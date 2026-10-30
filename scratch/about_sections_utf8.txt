@@ -1,0 +1,224 @@
+
+================= SECTION 1 =================
+<section class="category-hero">
+        <div class="about-hero__media" aria-hidden="true">
+          <img
+            src="assets/hero-load-visual.avif"
+            alt=""
+            fetchpriority="high"
+            decoding="sync">
+          <span class="about-hero__scroll-overlay" aria-hidden="true"></span>
+        </div>
+        <div class="page-grid">
+
+          <nav class="site-nav" aria-label="Primary">
+            <header class="logo">
+              <a href="/" aria-label="Realevate - home">
+                <img
+                  src="assets/realevate-white-logo.svg"
+                  data-logo-light="assets/realevate-white-logo.svg"
+                  data-logo-dark="assets/realevate-blue-logo.svg"
+                  alt="Realevate"
+                  width="211"
+                  height="15"
+                  decoding="async"
+                  fetchpriority="high">
+              </a>
+            </header>
+
+            <a href="/about" class="about-btn link-underline is-current">About</a>
+
+            <a href="/contact" class="contact-btn link-underline" data-nav-contact>Contact</a>
+
+            <div class="site-nav__actions">
+              <a href="#" class="our-selection-btn" data-open-selection-menu aria-haspopup="true" aria-expanded="false">
+                <span>Our Selection</span>
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <rect width="4" height="4" fill="currentColor"/>
+                  <rect x="9" width="4" height="4" fill="currentColor"/>
+                  <rect y="9" width="4" height="4" fill="currentColor"/>
+                  <rect x="9" y="9" width="4" height="4" fill="currentColor"/>
+                </svg>
+              </a>
+              <button type="button" class="menu-btn" aria-label="Open menu" aria-expanded="false">
+                <svg width="23" height="12" viewBox="0 0 23 12" fill="none" aria-hidden="true">
+                <rect width="23" height="3" fill="currentColor"/>
+                <rect y="9" width="10" height="3" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </nav>
+
+          <div class="hero-section">
+            <div class="hero-top">
+              <div class="marquee" aria-hidden="true">
+                <div class="marquee-reveal">
+                  <div class="marquee-scroll">
+                    <div class="marquee-collection">
+                      <span class="marquee-text">About Us</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <footer class="site-footer">
+            <span data-footer-copyright>(Scroll)</span>
+          </footer>
+
+        </div>
+      </section>
+
+================= SECTION 2 =================
+<section class="about-intro about-hero__chrome">
+        <div class="about-intro__grid">
+          <p class="about-page__label about-intro__label">(About Us)</p>
+          <h1 class="visually-hidden">About Realevate</h1>
+          <h2 class="about-intro__title"><span>Realevate </span> is a global real estate marketing agency, partnering with top-tier developers who share an innovative approach, commitment to excellence, and the vision of "Elevating real estate - Elevating life."</h2>
+
+          <div class="about-hero__visual about-intro__visual">
+            <button type="button" class="about-hero__video" aria-label="Play video">
+              <span class="about-hero__video-stack" aria-hidden="true">
+                <img class="about-hero__video-media about-hero__video-media--preview" src="assets/video-thumb.avif" alt="" decoding="async">
+                <video class="about-hero__video-media about-hero__video-media--full" playsinline preload="none" muted aria-hidden="true"></video>
+              </span>
+              <span class="about-hero__play about-intro__play" aria-hidden="true">
+                <span class="about-hero__play-icon">
+                  <svg width="14" height="16" viewBox="0 0 14 16" fill="none" aria-hidden="true">
+                    <path d="M13.5 7.134C14.1667 7.5189 14.1667 8.4811 13.5 8.866L1.5 15.7942C0.833333 16.1791 0 15.698 0 14.9282V1.0718C0 0.301997 0.833333 -0.179129 1.5 0.205771L13.5 7.134Z" fill="currentColor"/>
+                  </svg>
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+================= SECTION 3 =================
+<section class="about-video-expand" aria-label="Realevate video">
+      </section>
+
+================= SECTION 4 =================
+<section class="category-outro about-hero__chrome">
+
+
+        <div class="category-quote">
+          <figure class="category-quote__figure">
+            <img src="assets/marble-about.avif" alt="" loading="lazy" decoding="async">
+          </figure>
+          <h2 class="category-quote__text">&ldquo;We find the world's most distinctive projects for investment and wellbeing.&rdquo;</h2>
+
+        </div>
+
+        <div class="category-outro__marquee" aria-hidden="true">
+          <div class="marquee">
+            <div class="marquee-reveal">
+              <div class="marquee-scroll">
+                <div class="marquee-collection">
+                  <span class="marquee-text">Realevate</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-intro__grid">
+          <p class="about-page__label about-intro__label">(Philosophy)</p>
+          <h2 class="about-intro__title second"><span>Our </span> portfolio is selected by prime locations, exceptional living experiences, world-class amenities, strong year-round demand, and long-term capital appreciation potential.</h2>
+        </div>
+
+        <div class="category-values">
+          <article class="category-values__row">
+            <figure class="category-values__figure">
+              <img src="assets/strategic-location-converted.avif" alt="Luxury coastal marina with yachts and palm trees" loading="lazy" decoding="async">
+            </figure>
+            <div class="category-values__copy">
+              <p class="about-page__pillar-index">(01)</p>
+              <h3 class="category-values__stat">Strategic<br/>Location</h3>
+              <p class="category-values__desc">Highly sought-after locations where limited supply and sustained demand create long-term appreciation and above-average returns.</p>
+            </div>
+          </article>
+          <article class="category-values__row category-values__row--reverse">
+            <div class="category-values__copy">
+              <p class="about-page__pillar-index">(02)</p>
+              <h3 class="category-values__stat">Added<br/>Value</h3>
+              <p class="category-values__desc">A distinctive concept, world-class amenities, and premium services that enhance the living experience and drive stronger demand, occupancy, and long-term value.</p>
+            </div>
+            <figure class="category-values__figure">
+              <img src="assets/added-value-converted.avif" alt="Modern waterfront development at golden hour" loading="lazy" decoding="async">
+            </figure>
+          </article>
+          <article class="category-values__row">
+            <figure class="category-values__figure">
+              <img src="assets/masterplan-development-converted.avif" alt="People enjoying outdoor dining by the sea" loading="lazy" decoding="async">
+            </figure>
+            <div class="category-values__copy">
+              <p class="about-page__pillar-index">(03)</p>
+              <h3 class="category-values__stat">Masterplan<br/>Development</h3>
+              <p class="category-values__desc">“The next best thing” - a fully planned communities that integrate residential living, lifestyle amenities, and infrastructure and has the biggest potential for accelerating growth and demand.</p>
+            </div>
+          </article>
+          <article class="category-values__row category-values__row--reverse">
+            <div class="category-values__copy">
+              <p class="about-page__pillar-index">(04)</p>
+              <h3 class="category-values__stat">Exceptional<br/>Management</h3>
+              <p class="category-values__desc">Professional property management that ensures the highest standards of maintenance, supporting exceptional guest experiences and consistently high ratings on leading travel platforms.</p>
+            </div>
+            <figure class="category-values__figure">
+              <img src="assets/exceptional-management-converted.avif" alt="Clients toasting at an outdoor table overlooking a marina" loading="lazy" decoding="async">
+            </figure>
+          </article>
+        </div>
+
+        <div class="about-intro__grid">
+          <p class="about-page__label about-intro__label">(The process)</p>
+          <h2 class="about-intro__title second"><span>We </span> connect investors with trusted developers, provide them with early access to exceptional opportunities, and guide them through every step of the purchasing process to secure the right deal with confidence.</h2>
+        </div>
+      </section>
+
+================= SECTION 5 =================
+<section class="category-parallax" aria-label="Seaside resort lifestyle">
+        <div class="category-parallax__viewport">
+          <img
+            src="assets/about-villa-bottom.avif"
+            alt="Villa lifestyle"
+            loading="lazy"
+            decoding="async">
+        </div>
+      </section>
+
+================= SECTION 6 =================
+<section class="category-cta about-hero__chrome">
+        <div class="category-cta__inner">
+          <span class="category-cta__line" aria-hidden="true"></span>
+          <h2>Building wealth through better living.</h2>
+          <h4 class="category-cta__link">
+            <a href="/contact" class="link-underline">
+              Elevate your life <img src="assets/arrow.svg" alt="" width="17" height="15" decoding="async">
+            </a>
+          </h4>
+        </div>
+      </section>
+
+================= SECTION 7 =================
+<section class="category-next" aria-label="Next category: By The Sea">
+        <div class="category-next__viewport">
+          <div class="category-next__image-wrap">
+            <div class="category-next__parallax">
+            <img
+              src="assets/selection/bythesea/bythesea-cover.avif"
+              alt=""
+              loading="lazy"
+              decoding="async">
+            </div>
+          </div>
+        </div>
+        <div class="category-next__overlay" aria-hidden="true"></div>
+        <a href="/bythesea" class="category-next__content" data-category="by-the-sea">
+          <span class="category-next__label">Next</span>
+          <h2 class="category-next__title">By The Sea</h2>
+          <h6 class="category-next__desc">Coastal, Marina &amp; Seafront property</h6>
+        </a>
+      </section>

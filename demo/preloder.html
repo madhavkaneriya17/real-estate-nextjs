@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realevate | Exceptional Real Estate Investments</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- GSAP & CustomEase Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --brand-navy: #1F2B5E;
+      --brand-dark: #121831;
+      --white: #ffffff;
+      --text-muted: #6e6d7a;
+      --text-primary: #14121a;
+      --sans-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      
+      /* Realevate exact hero visual square dimensions */
+      --hero-visual-size: clamp(220px, 20vw, 360px);
+      --site-preloader-digit-size: clamp(1.4rem, 1.8vw, 1.85rem);
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      font-family: var(--sans-font);
+      background-color: var(--brand-navy);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body.site-preloading {
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* ========================================================
+       REALEVATE EXACT SITE PRELOADER
+       ======================================================== */
+    #site-preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: grid;
+      place-items: center;
+      background: transparent;
+      color: var(--white);
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Blue Background Wipe Layer */
+    .site-preloader__bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .site-preloader__bg--blue {
+      background: var(--brand-navy);
+      z-index: 1;
+      clip-path: inset(0% 0% 0% 0%);
+      will-change: clip-path;
+    }
+
+    .site-preloader__stage {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    /* Center Frames Box */
+    .site-preloader__frames {
+      position: relative;
+      width: var(--hero-visual-size);
+      height: var(--hero-visual-size);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      will-change: transform, top, left, width, height;
+    }
+
+    /* Each card sits dead center and opens via clip-path: inset() */
+    .site-preloader__frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      clip-path: inset(50% 50% 50% 50%);
+      will-change: clip-path;
+    }
+
+    .site-preloader__frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.5);
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    /* Odometer Counter */
+    .site-preloader__counter {
+      position: absolute;
+      left: 50%;
+      bottom: max(6.5vh, 2.5rem);
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .site-preloader__counter-mask {
+      overflow: hidden;
+      clip-path: inset(0% 0% 0% 0%);
+      line-height: 1;
+      height: var(--site-preloader-digit-size);
+      will-change: clip-path;
+    }
+
+    .site-preloader__number-wrapper {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.02em;
+      transform: translateY(100%);
+      will-change: transform;
+    }
+
+    .site-preloader__digit {
+      position: relative;
+      width: 0.65em;
+      height: var(--site-preloader-digit-size);
+      overflow: hidden;
+      font-weight: 500;
+      font-size: var(--site-preloader-digit-size);
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .site-preloader__digit-inner {
+      display: flex;
+      flex-direction: column;
+      transform: translateY(0%);
+      will-change: transform;
+    }
+
+    .site-preloader__number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 var(--site-preloader-digit-size);
+      height: var(--site-preloader-digit-size);
+      width: 100%;
+    }
+
+    /* ========================================================
+       REALEVATE EXACT LANDING HERO PAGE
+       ======================================================== */
+    #page-stage {
+      position: relative;
+      min-height: 100vh;
+      background-color: var(--white);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    /* Top Navigation */
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.2rem 4vw;
+      width: 100%;
+      max-width: 1800px;
+      margin: 0 auto;
+      z-index: 10;
+    }
+
+    .nav-link {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s;
+    }
+
+    .nav-link:hover {
+      opacity: 0.7;
+    }
+
+    .site-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      letter-spacing: 0.25em;
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: var(--brand-navy);
+      text-transform: uppercase;
+    }
+
+    /* Main Center Hero Section */
+    .hero-section {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2rem;
+      margin: auto 0;
+      width: 100%;
+      z-index: 5;
+    }
+
+    .hero-visual-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Big Marquee Behind the Hero Image */
+    .hero-marquee-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-marquee-text {
+      font-size: clamp(5rem, 14vw, 15rem);
+      font-weight: 700;
+      color: var(--brand-navy);
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      user-select: none;
+      opacity: 0.96;
+    }
+
+    /* Hero Visual Card */
+    .hero-visual-card {
+      position: relative;
+      z-index: 3;
+      width: var(--hero-visual-size);
+      height: var(--hero-visual-size);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(18, 24, 49, 0.22);
+    }
+
+    .hero-visual-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Headline & Price */
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.015em;
+    }
+
+    .hero-price-pill {
+      display: inline-block;
+      border: 1px solid #14121a;
+      padding: 0.6rem 1.8rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    /* Bottom Footer */
+    .site-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.2rem 4vw;
+      width: 100%;
+      max-width: 1800px;
+      margin: 0 auto;
+      z-index: 10;
+    }
+
+    .footer-copy {
+      font-size: 0.92rem;
+      color: #7b7a8c;
+      font-weight: 400;
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .selection-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      border: 1px solid #14121a;
+      background: transparent;
+      padding: 0.75rem 1.4rem;
+      font-size: 0.92rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .selection-btn:hover {
+      background: var(--brand-navy);
+      color: #fff;
+    }
+
+    .menu-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand-navy);
+      color: #fff;
+      width: 46px;
+      height: 46px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Floating Replay Button */
+    .replay-control {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 9999;
+      background: var(--brand-navy);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      font-family: var(--sans-font);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .replay-control:hover {
+      transform: translateY(-2px);
+      background: #141d40;
+    }
+
+    @media (max-width: 768px) {
+      .hero-marquee-text {
+        font-size: 16vw;
+      }
+      .site-nav, .site-footer {
+        padding: 1.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="site-preloading">
+
+  <!-- ========================================================
+       REALEVATE EXACT 5-FRAME PRELOADER
+       ======================================================== -->
+  <div id="site-preloader" aria-hidden="true">
+    <!-- Blue Fullscreen Wipe Layer -->
+    <div class="site-preloader__bg site-preloader__bg--blue" id="preloaderBlueBg"></div>
+
+    <div class="site-preloader__stage">
+      <!-- 5 Center Cascading Image Frames -->
+      <div class="site-preloader__frames" id="preloaderFrames">
+        <!-- Frame 0: By The Sea Coastal -->
+        <div class="site-preloader__frame" data-index="0">
+          <img src="assets/bythesea-card-cover.avif" alt="Coastal beachfront property" decoding="async">
+        </div>
+        <!-- Frame 1: Evergreen Golf Resort -->
+        <div class="site-preloader__frame" data-index="1">
+          <img src="assets/evergreen-card-cover.avif" alt="Golf course resort oasis" decoding="async">
+        </div>
+        <!-- Frame 2: Urban Living City Center -->
+        <div class="site-preloader__frame" data-index="2">
+          <img src="assets/urban-living-card-cover.avif" alt="City center terrace" decoding="async">
+        </div>
+        <!-- Frame 3: Rare Gems Tower -->
+        <div class="site-preloader__frame" data-index="3">
+          <img src="assets/rare-gems-card-cover.avif" alt="Architectural luxury skyscraper tower" decoding="async">
+        </div>
+        <!-- Frame 4: Final Hero Balcony Visual -->
+        <div class="site-preloader__frame site-preloader__frame--final" data-index="4">
+          <img src="assets/hero-load-visual.avif" alt="Woman relaxing on scenic coastal balcony" decoding="async">
+        </div>
+      </div>
+
+      <!-- Odometer Number Counter -->
+      <div class="site-preloader__counter" id="preloaderCounter">
+        <div class="site-preloader__counter-mask" id="counterMask">
+          <div class="site-preloader__number-wrapper" id="numberWrapper">
+            <!-- Tens Digit (0..9) -->
+            <div class="site-preloader__digit site-preloader__digit--tens">
+              <div class="site-preloader__digit-inner" id="tensInner">
+                <span class="site-preloader__number">0</span>
+                <span class="site-preloader__number">1</span>
+                <span class="site-preloader__number">2</span>
+                <span class="site-preloader__number">3</span>
+                <span class="site-preloader__number">4</span>
+                <span class="site-preloader__number">5</span>
+                <span class="site-preloader__number">6</span>
+                <span class="site-preloader__number">7</span>
+                <span class="site-preloader__number">8</span>
+                <span class="site-preloader__number">9</span>
+              </div>
+            </div>
+            <!-- Ones Digit (0..9) -->
+            <div class="site-preloader__digit site-preloader__digit--ones">
+              <div class="site-preloader__digit-inner" id="onesInner">
+                <span class="site-preloader__number">0</span>
+                <span class="site-preloader__number">1</span>
+                <span class="site-preloader__number">2</span>
+                <span class="site-preloader__number">3</span>
+                <span class="site-preloader__number">4</span>
+                <span class="site-preloader__number">5</span>
+                <span class="site-preloader__number">6</span>
+                <span class="site-preloader__number">7</span>
+                <span class="site-preloader__number">8</span>
+                <span class="site-preloader__number">9</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       REALEVATE EXACT HOMEPAGE HERO (Revealed on Completion)
+       ======================================================== -->
+  <div id="page-stage">
+    <nav class="site-nav">
+      <a href="#about" class="nav-link">About</a>
+      <a href="/" class="site-logo">Realevate</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <main class="hero-section">
+      <div class="hero-visual-container">
+        <!-- Giant Marquee Behind Hero Image -->
+        <div class="hero-marquee-bg">
+          <span class="hero-marquee-text" id="marqueeText">Elevating Life</span>
+        </div>
+
+        <!-- Hero Visual Card -->
+        <div class="hero-visual-card" id="heroVisualCard">
+          <img src="assets/hero-load-visual.avif" alt="Woman overlooking the Montenegro coast from stone balcony">
+        </div>
+      </div>
+
+      <div class="hero-content" id="heroContent">
+        <h1 class="hero-title">Invest in Exceptional Real Estate Properties in Cyprus, Montenegro, and Georgia.</h1>
+        <div class="hero-price-pill">Starting from 100,000€</div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span class="footer-copy">Realevate® 2026</span>
+      <div class="footer-actions">
+        <a href="#selection" class="selection-btn">
+          <span>Our Selection</span>
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <rect width="4" height="4" fill="currentColor"/>
+            <rect x="9" width="4" height="4" fill="currentColor"/>
+            <rect y="9" width="4" height="4" fill="currentColor"/>
+            <rect x="9" y="9" width="4" height="4" fill="currentColor"/>
+          </svg>
+        </a>
+        <button type="button" class="menu-icon-btn" aria-label="Open menu">
+          <svg width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true">
+            <rect width="22" height="2.5" fill="currentColor"/>
+            <rect y="8" width="12" height="2.5" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Floating Replay Preloader Control -->
+  <button type="button" class="replay-control" id="replayBtn" title="Replay Preloader Animation">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+    </svg>
+    <span>Replay Preloader</span>
+  </button>
+
+  <!-- ========================================================
+       GSAP REALEVATE EXACT ANIMATION SCRIPT
+       ======================================================== -->
+  <script>
+    (function () {
+      if (typeof CustomEase !== "undefined") {
+        gsap.registerPlugin(CustomEase);
+        CustomEase.create("bgWipe", "0.73, 0.15, 0.17, 0.99");
+      }
+
+      let masterTimeline = null;
+
+      // Exact timing parameters extracted directly from realevate.agency
+      const CONFIG = {
+        counterSteps: [27, 42, 68, 92, 99],
+        imageDelay: 0.50,               // Exactly 0.50s between each card
+        imageRevealDuration: 1.50,       // Exactly 1.50s clip-path expansion
+        imageRevealEase: "power4.out",   // Luxury deceleration
+        imageScaleFrom: 1.50,            // Image scales down from 1.5 -> 1.0
+        counterEnterDuration: 0.85,      // Odometer entrance duration
+        counterEnterEase: "power4.out",  // Odometer entrance easing
+        counterTickDuration: 0.50,       // Digit roll duration
+        counterTickEase: "expo.out",      // Snappy odometer digit snap
+        exitRevealDelay: 0.80,           // Pause on 99 before white page wipe
+        counterExitDuration: 0.95,       // Counter exit roll duration
+        counterExitEase: "power3.in",     // Counter exit easing
+        bgWipeDuration: 1.20,            // Blue background wipe upward duration
+        bgWipeEase: "power3.inOut"
+      };
+
+      const preloaderEl = document.getElementById('site-preloader');
+      const blueBg = document.getElementById('preloaderBlueBg');
+      const preloaderFrames = document.getElementById('preloaderFrames');
+      const numberWrapper = document.getElementById('numberWrapper');
+      const counterMask = document.getElementById('counterMask');
+      const tensInner = document.getElementById('tensInner');
+      const onesInner = document.getElementById('onesInner');
+      const frames = [...document.querySelectorAll('.site-preloader__frame')];
+      
+      const pageStage = document.getElementById('page-stage');
+      const marqueeText = document.getElementById('marqueeText');
+      const heroVisualCard = document.getElementById('heroVisualCard');
+      const heroContent = document.getElementById('heroContent');
+      const replayBtn = document.getElementById('replayBtn');
+
+      function getDigitYPercent(digit) {
+        const clamped = Math.min(9, Math.max(0, digit));
+        return -(clamped * 10);
+      }
+
+      function setCounter(value, animate = true) {
+        const val = Math.min(99, Math.max(0, Math.round(value)));
+        const tens = Math.floor(val / 10);
+        const ones = val % 10;
+
+        const tensY = getDigitYPercent(tens);
+        const onesY = getDigitYPercent(ones);
+
+        if (!animate) {
+          gsap.set(tensInner, { yPercent: tensY });
+          gsap.set(onesInner, { yPercent: onesY });
+          return;
+        }
+
+        gsap.to(tensInner, {
+          yPercent: tensY,
+          duration: CONFIG.counterTickDuration,
+          ease: CONFIG.counterTickEase,
+          overwrite: "auto"
+        });
+
+        gsap.to(onesInner, {
+          yPercent: onesY,
+          duration: CONFIG.counterTickDuration,
+          ease: CONFIG.counterTickEase,
+          overwrite: "auto"
+        });
+      }
+
+      function resetInitialState() {
+        if (masterTimeline) {
+          masterTimeline.kill();
+          masterTimeline = null;
+        }
+
+        document.body.classList.add('site-preloading');
+        preloaderEl.style.display = 'grid';
+        preloaderEl.style.opacity = '1';
+
+        // Blue Wipe Layer reset
+        gsap.set(blueBg, { clipPath: "inset(0% 0% 0% 0%)", autoAlpha: 1 });
+
+        // Frames container reset
+        gsap.set(preloaderFrames, { clearProps: "all" });
+
+        // All 5 frames reset to clip-path center 50% 50% 50% 50% & img scale 1.5
+        frames.forEach((frame) => {
+          const img = frame.querySelector('img');
+          gsap.set(frame, { clipPath: "inset(50% 50% 50% 50%)" });
+          if (img) gsap.set(img, { scale: CONFIG.imageScaleFrom, transformOrigin: "center center" });
+        });
+
+        // Counter reset
+        gsap.set(counterMask, { clipPath: "inset(0% 0% 0% 0%)" });
+        gsap.set(numberWrapper, { yPercent: 100 });
+        setCounter(CONFIG.counterSteps[0], false);
+
+        // Page stage hidden during preloader
+        gsap.set(pageStage, { visibility: "hidden", opacity: 0 });
+        gsap.set(marqueeText, { opacity: 0, scale: 0.95 });
+        gsap.set(heroContent, { opacity: 0, y: 25 });
+      }
+
+      function buildRealevateAnimation() {
+        resetInitialState();
+
+        const tl = gsap.timeline();
+        masterTimeline = tl;
+
+        // 1. Bottom Counter slides up into view (yPercent 100 -> 0)
+        tl.fromTo(numberWrapper, 
+          { yPercent: 100 }, 
+          { 
+            yPercent: 0, 
+            duration: CONFIG.counterEnterDuration, 
+            ease: CONFIG.counterEnterEase 
+          }, 
+          0
+        );
+
+        // 2. Exact Realevate 5-card cascade (every 0.50s next card blooms)
+        frames.forEach((frame, index) => {
+          const D = index * CONFIG.imageDelay;
+          const img = frame.querySelector('img');
+          const targetNumber = CONFIG.counterSteps[index];
+
+          // Counter step roll
+          if (index > 0) {
+            tl.call(() => {
+              setCounter(targetNumber, true);
+            }, null, D);
+          }
+
+          // Frame clipPath reveal: inset(50% 50% 50% 50%) -> inset(0% 0% 0% 0%)
+          tl.fromTo(frame, 
+            { clipPath: "inset(50% 50% 50% 50%)" }, 
+            { 
+              clipPath: "inset(0% 0% 0% 0%)", 
+              duration: CONFIG.imageRevealDuration, 
+              ease: CONFIG.imageRevealEase 
+            }, 
+            D
+          );
+
+          // Image inside scales down: 1.5 -> 1.0
+          if (img) {
+            tl.fromTo(img, 
+              { scale: CONFIG.imageScaleFrom }, 
+              { 
+                scale: 1.0, 
+                duration: CONFIG.imageRevealDuration, 
+                ease: CONFIG.imageRevealEase 
+              }, 
+              D
+            );
+          }
+        });
+
+        // 3. Exact Realevate Exit & Landing Page Reveal
+        const finalImageStartTime = (frames.length - 1) * CONFIG.imageDelay; // 4 * 0.5 = 2.0s
+        const exitStartTime = finalImageStartTime + CONFIG.exitRevealDelay;   // 2.0 + 0.8 = 2.8s
+
+        // A. Counter slides up and vanishes
+        tl.to(numberWrapper, {
+          yPercent: -100,
+          duration: CONFIG.counterExitDuration,
+          ease: CONFIG.counterExitEase
+        }, exitStartTime);
+
+        tl.to(counterMask, {
+          clipPath: "inset(100% 0% 0% 0%)",
+          duration: CONFIG.counterExitDuration,
+          ease: CONFIG.counterExitEase
+        }, exitStartTime);
+
+        // B. Make the underlying page stage visible right as wipe begins
+        tl.call(() => {
+          pageStage.style.visibility = "visible";
+          pageStage.style.opacity = "1";
+        }, null, exitStartTime);
+
+        // C. Blue background wipes UPWARD to reveal white page
+        tl.to(blueBg, {
+          clipPath: "inset(0% 0% 100% 0%)",
+          duration: CONFIG.bgWipeDuration,
+          ease: CustomEase.get("bgWipe") || CONFIG.bgWipeEase
+        }, exitStartTime);
+
+        // D. Giant Marquee & Hero Content elegant entrance
+        tl.to(marqueeText, {
+          opacity: 1,
+          scale: 1,
+          duration: 1.1,
+          ease: "power3.out"
+        }, exitStartTime + 0.25);
+
+        tl.to(heroContent, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out"
+        }, exitStartTime + 0.35);
+
+        // E. Preloader clean finish
+        tl.call(() => {
+          document.body.classList.remove('site-preloading');
+          preloaderEl.style.display = 'none';
+        }, null, exitStartTime + CONFIG.bgWipeDuration);
+      }
+
+      // Replay Button Listener
+      replayBtn.addEventListener('click', () => {
+        buildRealevateAnimation();
+      });
+
+      // Start on load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', buildRealevateAnimation);
+      } else {
+        buildRealevateAnimation();
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+/* === Why Invest Grid Section START === */
+.why-invest-section {
+  display: flex;
+  flex-direction: column;
+  gap: calc(13vw * calc(1 * min(1, calc(100svh / 950px))));
+  padding-top: calc(14vw * calc(1 * min(1, calc(100svh / 950px))));
+  padding-bottom: calc(14vw * calc(1 * min(1, calc(100svh / 950px))));
+  background-color: #ffffff;
+}
+
+.why-invest-value {
+  display: flex;
+  flex-direction: column;
+  gap: calc(5vw * calc(1 * min(1, calc(100svh / 950px))));
+  width: 100%;
+  padding-inline: calc(4.5vw * calc(1 * min(1, calc(100svh / 950px))));
+}
+
+.why-invest-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: calc(2.601vw * calc(1 * min(1, calc(100svh / 950px))));
+  align-items: stretch;
+}
+
+.why-invest-image {
+  grid-column: 2 / 5;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 708 / 908;
+}
+
+.why-invest-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.why-invest-content {
+  grid-column: 5 / 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.why-invest-row:nth-child(1) .why-invest-content {
+  align-self: start;
+}
+
+.why-invest-row:nth-child(2) .why-invest-content {
+  align-self: center;
+}
+
+.why-invest-row:nth-child(3) .why-invest-content {
+  align-self: end;
+}
+
+.why-invest-row:nth-child(4) .why-invest-content {
+  align-self: center;
+}
+
+.why-invest-row:nth-child(5) .why-invest-content {
+  align-self: end;
+}
+
+.why-invest-row--reverse .why-invest-content {
+  grid-column: 6 / 9;
+  align-self: center;
+}
+
+.why-invest-row--reverse .why-invest-image {
+  grid-column: 9 / 12;
+}
+
+.why-invest-content-title {
+  margin: 0;
+  color: var(--category-color, var(--about-bg, #2D1C2D));
+  font-family: "Google Sans", Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: calc(3.646vw * calc(1 * min(1, calc(100svh / 950px))));
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.why-invest-content-text {
+  margin: calc(3vw * calc(1 * min(1, calc(100svh / 950px)))) 0 0;
+  color: var(--category-color-muted, #6B5A6B);
+  font-family: "Google Sans", Arial, Helvetica, sans-serif;
+  font-size: calc(1.2vw * calc(1 * min(1, calc(100svh / 950px))));
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+/* === Why Invest Grid Section END === */
+
+/* === Why Invest Pull Quote Section START === */
+.why-invest-bottom-content,
+.why-invest-section .category-pull-quote {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: calc(2.601vw * calc(1 * min(1, calc(100svh / 950px))));
+  width: 100%;
+  padding-inline: calc(4.5vw * calc(1 * min(1, calc(100svh / 950px))));
+}
+
+.why-invest-bottom-content h2,
+.why-invest-section .category-pull-quote__text {
+  grid-column: 2 / 12;
+  margin: 0;
+  color: var(--category-color, var(--about-bg, #2D1C2D));
+  font-family: "Google Sans", Arial, Helvetica, sans-serif;
+  font-size: calc(3.646vw * calc(1 * min(1, calc(100svh / 950px))));
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  text-align: left;
+}
+
+.why-invest-bottom-quote-mark,
+.why-invest-section .category-pull-quote__mark {
+  display: inline-block;
+  padding-left: 10vw;
+}
+
+.why-invest-bottom-content-attrib,
+.why-invest-section .category-pull-quote__attrib {
+  grid-column: 2 / 12;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: calc(3vw * calc(1 * min(1, calc(100svh / 950px))));
+}
+
+.why-invest-bottom-content-name,
+.why-invest-section .category-quote__name {
+  margin: 0;
+  color: var(--category-color, var(--about-bg, #2D1C2D));
+  font-family: "Google Sans", Arial, Helvetica, sans-serif;
+  font-size: calc(1.2vw * calc(1 * min(1, calc(100svh / 950px))));
+  font-weight: 500;
+  text-align: left;
+}
+
+.why-invest-bottom-content-source,
+.why-invest-section .category-quote__source {
+  margin: 0;
+  color: var(--category-color-muted, #6B5A6B);
+  font-family: "Google Sans", Arial, Helvetica, sans-serif;
+  font-size: calc(1.2vw * calc(1 * min(1, calc(100svh / 950px))));
+  text-align: left;
+}
+/* === Why Invest Pull Quote Section END === */
+
+/* === Why Invest Responsive Breakpoints START === */
+@media (max-width: 900px) {
+  .why-invest-row {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  .why-invest-image,
+  .why-invest-row--reverse .why-invest-image {
+    grid-column: 1 / -1;
+    order: 1;
+  }
+
+  .why-invest-content,
+  .why-invest-row--reverse .why-invest-content {
+    grid-column: 1 / -1;
+    order: 2;
+  }
+
+  .why-invest-content-title {
+    font-size: 32px;
+  }
+
+  .why-invest-content-text {
+    font-size: 16px;
+    margin-top: 16px;
+  }
+
+  .why-invest-bottom-content,
+  .why-invest-section .category-pull-quote {
+    grid-template-columns: 1fr;
+    padding-inline: 20px;
+    row-gap: 20px;
+  }
+
+  .why-invest-bottom-content h2,
+  .why-invest-section .category-pull-quote__text,
+  .why-invest-bottom-content-attrib,
+  .why-invest-section .category-pull-quote__attrib {
+    grid-column: 1 / -1;
+  }
+
+  .why-invest-bottom-content h2,
+  .why-invest-section .category-pull-quote__text {
+    font-size: 26px;
+    line-height: 1.15;
+  }
+
+  .why-invest-bottom-quote-mark,
+  .why-invest-section .category-pull-quote__mark {
+    padding-left: 0;
+  }
+
+  .why-invest-bottom-content-name,
+  .why-invest-bottom-content-source {
+    font-size: 14px;
+  }
+}
+/* === Why Invest Responsive Breakpoints END === */
+
+.about-page__pillar-index {
+  color: var(--category-color, #1F2B5E);
+  font-family: var(--sans-font, "Google Sans", Arial, sans-serif);
+  font-size: clamp(14px, 1.1vw, 17px);
+  font-weight: 500;
+  margin: 0 0 0.8vw 0;
+  letter-spacing: -0.01em;
+}
+

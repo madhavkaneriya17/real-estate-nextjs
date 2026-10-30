@@ -1,0 +1,267 @@
+/* === Floating Toggle Button START === */
+.nav-floating-menu-btn {
+  position: fixed;
+  right: calc(4.5vw * min(1, calc(100svh / 950px)));
+  bottom: calc(4.5vw * min(1, calc(100svh / 950px)));
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(44px, 3.6vw, 54px);
+  height: clamp(44px, 3.6vw, 54px);
+  aspect-ratio: 1 / 1;
+  background-color: #FFFFFF;
+  color: #1A1A24;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  line-height: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.35s ease, color 0.35s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.nav-floating-menu-btn.dark-theme {
+  background-color: #2D1C2D;
+  color: #FFFFFF;
+}
+
+.nav-floating-menu-btn svg {
+  display: block;
+  width: 23px;
+  height: 12px;
+  overflow: visible;
+}
+
+.nav-floating-menu-btn svg rect:last-child,
+.nav-floating-menu-btn .menu-btn-line-bottom {
+  transform: translateX(0);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-floating-menu-btn:hover svg rect:last-child,
+.nav-floating-menu-btn:hover .menu-btn-line-bottom {
+  transform: translateX(13px);
+}
+
+.nav-floating-menu-btn:hover {
+  transform: scale(1.04);
+}
+/* === Floating Toggle Button END === */
+
+/* === Navigation Modal Backdrop & Panel START === */
+.nav-menu-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 999999 !important;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.nav-menu-wrapper.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-menu-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(31, 43, 94, 0.42);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.nav-menu-panel {
+  position: absolute;
+  right: calc(4.5vw * min(1, calc(100svh / 950px)));
+  bottom: calc(4.5vw * min(1, calc(100svh / 950px)));
+  width: clamp(310px, 24.5vw, 390px);
+  min-height: clamp(330px, 26.5vw, 430px);
+  background-color: var(--nav-menu-bg, #1F2B5E);
+  color: var(--nav-menu-color, #FFFFFF);
+  padding: clamp(30px, 2.7vw, 44px);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55), 0 4px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform-origin: bottom right;
+  border-radius: 0;
+  box-sizing: border-box;
+  will-change: clip-path;
+}
+/* === Navigation Modal Backdrop & Panel END === */
+
+/* === Navigation Links START === */
+.nav-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12em;
+  padding-top: 0.2vw;
+}
+
+.nav-menu-link-item {
+  display: block;
+  line-height: 1;
+}
+
+.nav-menu-link {
+  font-family: var(--display-font, 'Roslindale Display', Georgia, serif);
+  font-size: clamp(38px, 3.4vw, 52px);
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--nav-menu-color, #FFFFFF);
+  text-decoration: none;
+  width: fit-content;
+  display: block;
+  overflow: hidden;
+  height: 1.15em;
+  cursor: pointer;
+  letter-spacing: -0.02em;
+}
+
+.nav-menu-link__inner {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.nav-menu-link-item:hover .nav-menu-link__inner,
+.nav-menu-link:hover .nav-menu-link__inner {
+  transform: translateY(-50%) !important;
+}
+
+.nav-menu-link__text {
+  display: block;
+  line-height: 1.15;
+  height: 1.15em;
+  white-space: nowrap;
+  color: var(--nav-menu-color, #FFFFFF);
+}
+/* === Navigation Links END === */
+
+/* === Navigation Channels & Close Button START === */
+.nav-menu-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: clamp(24px, 2.2vw, 36px);
+  padding-top: 8px;
+  position: relative;
+}
+
+.nav-menu-channels {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 1.8vw, 32px);
+}
+
+.nav-menu-channel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--sans-font, 'Google Sans', sans-serif);
+  font-size: clamp(14px, 1.1vw, 16px);
+  font-weight: 500;
+  color: var(--nav-menu-color, #FFFFFF);
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.nav-menu-channel-icon-wrap {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.nav-menu-channel-icon-inner {
+  display: flex;
+  flex-direction: column;
+  width: 20px;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.nav-menu-channel-icon-slot {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-menu-channel-link:hover .nav-menu-channel-icon-inner {
+  transform: translateY(-50%);
+}
+
+.nav-menu-contact-icon {
+  display: block;
+  flex-shrink: 0;
+  color: var(--nav-menu-color, #FFFFFF);
+}
+
+.nav-menu-channel-link svg.nav-menu-contact-icon {
+  width: 20px;
+  height: auto;
+  display: block;
+}
+
+.nav-menu-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 32px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--nav-menu-color, #FFFFFF);
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+  padding: 0;
+  margin-left: auto;
+}
+
+.nav-menu-close-btn svg {
+  display: block;
+  color: var(--nav-menu-color, #FFFFFF);
+}
+
+.nav-menu-close-btn:hover {
+  opacity: 0.75;
+  transform: scaleX(1.15);
+}
+/* === Navigation Channels & Close Button END === */
+
+/* === Navigation Responsive Breakpoints START === */
+@media (max-width: 600px) {
+  .nav-menu-panel {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    width: auto;
+    min-height: 300px;
+    padding: 28px 24px;
+  }
+
+  .nav-floating-menu-btn {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .nav-menu-link {
+    font-size: 34px;
+  }
+}
+/* === Navigation Responsive Breakpoints END === */
