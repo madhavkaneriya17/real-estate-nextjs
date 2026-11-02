@@ -64,16 +64,17 @@ export const URBAN_LUXE_GALLERY_SLIDES: GallerySlide[] = [
 ];
 
 export const COASTAL_HAVEN_GALLERY_SLIDES: GallerySlide[] = [
-  { src: "/assets/selection/bythesea/coastal-luxury-pool-view.jpg", alt: "Private infinity pool overlooking azure bay" },
-  { src: "/assets/selection/bythesea/luxury-coastal-villa-view-4k.jpg", alt: "Frontline beachfront luxury villa" },
-  { src: "/assets/selection/bythesea/mediterranean-yachts-cove-4k.jpg", alt: "Private marina harbor and superyachts" },
-  { src: "/assets/selection/bythesea/amalfi-cliffside-villas-4k.jpg", alt: "Dramatic cliffside Mediterranean residences" },
-  { src: "/assets/selection/bythesea/santorini-infinity-pool.jpg", alt: "Sunset infinity pool terrace over the sea" },
-  { src: "/assets/selection/bythesea/luxury-hotel-resort-4k.jpg", alt: "Five-star seafront resort amenities" },
-  { src: "/assets/selection/bythesea/mediterranean-terrace-view.jpg", alt: "Sun-drenched outdoor terrace with sea views" },
-  { src: "/assets/selection/bythesea/coastal-resort-ocean-view.jpg", alt: "Direct beach promenade living" },
-  { src: "/assets/selection/bythesea/tropical-luxury-cove-4k.jpg", alt: "Secluded crystal-clear ocean cove" },
-  { src: "/assets/selection/bythesea/luxury-infinity-sea-view-4k.jpg", alt: "Panoramic horizon and coastal architecture" },
+  { src: "/assets/BTS-1.avif", alt: "Luxury beachfront villa interior" },
+  { src: "/assets/BTS-2.avif", alt: "Family enjoying coastal balcony" },
+  { src: "/assets/BTS-3.avif", alt: "Relaxing on seafront beach lounger" },
+  { src: "/assets/BTS-4.avif", alt: "Scenic seaside architecture" },
+  { src: "/assets/BTS-5.avif", alt: "Sunlit ocean view terrace" },
+  { src: "/assets/BTS-6.avif", alt: "Private infinity pool overlooking bay" },
+  { src: "/assets/BTS-7.avif", alt: "Coastal marina promenade" },
+  { src: "/assets/BTS-8.avif", alt: "Modern waterfront living room" },
+  { src: "/assets/BTS-9.avif", alt: "Panoramic blue waters and coastline" },
+  { src: "/assets/BTS-10.avif", alt: "Sunset by coastal resort" },
+  { src: "/assets/BTS-11.avif", alt: "Luxury bedroom facing the sea" },
 ];
 
 export const LIMITED_EDITION_GALLERY_SLIDES: GallerySlide[] = [

@@ -376,7 +376,8 @@
   align-items: center;
   gap: var(--slider-gap);
   will-change: transform;
-  transform: rotate(var(--slider-tilt));
+  rotate: var(--slider-tilt, -8deg);
+  transform: translate3d(0, 0, 0);
   transform-origin: center center;
 }
 

@@ -91,21 +91,20 @@ export function initProjectsSlider(container) {
 
   function wrapCoordinates() {
     if (!totalOriginalWidth) return;
-    const minX = baseOffset;
-    const maxX = baseOffset + totalOriginalWidth;
+    const half = totalOriginalWidth / 2;
 
-    while (pos.x >= maxX) {
+    while (pos.x > baseOffset + half) {
       pos.x -= totalOriginalWidth;
       targetX -= totalOriginalWidth;
     }
-    while (pos.x < minX) {
+    while (pos.x < baseOffset - half) {
       pos.x += totalOriginalWidth;
       targetX += totalOriginalWidth;
     }
   }
 
   function render() {
-    track.style.transform = `rotate(var(--slider-tilt, -8deg)) translate3d(${-pos.x}px, 0, 0)`;
+    track.style.transform = `translate3d(${-pos.x}px, 0, 0)`;
   }
 
   function updateMeasurements() {
@@ -152,14 +151,17 @@ export function initProjectsSlider(container) {
 
       // Smooth interpolation towards targetX
       const diff = targetX - pos.x;
-      if (Math.abs(diff) > 0.1) {
-        pos.x += diff * 0.18;
-      } else {
-        pos.x = targetX;
-      }
+      const hasMotion = Math.abs(diff) > 0.05 || Math.abs(velocity) > 0.05;
 
-      wrapCoordinates();
-      render();
+      if (hasMotion) {
+        if (Math.abs(diff) > 0.05) {
+          pos.x += diff * 0.18;
+        } else {
+          pos.x = targetX;
+        }
+        wrapCoordinates();
+        render();
+      }
     }
   }
 
@@ -327,21 +329,39 @@ export function initProjectsSlider(container) {
     return rect.bottom > 0 && rect.top < window.innerHeight;
   }
 
-  let lastScrollY = window.scrollY;
-  const scrollFactor = 0.85;
+  let wasInView = false;
+  let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
+  const scrollFactor = 0.45;
 
   const onScroll = () => {
     const currentScrollY = window.scrollY;
+    const inView = isSliderInView();
+
+    if (!inView) {
+      wasInView = false;
+      lastScrollY = currentScrollY;
+      return;
+    }
+
+    // When entering view for the first time, anchor baseline without any jump
+    if (!wasInView) {
+      wasInView = true;
+      lastScrollY = currentScrollY;
+      return;
+    }
+
     const deltaScroll = currentScrollY - lastScrollY;
     lastScrollY = currentScrollY;
 
-    if (!isDragging && isSliderInView()) {
+    if (!isDragging) {
       if (isTweening) {
         gsap.killTweensOf(pos);
         isTweening = false;
         targetX = pos.x;
       }
-      targetX -= deltaScroll * scrollFactor;
+      // Clamp delta to prevent sudden momentum spikes
+      const clampedDelta = Math.max(-100, Math.min(100, deltaScroll));
+      targetX -= clampedDelta * scrollFactor;
     }
   };
   window.addEventListener("scroll", onScroll, { passive: true });
