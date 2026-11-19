@@ -1226,6 +1226,12 @@ body.bottom-cursor-active * {
     --category-intro-gap: 1.25rem;
   }
 
+  .about-page-wrapper.is-dock-active.is-docked {
+    transform: translateY(105svh) scale(0.95) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
   /* Section 1: Hero */
   .about-hero {
     padding: 1.25rem;

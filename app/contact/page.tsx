@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
-import { COUNTRIES } from "./countries-data";
+
 import "./contact.css";
 
 export default function ContactPage() {
@@ -115,38 +115,20 @@ export default function ContactPage() {
     }
   };
 
-  // Country Selection & Dial Code Auto-fill (Investors)
+  // Country Selection (Investors)
   const handleInvestorCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCountryName = e.target.value;
-    const countryObj = COUNTRIES.find((c) => c.name === selectedCountryName);
-    setInvestorData((prev) => {
-      let updatedPhone = prev.phone;
-      if (countryObj && countryObj.dialCode && !prev.phone.trim()) {
-        updatedPhone = `${countryObj.dialCode} `;
-      }
-      return {
-        ...prev,
-        country: selectedCountryName,
-        phone: updatedPhone,
-      };
-    });
+    setInvestorData((prev) => ({
+      ...prev,
+      country: e.target.value,
+    }));
   };
 
-  // Country Selection & Dial Code Auto-fill (Partnership)
+  // Country Selection (Partnership)
   const handlePartnerCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCountryName = e.target.value;
-    const countryObj = COUNTRIES.find((c) => c.name === selectedCountryName);
-    setPartnerData((prev) => {
-      let updatedPhone = prev.phone;
-      if (countryObj && countryObj.dialCode && !prev.phone.trim()) {
-        updatedPhone = `${countryObj.dialCode} `;
-      }
-      return {
-        ...prev,
-        country: selectedCountryName,
-        phone: updatedPhone,
-      };
-    });
+    setPartnerData((prev) => ({
+      ...prev,
+      country: e.target.value,
+    }));
   };
 
   // Submit Investors Form
@@ -468,11 +450,40 @@ export default function ContactPage() {
                             <option value="" disabled>
                               Country*
                             </option>
-                            {COUNTRIES.map((c) => (
-                              <option key={c.code} value={c.name}>
-                                {c.name}
-                              </option>
-                            ))}
+                            <option value="United Arab Emirates">United Arab Emirates</option>
+                            <option value="United States">United States</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Austria">Austria</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Cyprus">Cyprus</option>
+                            <option value="Denmark">Denmark</option>
+                            <option value="France">France</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Greece">Greece</option>
+                            <option value="India">India</option>
+                            <option value="Ireland">Ireland</option>
+                            <option value="Israel">Israel</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Kuwait">Kuwait</option>
+                            <option value="Monaco">Monaco</option>
+                            <option value="Montenegro">Montenegro</option>
+                            <option value="Netherlands">Netherlands</option>
+                            <option value="Norway">Norway</option>
+                            <option value="Oman">Oman</option>
+                            <option value="Poland">Poland</option>
+                            <option value="Portugal">Portugal</option>
+                            <option value="Qatar">Qatar</option>
+                            <option value="Saudi Arabia">Saudi Arabia</option>
+                            <option value="Singapore">Singapore</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Switzerland">Switzerland</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="Other">Other</option>
                           </select>
                         </div>
                       </div>
@@ -707,11 +718,40 @@ export default function ContactPage() {
                             <option value="" disabled>
                               Country*
                             </option>
-                            {COUNTRIES.map((c) => (
-                              <option key={c.code} value={c.name}>
-                                {c.name}
-                              </option>
-                            ))}
+                            <option value="United Arab Emirates">United Arab Emirates</option>
+                            <option value="United States">United States</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Austria">Austria</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Cyprus">Cyprus</option>
+                            <option value="Denmark">Denmark</option>
+                            <option value="France">France</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Greece">Greece</option>
+                            <option value="India">India</option>
+                            <option value="Ireland">Ireland</option>
+                            <option value="Israel">Israel</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Kuwait">Kuwait</option>
+                            <option value="Monaco">Monaco</option>
+                            <option value="Montenegro">Montenegro</option>
+                            <option value="Netherlands">Netherlands</option>
+                            <option value="Norway">Norway</option>
+                            <option value="Oman">Oman</option>
+                            <option value="Poland">Poland</option>
+                            <option value="Portugal">Portugal</option>
+                            <option value="Qatar">Qatar</option>
+                            <option value="Saudi Arabia">Saudi Arabia</option>
+                            <option value="Singapore">Singapore</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Switzerland">Switzerland</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="Other">Other</option>
                           </select>
                         </div>
                       </div>

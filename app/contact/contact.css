@@ -689,4 +689,23 @@
   .contact-form-tabs__tab {
     font-size: 1.05rem;
   }
+
+  /* Prevent tooltip overflow on small screens */
+  .contact-hero__channel-copy-feedback {
+    left: 0;
+    top: -120%;
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Full width submit button for mobile */
+  .contact-form__submit-row {
+    width: 100%;
+  }
+
+  .contact-page-form [type="submit"] {
+    width: 100%;
+    padding: 0.95em 2em;
+    font-size: 1rem;
+  }
 }

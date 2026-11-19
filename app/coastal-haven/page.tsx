@@ -595,7 +595,7 @@ export default function CoastalHavenPage() {
           (Scroll)
         </span>
 
-        <div className={`about-footer-actions ${isSelectionOpen || isDockActive || isCtaVisible ? "is-hidden" : ""}`}>
+        <div className={`about-footer-actions ${isCtaVisible && !isSelectionOpen ? "is-hidden" : ""}`}>
           <button
             type="button"
             className={`about-selection-btn ${isZoomed || isSelectionOpen ? "is-zoomed" : ""}`}

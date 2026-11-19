@@ -271,58 +271,58 @@ export default function Home() {
             {/* === Hero Content END === */}
           </div>
           {/* === Hero Body END === */}
-
-          {/* === Site Footer Bar START === */}
-          <footer className="site-footer">
-            <span className="footer-copyright">Realevate® 2026</span>
-
-            <div
-              className="footer-actions"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                type="button"
-                className="our-selection-btn"
-                onClick={() => setIsSelectionOpen(!isSelectionOpen)}
-                aria-label="Toggle Our Selection"
-              >
-                <span>{isSelectionOpen ? "Close Selection" : "Our Selection"}</span>
-                <svg
-                  viewBox="0 0 13 13"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <rect width="4" height="4" fill="currentColor" />
-                  <rect x="9" width="4" height="4" fill="currentColor" />
-                  <rect y="9" width="4" height="4" fill="currentColor" />
-                  <rect x="9" y="9" width="4" height="4" fill="currentColor" />
-                </svg>
-              </button>
-
-              <button
-                type="button"
-                className="menu-toggle-btn"
-                onClick={() => setIsMenuOpen(true)}
-                aria-label="Open menu"
-                aria-expanded={isMenuOpen}
-              >
-                <svg
-                  width="23"
-                  height="12"
-                  viewBox="0 0 23 12"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <rect width="23" height="3" fill="currentColor" />
-                  <rect className="menu-btn-line-bottom" y="9" width="10" height="3" fill="currentColor" />
-                </svg>
-              </button>
-            </div>
-          </footer>
-          {/* === Site Footer Bar END === */}
         </div>
       </main>
       {/* === Hero Stage Section END === */}
+
+      {/* === Site Footer Bar START === */}
+      <footer className="site-footer">
+        <span className="footer-copyright">Realevate® 2026</span>
+
+        <div
+          className="footer-actions"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            className="our-selection-btn"
+            onClick={() => setIsSelectionOpen(!isSelectionOpen)}
+            aria-label="Toggle Our Selection"
+          >
+            <span>{isSelectionOpen ? "Close Selection" : "Our Selection"}</span>
+            <svg
+              viewBox="0 0 13 13"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect width="4" height="4" fill="currentColor" />
+              <rect x="9" width="4" height="4" fill="currentColor" />
+              <rect y="9" width="4" height="4" fill="currentColor" />
+              <rect x="9" y="9" width="4" height="4" fill="currentColor" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            className="menu-toggle-btn"
+            onClick={() => setIsMenuOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={isMenuOpen}
+          >
+            <svg
+              width="23"
+              height="12"
+              viewBox="0 0 23 12"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect width="23" height="3" fill="currentColor" />
+              <rect className="menu-btn-line-bottom" y="9" width="10" height="3" fill="currentColor" />
+            </svg>
+          </button>
+        </div>
+      </footer>
+      {/* === Site Footer Bar END === */}
 
       {/* === Navigation Menu Drawer START === */}
       <NavigationMenu

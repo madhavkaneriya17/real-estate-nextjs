@@ -492,12 +492,21 @@ button {
 
 /* === Site Footer Actions & Toggle Buttons START === */
 .site-footer {
-  position: relative;
-  z-index: 20;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
   width: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  padding: calc(4.5vw * min(1, calc(100svh / 950px)));
+  pointer-events: none;
+}
+
+.site-footer > * {
+  pointer-events: auto;
 }
 
 .footer-copyright {
@@ -571,30 +580,64 @@ button {
 /* === Global Responsive Breakpoints START === */
 @media (max-width: 900px) {
   .selection-container {
-    padding: 5vw 5vw 0;
+    padding: clamp(12px, 3vw, 24px) clamp(12px, 3vw, 24px) 0;
   }
 
   .hero-grid {
     padding: 5vw;
   }
 
-  .hero-stage.is-docked {
-    transform: translateY(calc(5vw + 70svh + 16px)) scale(0.48);
+  .hero-stage.is-docked,
+  .about-page-wrapper.is-dock-active.is-docked {
+    transform: translateY(105svh) scale(0.95) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
   
   .selection-cards-grid {
     grid-template-columns: repeat(2, 1fr);
-    height: 70svh;
-    gap: 12px;
+    height: calc(100svh - clamp(80px, 14svh, 110px));
+    max-height: 620px;
+    gap: clamp(8px, 1.8vw, 12px);
   }
 
+  .selection-card {
+    border-radius: 2px;
+  }
+
+  .selection-card__panel {
+    flex: 1 1 auto;
+    padding: clamp(10px, 2.5vw, 16px);
+    overflow: hidden;
+  }
+
+  .selection-card__symbol {
+    width: 22px;
+    min-width: 20px;
+    height: auto;
+  }
+
+  /* Prevent vertical title cut-off on mobile */
   .selection-card__title {
-    font-size: 15px;
+    font-size: clamp(11.5px, 2.8vw, 13.5px);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    max-height: 100%;
+    transform: rotate(180deg);
+    padding-bottom: 2px;
   }
 
   .selection-card__desc {
-    max-width: 35vw;
-    font-size: clamp(12px, 3.2vw, 14px);
+    max-width: 100%;
+    font-size: clamp(10px, 2.4vw, 12px);
+    line-height: 1.25;
+    padding-right: 6px;
+  }
+
+  /* Balanced cover image height so panel has ample room for titles */
+  .selection-card__cover {
+    height: clamp(80px, 14svh, 115px);
+    flex: 0 0 auto;
   }
 
   .nav-menu-panel {
@@ -607,6 +650,120 @@ button {
 
   .nav-menu-link {
     font-size: 32px;
+  }
+
+  .site-footer {
+    padding: 1.25rem;
+    z-index: 50;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --hero-visual-size: clamp(170px, 45vw, 230px);
+  }
+
+  .site-header {
+    padding-top: 0.25rem;
+  }
+
+  .site-logo img {
+    width: clamp(125px, 34vw, 160px);
+  }
+
+  .nav-link {
+    font-size: 14px;
+  }
+
+  .hero-content-unclickable {
+    max-width: min(88vw, 360px);
+    margin-top: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-tagline {
+    font-size: clamp(14px, 3.8vw, 17px);
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-price-badge {
+    font-size: 11px;
+    padding: 0.45em 1.2em;
+  }
+
+  /* Hide left copyright on mobile to prevent overlapping actions */
+  .footer-copyright {
+    display: none;
+  }
+
+  .site-footer {
+    padding: 1rem;
+    justify-content: flex-end;
+    z-index: 50;
+  }
+
+  .our-selection-btn {
+    height: 44px;
+    padding: 0 1.2em;
+    font-size: 13px;
+  }
+
+  .menu-toggle-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-grid {
+    padding: 1rem;
+  }
+
+  .selection-container {
+    padding: 0.75rem 0.75rem 0;
+  }
+
+  .selection-cards-grid {
+    height: clamp(360px, 63svh, 480px);
+    gap: 8px;
+  }
+
+  .selection-cards-grid {
+    height: calc(100svh - 85px);
+    max-height: 580px;
+    gap: 8px;
+  }
+
+  .hero-stage.is-docked,
+  .about-page-wrapper.is-dock-active.is-docked {
+    transform: translateY(105svh) scale(0.95) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .selection-card__panel {
+    padding: 8px 8px 10px 10px;
+  }
+
+  .selection-card__symbol {
+    width: 18px;
+    min-width: 18px;
+  }
+
+  .selection-card__title {
+    font-size: clamp(11px, 2.7vw, 12.5px);
+    letter-spacing: -0.01em;
+  }
+
+  .selection-card__desc {
+    font-size: 10.5px;
+    line-height: 1.2;
+    padding-right: 4px;
+  }
+
+  .selection-card__cover {
+    height: clamp(75px, 13svh, 95px);
   }
 }
 /* === Global Responsive Breakpoints END === */

@@ -624,14 +624,79 @@
 }
 
 @media (max-width: 900px) {
+  .about-page-wrapper.is-dock-active.is-docked {
+    transform: translateY(105svh) scale(0.95) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
   .about-header {
-    padding: 5vw;
+    padding: 1.25rem;
+  }
+
+  .about-logo img {
+    width: clamp(130px, 32vw, 190px);
+  }
+
+  .about-nav-link {
+    font-size: 14px;
   }
 
   .about-fixed-footer {
-    left: 5vw;
-    right: 5vw;
-    bottom: 5vw;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+  }
+
+  .about-scroll-hint {
+    display: none;
+  }
+
+  .about-footer-actions {
+    margin-left: auto;
+  }
+
+  .about-selection-btn {
+    height: 44px;
+    padding: 0 1.2em;
+    font-size: 13px;
+  }
+
+  .about-menu-toggle-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .about-content {
+    max-width: min(88vw, 360px);
+    width: 90%;
+  }
+
+  .about-tagline {
+    font-size: clamp(14px, 3.8vw, 17px);
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-price-badge {
+    font-size: 11px;
+    padding: 0.45em 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-header {
+    padding: 1rem;
+  }
+
+  .about-logo img {
+    width: clamp(120px, 34vw, 150px);
+  }
+
+  .about-fixed-footer {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
   }
 }
 /* === Fixed Footer Actions END === */

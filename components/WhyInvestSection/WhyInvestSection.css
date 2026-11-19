@@ -247,6 +247,31 @@
     margin-bottom: 8px !important;
   }
 }
+
+@media (max-width: 480px) {
+  .why-invest-value,
+  .why-invest-bottom-content,
+  .why-invest-section .category-pull-quote {
+    padding-inline: 1rem;
+  }
+
+  .why-invest-bottom-content h2,
+  .why-invest-section .category-pull-quote__text {
+    font-size: clamp(20px, 5.8vw, 28px);
+    line-height: 1.25;
+  }
+
+  .why-invest-bottom-content-name,
+  .why-invest-bottom-content-source,
+  .why-invest-section .category-quote__name,
+  .why-invest-section .category-quote__source,
+  .category-quote__name,
+  .category-quote__source,
+  .category-pull-quote__attrib p {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+}
 /* === Why Invest Responsive Breakpoints END === */
 
 .about-page__pillar-index {
