@@ -25,7 +25,7 @@ import { useInteractions } from "@/lib/interactions";
 // =========================================================================
 const WHY_INVEST_ITEMS: WhyInvestItem[] = [
   {
-    imageSrc: "/assets/selection/bythesea/coastal-luxury-pool-view.jpg",
+    imageSrc: "/assets/selection/bythesea/coastal-luxury-pool-view.avif",
     imageAlt: "Frontline Scarcity waterfront villa pool overlooking the bay",
     title: (
       <>
@@ -51,7 +51,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
     reverse: true,
   },
   {
-    imageSrc: "/assets/selection/bythesea/luxury-hotel-resort-4k.jpg",
+    imageSrc: "/assets/selection/bythesea/luxury-hotel-resort.avif",
     imageAlt: "Lucrative year-round rental yields in coastal destination",
     title: (
       <>
@@ -64,7 +64,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
     reverse: false,
   },
   {
-    imageSrc: "/assets/selection/bythesea/mediterranean-yachts-cove-4k.jpg",
+    imageSrc: "/assets/selection/bythesea/mediterranean-yachts-cove.avif",
     imageAlt: "Exclusive marina and yachting lifestyle",
     title: (
       <>
@@ -77,7 +77,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
     reverse: true,
   },
   {
-    imageSrc: "/assets/selection/bythesea/luxury-coastal-villa-view-4k.jpg",
+    imageSrc: "/assets/selection/bythesea/luxury-coastal-villa-view.avif",
     imageAlt: "Enduring liquidity and frontline sea view villa",
     title: (
       <>
@@ -426,7 +426,7 @@ export default function CoastalHavenPage() {
               {/* === Hero Center Visual START === */}
               <div ref={visualRef} className="about-visual-wrapper">
                 <img
-                  src="/assets/selection/bythesea/coastal-hero-cover.jpg"
+                  src="/assets/bythesea-card-cover.avif"
                   alt="Coastal Haven Luxury Waterfront Residences"
                   fetchPriority="high"
                   decoding="sync"
@@ -482,7 +482,7 @@ export default function CoastalHavenPage() {
 
             <div className="page-blog-bottom">
               <figure className="blog-img">
-                <img src="/assets/selection/bythesea/coastal-ocean-waves.jpg" alt="Coastal Haven Waterfront Living" />
+                <img src="/assets/selection/bythesea/coastal-ocean-waves.avif" alt="Coastal Haven Waterfront Living" loading="lazy" decoding="async" />
               </figure>
 
               <h2>
@@ -500,7 +500,7 @@ export default function CoastalHavenPage() {
           {/* === Background Parallax Section (1) START === */}
           <section className="background-image-parallax category-parallax">
             <div className="background-image-parallax-inner category-parallax__viewport">
-              <img src="/assets/selection/bythesea/coastal-parallax-one.jpg" alt="Panoramic Mediterranean shoreline and beachfront residences" />
+              <img src="/assets/selection/bythesea/coastal-parallax-one.avif" alt="Panoramic Mediterranean shoreline and beachfront residences" loading="lazy" decoding="async" />
             </div>
           </section>
           {/* === Background Parallax Section (1) END === */}
@@ -515,7 +515,7 @@ export default function CoastalHavenPage() {
           {/* === Background Parallax Section (2) START === */}
           <section className="background-image-parallax category-parallax">
             <div className="background-image-parallax-inner category-parallax__viewport">
-              <img src="/assets/selection/bythesea/amalfi-coast-panoramic-4k.jpg" alt="Sun-drenched coastal cliffs and azure waters" />
+              <img src="/assets/selection/bythesea/amalfi-coast-panoramic.avif" alt="Sun-drenched coastal cliffs and azure waters" loading="lazy" decoding="async" />
             </div>
           </section>
           {/* === Background Parallax Section (2) END === */}
@@ -552,12 +552,20 @@ export default function CoastalHavenPage() {
               <span className="next-category-scroll-label">Scroll</span>
             </div>
 
-            <Link href="/serene-greens" className="move-next-category-link">
+            <Link
+              href="/serene-greens"
+              className="move-next-category-link"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
               <div className="move-next-category-image">
                 <div className="move-next-category-image-wrapper">
                   <img
-                    src="/assets/evergreen-card-cover.avif"
+                    src="/assets/selection/evergreen/evergreen-big-image.avif"
                     alt="Serene Greens"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="move-next-category-overlay" />
                 </div>

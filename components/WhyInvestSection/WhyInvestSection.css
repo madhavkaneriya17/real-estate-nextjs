@@ -28,6 +28,8 @@
   margin: 0;
   overflow: hidden;
   aspect-ratio: 708 / 908;
+  position: relative;
+  contain: paint;
 }
 
 .why-invest-image img {
@@ -36,6 +38,9 @@
   height: 100%;
   object-fit: cover;
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .why-invest-content {
@@ -79,8 +84,8 @@
   color: var(--category-color, var(--about-bg, #2D1C2D));
   font-family: "Google Sans", Arial, Helvetica, sans-serif;
   font-weight: 500;
-  font-size: calc(3.646vw * calc(1 * min(1, calc(100svh / 950px))));
-  line-height: 0.92;
+  font-size: clamp(26px, 3.646vw, 42px);
+  line-height: 0.95;
   letter-spacing: -0.05em;
 }
 
@@ -88,8 +93,8 @@
   margin: calc(3vw * calc(1 * min(1, calc(100svh / 950px)))) 0 0;
   color: var(--category-color-muted, #6B5A6B);
   font-family: "Google Sans", Arial, Helvetica, sans-serif;
-  font-size: calc(1.2vw * calc(1 * min(1, calc(100svh / 950px))));
-  line-height: 1.35;
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.45;
   letter-spacing: -0.01em;
 }
 /* === Why Invest Grid Section END === */
@@ -110,8 +115,8 @@
   margin: 0;
   color: var(--category-color, var(--about-bg, #2D1C2D));
   font-family: "Google Sans", Arial, Helvetica, sans-serif;
-  font-size: calc(3.646vw * calc(1 * min(1, calc(100svh / 950px))));
-  line-height: 1;
+  font-size: clamp(22px, 3.646vw, 44px);
+  line-height: 1.15;
   letter-spacing: -0.02em;
   font-weight: 500;
   text-align: left;
@@ -133,36 +138,55 @@
 }
 
 .why-invest-bottom-content-name,
-.why-invest-section .category-quote__name {
+.why-invest-section .category-quote__name,
+.category-quote__name {
   margin: 0;
   color: var(--category-color, var(--about-bg, #2D1C2D));
   font-family: "Google Sans", Arial, Helvetica, sans-serif;
-  font-size: calc(1.2vw * calc(1 * min(1, calc(100svh / 950px))));
+  font-size: clamp(14px, 1.2vw, 17px);
   font-weight: 500;
   text-align: left;
 }
 
 .why-invest-bottom-content-source,
-.why-invest-section .category-quote__source {
+.why-invest-section .category-quote__source,
+.category-quote__source {
   margin: 0;
   color: var(--category-color-muted, #6B5A6B);
   font-family: "Google Sans", Arial, Helvetica, sans-serif;
-  font-size: calc(1.2vw * calc(1 * min(1, calc(100svh / 950px))));
+  font-size: clamp(13px, 1.15vw, 16px);
   text-align: left;
 }
 /* === Why Invest Pull Quote Section END === */
 
 /* === Why Invest Responsive Breakpoints START === */
 @media (max-width: 900px) {
+  .why-invest-section {
+    padding-block: clamp(48px, 12vw, 80px);
+    gap: clamp(40px, 10vw, 72px);
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .why-invest-value {
+    gap: clamp(36px, 9vw, 64px);
+    padding-inline: 1.25rem;
+  }
+
   .why-invest-row {
     grid-template-columns: 1fr;
-    row-gap: 32px;
+    row-gap: 20px;
   }
 
   .why-invest-image,
   .why-invest-row--reverse .why-invest-image {
     grid-column: 1 / -1;
     order: 1;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: 280px;
+    border-radius: 4px;
   }
 
   .why-invest-content,
@@ -172,19 +196,21 @@
   }
 
   .why-invest-content-title {
-    font-size: 32px;
+    font-size: clamp(26px, 7vw, 36px);
+    line-height: 1.05;
   }
 
   .why-invest-content-text {
-    font-size: 16px;
-    margin-top: 16px;
+    font-size: clamp(15px, 3.8vw, 17px);
+    line-height: 1.45;
+    margin-top: 12px;
   }
 
   .why-invest-bottom-content,
   .why-invest-section .category-pull-quote {
     grid-template-columns: 1fr;
-    padding-inline: 20px;
-    row-gap: 20px;
+    padding-inline: 1.25rem;
+    row-gap: 16px;
   }
 
   .why-invest-bottom-content h2,
@@ -196,8 +222,8 @@
 
   .why-invest-bottom-content h2,
   .why-invest-section .category-pull-quote__text {
-    font-size: 26px;
-    line-height: 1.15;
+    font-size: clamp(24px, 6.2vw, 34px);
+    line-height: 1.2;
   }
 
   .why-invest-bottom-quote-mark,
@@ -206,8 +232,19 @@
   }
 
   .why-invest-bottom-content-name,
-  .why-invest-bottom-content-source {
-    font-size: 14px;
+  .why-invest-bottom-content-source,
+  .why-invest-section .category-quote__name,
+  .why-invest-section .category-quote__source,
+  .category-quote__name,
+  .category-quote__source,
+  .category-pull-quote__attrib p {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  .about-page__pillar-index {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
   }
 }
 /* === Why Invest Responsive Breakpoints END === */

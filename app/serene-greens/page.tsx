@@ -425,7 +425,7 @@ export default function SereneGreensPage() {
               {/* === Hero Center Visual START === */}
               <div ref={visualRef} className="about-visual-wrapper">
                 <img
-                  src="/assets/selection/evergreen/slider/ever-14_converted.avif"
+                  src="/assets/selection/evergreen/evergreen-big-image.avif"
                   alt="Serene Greens Golf Resort and Forest Oasis"
                   fetchPriority="high"
                   decoding="sync"
@@ -551,7 +551,13 @@ export default function SereneGreensPage() {
               <span className="next-category-scroll-label">Scroll</span>
             </div>
 
-            <Link href="/urban-luxe" className="move-next-category-link">
+            <Link
+              href="/urban-luxe"
+              className="move-next-category-link"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
               <div className="move-next-category-image">
                 <div className="move-next-category-image-wrapper">
                   <img

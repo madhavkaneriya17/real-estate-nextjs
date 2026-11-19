@@ -65,8 +65,8 @@
   max-width: calc(25.013vw * calc(1 * min(1, calc(100svh / 950px))));
   color: var(--gallery-subtext, #6b5a6b);
   font-family: var(--sans-font, sans-serif);
-  font-size: calc(1.2vw * calc(1 * min(1, calc(100svh / 950px))));
-  line-height: 1.35;
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 1.45;
   letter-spacing: -0.01em;
   text-align: center;
   margin: 0px;
@@ -197,41 +197,56 @@
 
 @media (max-width: 900px) {
   .category-gallery {
-    padding-top: 10vw;
-    padding-bottom: 10vw;
+    padding-top: clamp(48px, 10vw, 80px);
+    padding-bottom: clamp(48px, 10vw, 80px);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .category-gallery-intro {
+    padding-inline: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .category-gallery-intro__line {
+    height: 28px;
   }
 
   .category-gallery-intro h2 {
-    font-size: clamp(32px, 8vw, 56px);
-    max-width: 88vw;
+    font-size: clamp(30px, 7.5vw, 48px);
+    max-width: min(90vw, 520px);
+    line-height: 1.05;
   }
 
   .category-gallery-intro p {
-    font-size: clamp(14px, 3.5vw, 18px);
-    max-width: 82vw;
+    font-size: clamp(14px, 3.8vw, 16px);
+    max-width: min(88vw, 420px);
+    line-height: 1.45;
   }
 }
 
 @media (max-width: 650px) {
   :root {
-    --projects-slide-width: 82vw;
+    --projects-slide-width: 84vw;
     --projects-slide-height: 56vw;
-    --slider-gap: 6vw;
-    --slider-tilt: -4deg;
-    --item-counter-tilt: 4deg;
-    --projects-slider-arrow-size: 46px;
+    --slider-gap: 5vw;
+    --slider-tilt: -3deg;
+    --item-counter-tilt: 3deg;
+    --projects-slider-arrow-size: 44px;
   }
 
   .projects-slider {
-    padding-top: 6vw;
-    padding-bottom: 5rem;
+    padding-top: 4vw;
+    padding-bottom: 4.5rem;
+    width: 100%;
+    max-width: 100%;
   }
 
   .projects-slider-nav {
     right: 50%;
     transform: translateX(50%);
-    bottom: 1.25rem;
-    gap: 1.25rem;
+    bottom: 1rem;
+    gap: 1rem;
   }
 }
 /* === Category Gallery Responsive Breakpoints END === */

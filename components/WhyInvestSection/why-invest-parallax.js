@@ -20,7 +20,18 @@ export function initWhyInvestParallax(container) {
 
   const travelY = 8;
   const scaleVal = 1.12;
-  const scrubLag = 0.3;
+  const scrubLag = 0.25;
+
+  const loadListeners = [];
+  let refreshTimer = null;
+
+  const requestDebouncedRefresh = () => {
+    if (refreshTimer) return;
+    refreshTimer = requestAnimationFrame(() => {
+      refreshTimer = null;
+      ScrollTrigger.refresh();
+    });
+  };
 
   const ctx = gsap.context(() => {
     figures.forEach((fig, idx) => {
@@ -34,37 +45,40 @@ export function initWhyInvestParallax(container) {
         transformOrigin: "center center",
       });
 
-      gsap.fromTo(
-        img,
-        {
-          yPercent: -travelY,
-          scale: scaleVal,
+      gsap.to(img, {
+        yPercent: travelY,
+        ease: "none",
+        immediateRender: false,
+        scrollTrigger: {
+          id: `why-invest-parallax-${idx}`,
+          trigger: fig,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: scrubLag,
+          invalidateOnRefresh: false,
+          fastScrollEnd: true,
         },
-        {
-          yPercent: travelY,
-          scale: scaleVal,
-          ease: "none",
-          immediateRender: false,
-          scrollTrigger: {
-            id: `why-invest-parallax-${idx}`,
-            trigger: fig,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: scrubLag,
-            invalidateOnRefresh: true,
-          },
-        }
-      );
+      });
 
-      const onImgLoad = () => {
-        ScrollTrigger.refresh();
-      };
       if (!img.complete) {
+        const onImgLoad = () => {
+          requestDebouncedRefresh();
+        };
         img.addEventListener("load", onImgLoad, { once: true });
+        loadListeners.push({ img, handler: onImgLoad });
       }
     });
   }, root);
 
-  return () => ctx.revert();
+  return () => {
+    if (refreshTimer) {
+      cancelAnimationFrame(refreshTimer);
+      refreshTimer = null;
+    }
+    loadListeners.forEach(({ img, handler }) => {
+      img.removeEventListener("load", handler);
+    });
+    ctx.revert();
+  };
 }
 /* === Why Invest Parallax Animation END === */

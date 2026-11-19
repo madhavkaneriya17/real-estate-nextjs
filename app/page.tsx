@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useInteractions } from "../lib/interactions";
 import gsap from "gsap";
 import NavigationMenu from "@/components/NavigationMenu";
+import { animatePriceBadgeBorder } from "@/lib/category-transitions";
 
 export default function Home() {
   const {
@@ -45,6 +46,10 @@ export default function Home() {
           { opacity: 0, y: 25 },
           { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", delay: 0.35 }
         );
+        const badge = heroContentRef.current?.querySelector(".hero-price-badge");
+        if (badge) {
+          animatePriceBadgeBorder(badge, { delay: 0.5 });
+        }
       });
     };
 

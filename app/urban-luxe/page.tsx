@@ -471,7 +471,13 @@ export default function UrbanLuxePage() {
               <span className="next-category-scroll-label">Scroll</span>
             </div>
 
-            <Link href="/limited-edition" className="move-next-category-link">
+            <Link
+              href="/limited-edition"
+              className="move-next-category-link"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
               <div className="move-next-category-image">
                 <div className="move-next-category-image-wrapper">
                   <img

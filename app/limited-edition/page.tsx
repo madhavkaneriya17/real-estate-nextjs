@@ -553,7 +553,13 @@ export default function LimitedEditionPage() {
               <span className="next-category-scroll-label">Scroll</span>
             </div>
 
-            <Link href="/coastal-haven" className="move-next-category-link">
+            <Link
+              href="/coastal-haven"
+              className="move-next-category-link"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
               <div className="move-next-category-image">
                 <div className="move-next-category-image-wrapper">
                   <img

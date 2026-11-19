@@ -295,13 +295,23 @@ export default function WhyInvestSection({
                   <p className="why-invest-content-text">{item.text}</p>
                 </div>
                 <figure className="why-invest-image">
-                  <img src={item.imageSrc} alt={item.imageAlt || ""} />
+                  <img
+                    src={item.imageSrc}
+                    alt={item.imageAlt || ""}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </figure>
               </>
             ) : (
               <>
                 <figure className="why-invest-image">
-                  <img src={item.imageSrc} alt={item.imageAlt || ""} />
+                  <img
+                    src={item.imageSrc}
+                    alt={item.imageAlt || ""}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </figure>
                 <div className="why-invest-content">
                   {item.index && <p className="about-page__pillar-index">{item.index}</p>}

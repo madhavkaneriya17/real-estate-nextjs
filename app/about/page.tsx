@@ -139,106 +139,115 @@ export default function AboutPage() {
     };
   }, []);
 
-  // Scroll Expand Video Animation
+  // Scroll Expand Video Animation (Desktop Only: > 900px)
   useEffect(() => {
     const stageEl = videoStageRef.current;
     const anchorEl = videoAnchorRef.current;
     const visualEl = videoVisualRef.current;
     if (!stageEl || !anchorEl || !visualEl) return;
 
-    let isExpanded = false;
+    const mm = gsap.matchMedia();
 
-    const cleanupActiveStyles = () => {
-      visualEl.classList.remove("about-video-visual--active");
-      gsap.set(visualEl, {
-        clearProps:
-          "position,top,left,right,bottom,width,height,margin,zIndex,aspectRatio,maxWidth,maxHeight,overflow,clipPath,borderRadius,boxShadow",
-      });
-      isExpanded = false;
-    };
+    // Only enable scroll expansion on desktop screens (> 900px)
+    mm.add("(min-width: 901px)", () => {
+      let isExpanded = false;
 
-    const applyProgress = (progress: number) => {
-      const Z = Math.max(0, Math.min(1, progress));
+      const cleanupActiveStyles = () => {
+        visualEl.classList.remove("about-video-visual--active");
+        gsap.set(visualEl, {
+          clearProps:
+            "position,top,left,right,bottom,width,height,margin,zIndex,aspectRatio,maxWidth,maxHeight,overflow,clipPath,borderRadius,boxShadow",
+        });
+        isExpanded = false;
+      };
 
-      if (Z <= 0) {
-        if (visualEl.classList.contains("about-video-visual--active")) {
-          cleanupActiveStyles();
+      const applyProgress = (progress: number) => {
+        const Z = Math.max(0, Math.min(1, progress));
+
+        if (Z <= 0) {
+          if (visualEl.classList.contains("about-video-visual--active")) {
+            cleanupActiveStyles();
+          }
+          return;
         }
-        return;
-      }
 
-      const vw = window.visualViewport?.width || window.innerWidth;
-      const vh = window.visualViewport?.height || window.innerHeight;
-      const stageRect = stageEl.getBoundingClientRect();
-      const anchorRect = anchorEl.getBoundingClientRect();
+        const vw = window.visualViewport?.width || window.innerWidth;
+        const vh = window.visualViewport?.height || window.innerHeight;
+        const stageRect = stageEl.getBoundingClientRect();
+        const anchorRect = anchorEl.getBoundingClientRect();
 
-      // Static start metrics in viewport coordinates at start: "bottom bottom"
-      // At start, anchor bottom touches viewport bottom, so top is:
-      const startViewportTop = vh - anchorRect.height;
-      const startViewportLeft = anchorRect.left;
-      const startWidth = anchorRect.width;
-      const startHeight = anchorRect.height;
+        // Static start metrics in viewport coordinates at start: "bottom bottom"
+        // At start, anchor bottom touches viewport bottom, so top is:
+        const startViewportTop = vh - anchorRect.height;
+        const startViewportLeft = anchorRect.left;
+        const startWidth = anchorRect.width;
+        const startHeight = anchorRect.height;
 
-      const Q = Z;
-      const Ne = 1 - (1 - Q) * (1 - Q); // Ease-out quadratic
+        const Q = Z;
+        const Ne = 1 - (1 - Q) * (1 - Q); // Ease-out quadratic
 
-      const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+        const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-      let targetTop: number;
-      if (Z >= 1) {
-        // Pinned to the bottom of stageEl so it scrolls away naturally with stageEl
-        targetTop = stageEl.offsetHeight - vh;
-      } else {
-        // Relative to stageEl: desired viewport top - stageRect.top
-        targetTop = lerp(startViewportTop, 0, Ne) - stageRect.top;
-      }
+        let targetTop: number;
+        if (Z >= 1) {
+          // Pinned to the bottom of stageEl so it scrolls away naturally with stageEl
+          targetTop = stageEl.offsetHeight - vh;
+        } else {
+          // Relative to stageEl: desired viewport top - stageRect.top
+          targetTop = lerp(startViewportTop, 0, Ne) - stageRect.top;
+        }
 
-      const targetLeft = lerp(startViewportLeft, 0, Ne) - stageRect.left;
-      const targetWidth = lerp(startWidth, vw, Q);
-      const targetHeight = lerp(startHeight, vh, Q);
-      const targetRadius = lerp(4, 0, Q);
+        const targetLeft = lerp(startViewportLeft, 0, Ne) - stageRect.left;
+        const targetWidth = lerp(startWidth, vw, Q);
+        const targetHeight = lerp(startHeight, vh, Q);
+        const targetRadius = lerp(4, 0, Q);
 
-      gsap.set(visualEl, {
-        position: "absolute",
-        top: targetTop,
-        left: targetLeft,
-        width: targetWidth,
-        height: targetHeight,
-        borderRadius: `${targetRadius}px`,
-        margin: 0,
-        zIndex: 50,
-        aspectRatio: "unset",
-        maxWidth: "none",
-        maxHeight: "none",
-        overflow: "hidden",
-        boxShadow: "none",
+        gsap.set(visualEl, {
+          position: "absolute",
+          top: targetTop,
+          left: targetLeft,
+          width: targetWidth,
+          height: targetHeight,
+          borderRadius: `${targetRadius}px`,
+          margin: 0,
+          zIndex: 50,
+          aspectRatio: "unset",
+          maxWidth: "none",
+          maxHeight: "none",
+          overflow: "hidden",
+          boxShadow: "none",
+        });
+
+        if (!isExpanded) {
+          visualEl.classList.add("about-video-visual--active");
+          isExpanded = true;
+        }
+      };
+
+      const st = ScrollTrigger.create({
+        id: "about-video-scroll-expand",
+        trigger: anchorEl,
+        start: "bottom bottom",
+        endTrigger: stageEl,
+        end: "bottom bottom",
+        scrub: true,
+        invalidateOnRefresh: true,
+        onRefresh: (self) => {
+          applyProgress(self.progress);
+        },
+        onUpdate: (self) => {
+          applyProgress(self.progress);
+        },
       });
 
-      if (!isExpanded) {
-        visualEl.classList.add("about-video-visual--active");
-        isExpanded = true;
-      }
-    };
-
-    const st = ScrollTrigger.create({
-      id: "about-video-scroll-expand",
-      trigger: anchorEl,
-      start: "bottom bottom",
-      endTrigger: stageEl,
-      end: "bottom bottom",
-      scrub: true,
-      invalidateOnRefresh: true,
-      onRefresh: (self) => {
-        applyProgress(self.progress);
-      },
-      onUpdate: (self) => {
-        applyProgress(self.progress);
-      },
+      return () => {
+        st.kill();
+        cleanupActiveStyles();
+      };
     });
 
     return () => {
-      st.kill();
-      cleanupActiveStyles();
+      mm.revert();
     };
   }, []);
 
@@ -272,7 +281,6 @@ export default function AboutPage() {
       ref={containerRef}
       className="about-viewport-root"
       style={{
-        backgroundColor: "#0E152E",
         ...(isDockActive ? { minHeight: `${pageHeight}px` } : {}),
       }}
     >
@@ -708,11 +716,17 @@ export default function AboutPage() {
           <span className="next-category-scroll-label">Scroll</span>
         </div>
 
-        <Link href="/coastal-haven" className="move-next-category-link">
+        <Link
+          href="/coastal-haven"
+          className="move-next-category-link"
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
           <div className="move-next-category-image">
             <div className="move-next-category-image-wrapper">
               <img
-                src="/assets/selection/bythesea/bythesea-cover.avif"
+                src="/assets/bythesea-card-cover.avif"
                 alt="Coastal Haven"
               />
               <div className="move-next-category-overlay" />
