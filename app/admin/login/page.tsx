@@ -22,9 +22,18 @@ export default function AdminLoginPage() {
         body: JSON.stringify({ password }),
       });
 
-      const data = await res.json();
+      const rawText = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        // If server returns HTML (e.g. 502/404 during Netlify deploy)
+      }
+
       if (!res.ok) {
-        throw new Error(data.error || "Authentication failed");
+        throw new Error(
+          data?.error || `Authentication failed (${res.status}): Please check credentials.`
+        );
       }
 
       router.push("/admin");
@@ -71,7 +80,7 @@ export default function AdminLoginPage() {
               id="password"
               type="password"
               className="admin-input"
-              placeholder="Default: admin123"
+              placeholder="admin123 or Madhav@123"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -96,7 +105,7 @@ export default function AdminLoginPage() {
             color: "var(--adm-text-dim)",
           }}
         >
-          Default PIN/Password: <strong style={{ color: "var(--adm-accent)" }}>admin123</strong>
+          Default PIN/Password: <strong style={{ color: "var(--adm-accent)" }}>admin123</strong> or <strong style={{ color: "var(--adm-accent)" }}>Madhav@123</strong>
         </p>
       </div>
     </div>
