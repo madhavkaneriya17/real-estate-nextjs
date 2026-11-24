@@ -764,16 +764,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: calc(63vw* calc(1* min(1, calc(100svh/950px))));
+  max-width: min(90vw, 84vw);
   text-align: center;
-  gap: calc(4.282vw* calc(1* min(1, calc(100svh/950px))));
-  padding-inline: calc(4.5vw * calc(1* min(1, calc(100svh/950px))));
+  gap: calc(4.282vw * calc(1 * min(1, calc(100svh / 950px))));
+  padding-inline: calc(4.5vw * calc(1 * min(1, calc(100svh / 950px))));
   margin-inline: auto;
 }
 
 .blog-img {
-  width: calc(12.674vw * calc(1* min(1, calc(100svh/950px))));
-  height: calc(12.674vw* calc(1* min(1, calc(100svh/950px))));
+  width: calc(12.674vw * calc(1 * min(1, calc(100svh / 950px))));
+  height: calc(12.674vw * calc(1 * min(1, calc(100svh / 950px))));
+  min-width: 90px;
+  min-height: 90px;
+  max-width: 170px;
+  max-height: 170px;
   flex-shrink: 0;
   margin: 0px;
 }
@@ -789,10 +793,11 @@
   width: 100%;
   color: var(--about-bg);
   font-family: var(--display-font);
-  font-size: clamp(28px, 5.2vw, 52px);
+  font-size: clamp(42px, 5.2vw, 100px);
   line-height: .94;
   font-weight: 200;
-  font-feature-settings: "ss01";
+  letter-spacing: -.03em;
+  font-feature-settings: "ss01" on;
   text-align: center;
   margin: 0px;
   overflow: visible;
@@ -802,10 +807,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .blog-bottom-line p {
   color: var(--about-bg);
+  font-family: var(--sans-font);
+  font-size: clamp(14px, 1.15vw, 17px);
+  line-height: 1.45;
+  margin: 0;
 }
 
 .blog-bottom-line-2 {
@@ -963,18 +974,20 @@
 
 .cta-inner h2 {
   margin: 0;
-  max-width: min(90vw, 560px);
+  max-width: min(90vw, 9em);
   color: inherit;
+  font-family: var(--display-font);
   font-weight: 200;
   font-feature-settings: "ss01" on;
-  font-size: clamp(28px, 5.2vw, 52px);
+  font-size: clamp(42px, 5.2vw, 100px);
   line-height: .94;
+  letter-spacing: -.03em;
 }
 
 .cta-link {
   margin-top: calc(4.282vw * calc(1 * min(1, calc(100svh / 950px))));
   color: var(--about-text);
-  font-size: clamp(15px, 1.5vw, 18px);
+  font-size: clamp(16px, 1.5vw, 22px);
   line-height: 1.3;
 }
 

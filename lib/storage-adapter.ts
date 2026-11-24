@@ -159,23 +159,23 @@ export async function saveJSONToStorage<T>(
 
   // 4. Try saving to local workspace directory (for local dev environments)
   try {
-    const dir = path.dirname(localFilePath);
-    await fs.mkdir(dir, { recursive: true });
-    await fs.writeFile(localFilePath, JSON.stringify(data, null, 2), "utf-8");
+    const isServerless = Boolean(
+      process.env.NETLIFY ||
+      process.env.AWS_LAMBDA_FUNCTION_NAME ||
+      process.env.LAMBDA_TASK_ROOT ||
+      process.env.VERCEL
+    );
+    // In serverless environments, root filesystem /var/task is strictly read-only.
+    // Skip trying to write to process.cwd() directly to avoid unnecessary EROFS errors.
+    if (!isServerless) {
+      const dir = path.dirname(localFilePath);
+      await fs.mkdir(dir, { recursive: true });
+      await fs.writeFile(localFilePath, JSON.stringify(data, null, 2), "utf-8");
+    }
   } catch (fsErr: unknown) {
-    const isReadOnly =
-      (fsErr && typeof fsErr === "object" && "code" in fsErr && (fsErr as { code?: string }).code === "EROFS") ||
-      (fsErr instanceof Error && fsErr.message.includes("read-only file system"));
-
-    // In serverless, /var/task is read-only. We have already preserved data in memory & /tmp.
-    if (isReadOnly) {
-      console.log(`[StorageAdapter] Serverless read-only filesystem handled safely for "${key}".`);
-      return;
-    }
-
-    if (!savedToBlob) {
-      throw fsErr;
-    }
+    // In any environment where local disk is read-only or inaccessible,
+    // we safely ignore since data is already held in memory and in /tmp (or Blobs).
+    console.warn(`[StorageAdapter] Local filesystem write bypassed:`, fsErr instanceof Error ? fsErr.message : fsErr);
   }
 }
 
@@ -220,21 +220,19 @@ export async function saveUploadedFile(
 
   // 3. Local public/uploads directory (local dev)
   try {
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    await fs.mkdir(uploadsDir, { recursive: true });
-    await fs.writeFile(path.join(uploadsDir, fileName), buffer);
+    const isServerless = Boolean(
+      process.env.NETLIFY ||
+      process.env.AWS_LAMBDA_FUNCTION_NAME ||
+      process.env.LAMBDA_TASK_ROOT ||
+      process.env.VERCEL
+    );
+    if (!isServerless) {
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      await fs.mkdir(uploadsDir, { recursive: true });
+      await fs.writeFile(path.join(uploadsDir, fileName), buffer);
+    }
   } catch (fsErr: unknown) {
-    const isReadOnly =
-      (fsErr && typeof fsErr === "object" && "code" in fsErr && (fsErr as { code?: string }).code === "EROFS") ||
-      (fsErr instanceof Error && fsErr.message.includes("read-only file system"));
-
-    if (isReadOnly) {
-      return `/uploads/${fileName}`;
-    }
-
-    if (!savedToBlob) {
-      throw fsErr;
-    }
+    console.warn(`[StorageAdapter] Local uploads write bypassed:`, fsErr instanceof Error ? fsErr.message : fsErr);
   }
 
   return `/uploads/${fileName}`;

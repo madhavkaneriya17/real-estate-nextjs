@@ -115,8 +115,8 @@
   margin: 0;
   color: var(--category-color, var(--about-bg, #2D1C2D));
   font-family: "Google Sans", Arial, Helvetica, sans-serif;
-  font-size: clamp(22px, 3.646vw, 44px);
-  line-height: 1.15;
+  font-size: clamp(26px, 3.646vw, 56px);
+  line-height: 1.08;
   letter-spacing: -0.02em;
   font-weight: 500;
   text-align: left;
