@@ -451,34 +451,40 @@
 /* Toast Notification */
 .admin-toast {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #1a2332;
-  border: 1px solid var(--adm-card-border);
+  top: 24px;
+  right: 24px;
+  bottom: auto;
+  left: auto;
+  background: #141b27;
+  border: 1px solid rgba(197, 168, 128, 0.4);
   color: #ffffff;
-  padding: 14px 22px;
+  padding: 16px 24px;
   border-radius: var(--adm-radius-sm);
   display: flex;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  z-index: 200;
-  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  font-size: 13.5px;
+  gap: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+  z-index: 99999999 !important;
+  animation: slideDownToast 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-size: 14px;
+  max-width: min(560px, calc(100vw - 48px));
+  word-break: break-word;
 }
 
 .admin-toast--success {
-  border-left: 4px solid var(--adm-green);
+  border-left: 5px solid var(--adm-green);
+  box-shadow: 0 16px 48px rgba(16, 185, 129, 0.25);
 }
 
 .admin-toast--error {
-  border-left: 4px solid var(--adm-red);
+  border-left: 5px solid var(--adm-red);
+  box-shadow: 0 16px 48px rgba(239, 68, 68, 0.3);
 }
 
-@keyframes slideUp {
+@keyframes slideDownToast {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;

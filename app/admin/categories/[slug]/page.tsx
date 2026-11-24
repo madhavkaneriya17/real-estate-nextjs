@@ -221,8 +221,17 @@ export default function AdminCategoryDetailPage({
         body: JSON.stringify({ slug, category }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Save failed");
+      const rawText = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        // Non-JSON response
+      }
+
+      if (!res.ok) {
+        throw new Error(data?.error || `Save failed (${res.status}): ${rawText.slice(0, 100)}`);
+      }
 
       showToast(`Saved! Changes for ${category.name} are live on your site!`);
     } catch (err: unknown) {

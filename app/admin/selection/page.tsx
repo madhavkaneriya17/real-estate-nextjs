@@ -68,8 +68,17 @@ export default function AdminSelectionPage() {
         body: JSON.stringify(content),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Save failed");
+      const rawText = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        // Non-JSON response
+      }
+
+      if (!res.ok) {
+        throw new Error(data?.error || `Save failed (${res.status}): ${rawText.slice(0, 100)}`);
+      }
 
       showToast("Selection cards saved successfully!");
     } catch (err: unknown) {
