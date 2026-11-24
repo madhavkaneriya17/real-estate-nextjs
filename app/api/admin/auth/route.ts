@@ -42,9 +42,8 @@ export async function GET() {
     }
 
     return NextResponse.json({ authenticated: false });
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Error checking auth";
-    return NextResponse.json({ authenticated: false, error: message }, { status: 200 });
+  } catch {
+    return NextResponse.json({ authenticated: false }, { status: 200 });
   }
 }
 
@@ -53,30 +52,43 @@ export async function POST(request: NextRequest) {
     const body = await request.json().catch(() => ({}));
     const { password } = body;
 
-    const storedPassword = await getStoredPassword();
+    if (!password) {
+      return NextResponse.json({ error: "Password is required" }, { status: 400 });
+    }
 
-    // Accept stored password, or fallback defaults admin123 / Madhav@123
-    const isMatch =
-      Boolean(password) &&
-      (password === storedPassword ||
-        password === "admin123" ||
-        password === "Madhav@123");
+    // Fast-path instant match for standard passwords (zero storage wait, zero timeout risk)
+    const isDirectMatch = password === "admin123" || password === "Madhav@123";
 
-    if (!isMatch) {
+    let isValid = isDirectMatch;
+    if (!isValid) {
+      try {
+        const storedPassword = await getStoredPassword();
+        isValid = password === storedPassword;
+      } catch {
+        // Fallback check
+        isValid = false;
+      }
+    }
+
+    if (!isValid) {
       return NextResponse.json({ error: "Invalid password. Use admin123 or Madhav@123" }, { status: 401 });
     }
 
     const response = NextResponse.json({ success: true, message: "Logged in successfully" });
 
-    // Set auth cookie
-    const cookieStore = await cookies();
-    cookieStore.set(AUTH_COOKIE_NAME, "authenticated", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      path: "/",
-    });
+    // Set cookie on response and on cookieStore
+    try {
+      const cookieStore = await cookies();
+      cookieStore.set(AUTH_COOKIE_NAME, "authenticated", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: "/",
+      });
+    } catch {
+      // In case cookies() store is locked
+    }
 
     response.cookies.set(AUTH_COOKIE_NAME, "authenticated", {
       httpOnly: true,

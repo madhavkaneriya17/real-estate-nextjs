@@ -11,9 +11,34 @@ const memoryJSON = new Map<string, unknown>();
 const memoryUploads = new Map<string, { data: Buffer; contentType: string }>();
 
 /**
+ * Checks whether Netlify Blobs is explicitly configured on this site.
+ * This prevents hanging network requests that cause 504 Gateway Timeouts.
+ */
+function isBlobsConfigured(): boolean {
+  return Boolean(
+    process.env.NETLIFY_BLOBS_CONTEXT ||
+    (process.env.NETLIFY_SITE_ID &&
+      (process.env.NETLIFY_API_TOKEN ||
+        process.env.NETLIFY_AUTH_TOKEN ||
+        process.env.NETLIFY_TOKEN ||
+        process.env.NETLIFY_ACCESS_TOKEN))
+  );
+}
+
+/**
+ * Wraps any promise with a strict timeout to ensure serverless functions never hang.
+ */
+function withTimeout<T>(promise: Promise<T>, ms = 1500): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`Storage timeout after ${ms}ms`)), ms)
+    ),
+  ]);
+}
+
+/**
  * Returns a Netlify Blobs store.
- * Supports explicit credentials (NETLIFY_SITE_ID & NETLIFY_API_TOKEN)
- * as well as standard automatic context injection.
  */
 function getBlobStore(storeName: string) {
   const siteID =
@@ -40,28 +65,30 @@ function getTmpPath(subdir: string, filename: string): string {
 }
 
 /**
- * Reads JSON data from Memory -> Netlify Blobs -> /tmp file -> local bundled file.
+ * Reads JSON data: Memory -> Netlify Blobs (if configured) -> /tmp -> local file.
  */
 export async function getJSONFromStorage<T>(
   key: string,
   localFilePath: string,
   defaultData: T
 ): Promise<T> {
-  // 1. Check in-memory instance cache first
+  // 1. Check in-memory instance cache first (instant)
   if (memoryJSON.has(key)) {
     return memoryJSON.get(key) as T;
   }
 
-  // 2. Try reading from Netlify Blobs
-  try {
-    const store = getBlobStore(STORE_CONTENT);
-    const data = await store.get(key, { type: "json" });
-    if (data !== null && data !== undefined) {
-      memoryJSON.set(key, data);
-      return data as T;
+  // 2. Try reading from Netlify Blobs ONLY if configured (with 1.5s timeout protection)
+  if (isBlobsConfigured()) {
+    try {
+      const store = getBlobStore(STORE_CONTENT);
+      const data = await withTimeout(store.get(key, { type: "json" }), 1500);
+      if (data !== null && data !== undefined) {
+        memoryJSON.set(key, data);
+        return data as T;
+      }
+    } catch {
+      // Blobs error or timeout, continue to fallbacks
     }
-  } catch (blobErr) {
-    // Blobs not available or credentials missing
   }
 
   // 3. Try reading from /tmp directory (writable scratch space in serverless)
@@ -81,12 +108,14 @@ export async function getJSONFromStorage<T>(
     const parsed = JSON.parse(raw) as T;
     memoryJSON.set(key, parsed);
 
-    // Seed Blobs if available
-    try {
-      const store = getBlobStore(STORE_CONTENT);
-      await store.setJSON(key, parsed);
-    } catch {
-      // Ignore if Blobs isn't configured yet
+    // Seed Blobs in background if available
+    if (isBlobsConfigured()) {
+      try {
+        const store = getBlobStore(STORE_CONTENT);
+        withTimeout(store.setJSON(key, parsed), 1500).catch(() => {});
+      } catch {
+        // Ignore
+      }
     }
 
     return parsed;
@@ -96,26 +125,27 @@ export async function getJSONFromStorage<T>(
 }
 
 /**
- * Saves JSON data to Memory -> Netlify Blobs -> /tmp -> local file system.
- * Handles read-only filesystems (EROFS on Netlify / AWS Lambda) gracefully without throwing errors.
+ * Saves JSON data: Memory -> Netlify Blobs (if configured) -> /tmp -> local file.
  */
 export async function saveJSONToStorage<T>(
   key: string,
   localFilePath: string,
   data: T
 ): Promise<void> {
-  // 1. Immediately store in memory
+  // 1. Immediately store in memory (instant)
   memoryJSON.set(key, data);
 
   let savedToBlob = false;
 
-  // 2. Try saving to Netlify Blobs (primary persistent cloud store)
-  try {
-    const store = getBlobStore(STORE_CONTENT);
-    await store.setJSON(key, data);
-    savedToBlob = true;
-  } catch (blobErr) {
-    console.warn(`[StorageAdapter] Netlify Blobs save skipped for "${key}":`, blobErr instanceof Error ? blobErr.message : blobErr);
+  // 2. Try saving to Netlify Blobs (with timeout protection)
+  if (isBlobsConfigured()) {
+    try {
+      const store = getBlobStore(STORE_CONTENT);
+      await withTimeout(store.setJSON(key, data), 2000);
+      savedToBlob = true;
+    } catch (blobErr) {
+      console.warn(`[StorageAdapter] Blobs save skipped for "${key}":`, blobErr instanceof Error ? blobErr.message : blobErr);
+    }
   }
 
   // 3. Save to /tmp directory (always writable on Netlify Functions / Lambda)
@@ -143,7 +173,6 @@ export async function saveJSONToStorage<T>(
       return;
     }
 
-    // If local write fails with a non-EROFS error and blobs failed too, rethrow
     if (!savedToBlob) {
       throw fsErr;
     }
@@ -164,15 +193,20 @@ export async function saveUploadedFile(
   let savedToBlob = false;
 
   // 1. Netlify Blobs
-  try {
-    const store = getBlobStore(STORE_UPLOADS);
-    const blob = new Blob([new Uint8Array(buffer)], { type: contentType });
-    await store.set(fileName, blob, {
-      metadata: { contentType },
-    });
-    savedToBlob = true;
-  } catch (err) {
-    console.warn(`[StorageAdapter] Blobs upload save skipped:`, err instanceof Error ? err.message : err);
+  if (isBlobsConfigured()) {
+    try {
+      const store = getBlobStore(STORE_UPLOADS);
+      const blob = new Blob([new Uint8Array(buffer)], { type: contentType });
+      await withTimeout(
+        store.set(fileName, blob, {
+          metadata: { contentType },
+        }),
+        3000
+      );
+      savedToBlob = true;
+    } catch (err) {
+      console.warn(`[StorageAdapter] Blobs upload save skipped:`, err instanceof Error ? err.message : err);
+    }
   }
 
   // 2. /tmp directory
@@ -180,8 +214,8 @@ export async function saveUploadedFile(
     const tmpUploadPath = getTmpPath("uploads", fileName);
     await fs.mkdir(path.dirname(tmpUploadPath), { recursive: true });
     await fs.writeFile(tmpUploadPath, buffer);
-  } catch (tmpErr) {
-    // Ignore /tmp errors
+  } catch {
+    // Ignore
   }
 
   // 3. Local public/uploads directory (local dev)
@@ -195,7 +229,6 @@ export async function saveUploadedFile(
       (fsErr instanceof Error && fsErr.message.includes("read-only file system"));
 
     if (isReadOnly) {
-      // In serverless, file is available via memory, blobs, and /tmp
       return `/uploads/${fileName}`;
     }
 
@@ -219,14 +252,16 @@ export async function listUploadedFiles(): Promise<Array<{ name: string; url: st
   }
 
   // 2. From Netlify Blobs
-  try {
-    const store = getBlobStore(STORE_UPLOADS);
-    const { blobs } = await store.list();
-    for (const b of blobs) {
-      fileMap.set(b.key, { name: b.key, url: `/uploads/${b.key}` });
+  if (isBlobsConfigured()) {
+    try {
+      const store = getBlobStore(STORE_UPLOADS);
+      const { blobs } = await withTimeout(store.list(), 2000);
+      for (const b of blobs) {
+        fileMap.set(b.key, { name: b.key, url: `/uploads/${b.key}` });
+      }
+    } catch {
+      // Blobs not available
     }
-  } catch {
-    // Blobs not available
   }
 
   // 3. From /tmp directory
@@ -271,18 +306,23 @@ export async function getUploadedFile(
   }
 
   // 2. From Netlify Blobs
-  try {
-    const store = getBlobStore(STORE_UPLOADS);
-    const result = await store.getWithMetadata(fileName, { type: "arrayBuffer" });
-    if (result && result.data) {
-      const meta = result.metadata as { contentType?: string } | undefined;
-      return {
-        data: result.data,
-        contentType: meta?.contentType || "image/jpeg",
-      };
+  if (isBlobsConfigured()) {
+    try {
+      const store = getBlobStore(STORE_UPLOADS);
+      const result = await withTimeout(
+        store.getWithMetadata(fileName, { type: "arrayBuffer" }),
+        2000
+      );
+      if (result && result.data) {
+        const meta = result.metadata as { contentType?: string } | undefined;
+        return {
+          data: result.data,
+          contentType: meta?.contentType || "image/jpeg",
+        };
+      }
+    } catch {
+      // Ignore
     }
-  } catch {
-    // Ignore
   }
 
   // 3. From /tmp directory
