@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   experimental: {
     cpus: 1,
   },
+  async rewrites() {
+    return [
+      {
+        source: "/uploads/:path*",
+        destination: "/api/uploads/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

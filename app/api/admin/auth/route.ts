@@ -1,28 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import fs from "fs/promises";
 import path from "path";
+import { getJSONFromStorage, saveJSONToStorage } from "@/lib/storage-adapter";
 
 const AUTH_COOKIE_NAME = "admin_session";
 const CONFIG_PATH = path.join(process.cwd(), "data", "admin-config.json");
 
+interface AdminConfig {
+  password?: string;
+  updatedAt?: string;
+}
+
 async function getStoredPassword(): Promise<string> {
-  try {
-    const raw = await fs.readFile(CONFIG_PATH, "utf-8");
-    const json = JSON.parse(raw);
-    if (json.password) return json.password;
-  } catch (err) {
-    // Fallback if file doesn't exist
-  }
-  return process.env.ADMIN_PASSWORD || "admin123";
+  const config = await getJSONFromStorage<AdminConfig>("admin-config", CONFIG_PATH, {
+    password: process.env.ADMIN_PASSWORD || "Madhav@123",
+  });
+  return config.password || process.env.ADMIN_PASSWORD || "Madhav@123";
 }
 
 async function setStoredPassword(newPassword: string): Promise<void> {
-  const config = {
+  const config: AdminConfig = {
     password: newPassword,
     updatedAt: new Date().toISOString(),
   };
-  await fs.writeFile(CONFIG_PATH, JSON.stringify(config, null, 2), "utf-8");
+  await saveJSONToStorage<AdminConfig>("admin-config", CONFIG_PATH, config);
 }
 
 export async function GET(request: NextRequest) {

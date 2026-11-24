@@ -1,5 +1,7 @@
-import fs from "fs/promises";
 import path from "path";
+import { getJSONFromStorage, saveJSONToStorage } from "./storage-adapter";
+import defaultSiteContent from "@/data/site-content.json";
+import defaultCategories from "@/data/categories.json";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const SITE_CONTENT_PATH = path.join(DATA_DIR, "site-content.json");
@@ -99,27 +101,23 @@ export interface CategoryData {
 export type CategoriesMap = Record<string, CategoryData>;
 
 export async function getSiteContent(): Promise<SiteContent> {
-  try {
-    const raw = await fs.readFile(SITE_CONTENT_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error("Error reading site-content.json, returning empty structure:", err);
-    throw err;
-  }
+  return getJSONFromStorage<SiteContent>(
+    "site-content",
+    SITE_CONTENT_PATH,
+    defaultSiteContent as SiteContent
+  );
 }
 
 export async function saveSiteContent(data: SiteContent): Promise<void> {
-  await fs.writeFile(SITE_CONTENT_PATH, JSON.stringify(data, null, 2), "utf-8");
+  await saveJSONToStorage<SiteContent>("site-content", SITE_CONTENT_PATH, data);
 }
 
 export async function getCategories(): Promise<CategoriesMap> {
-  try {
-    const raw = await fs.readFile(CATEGORIES_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error("Error reading categories.json:", err);
-    throw err;
-  }
+  return getJSONFromStorage<CategoriesMap>(
+    "categories",
+    CATEGORIES_PATH,
+    defaultCategories as unknown as CategoriesMap
+  );
 }
 
 export async function getCategoryBySlug(slug: string): Promise<CategoryData | null> {
@@ -132,10 +130,10 @@ export async function saveCategory(slug: string, data: Partial<CategoryData>): P
   const existing = all[slug] || { slug, name: slug };
   const updated = { ...existing, ...data, slug };
   all[slug] = updated as CategoryData;
-  await fs.writeFile(CATEGORIES_PATH, JSON.stringify(all, null, 2), "utf-8");
+  await saveAllCategories(all);
   return updated as CategoryData;
 }
 
 export async function saveAllCategories(categories: CategoriesMap): Promise<void> {
-  await fs.writeFile(CATEGORIES_PATH, JSON.stringify(categories, null, 2), "utf-8");
+  await saveJSONToStorage<CategoriesMap>("categories", CATEGORIES_PATH, categories);
 }

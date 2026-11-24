@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import fs from "fs/promises";
-import path from "path";
+import { saveUploadedFile, listUploadedFiles } from "@/lib/storage-adapter";
 
 export const dynamic = "force-dynamic";
 
@@ -33,13 +32,8 @@ export async function POST(request: NextRequest) {
     const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
     const uniqueFileName = `${timestamp}-${cleanFileName}`;
 
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    await fs.mkdir(uploadsDir, { recursive: true });
+    const publicUrl = await saveUploadedFile(uniqueFileName, buffer, file.type || "image/jpeg");
 
-    const filePath = path.join(uploadsDir, uniqueFileName);
-    await fs.writeFile(filePath, buffer);
-
-    const publicUrl = `/uploads/${uniqueFileName}`;
     return NextResponse.json({
       success: true,
       url: publicUrl,
@@ -55,18 +49,7 @@ export async function POST(request: NextRequest) {
 // GET to list uploaded files
 export async function GET() {
   try {
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    await fs.mkdir(uploadsDir, { recursive: true });
-    const files = await fs.readdir(uploadsDir);
-    
-    const fileList = files
-      .filter((name) => /\.(jpg|jpeg|png|webp|avif|svg)$/i.test(name))
-      .map((name) => ({
-        name,
-        url: `/uploads/${name}`,
-      }))
-      .reverse();
-
+    const fileList = await listUploadedFiles();
     return NextResponse.json({ files: fileList });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Error listing files";
