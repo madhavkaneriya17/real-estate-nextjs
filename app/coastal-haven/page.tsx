@@ -12,6 +12,7 @@ import WhyInvestSection, {
   WhyInvestQuote,
 } from "@/components/WhyInvestSection";
 import NavigationMenu from "@/components/NavigationMenu";
+import { useCategoryContent, useSiteContent } from "@/lib/use-site-content";
 import {
   initHeroParallax,
   initBackgroundParallax,
@@ -99,6 +100,8 @@ const WHY_INVEST_QUOTE: WhyInvestQuote = {
 
 export default function CoastalHavenPage() {
   const router = useRouter();
+  const { content } = useSiteContent();
+  const { category } = useCategoryContent("coastal-haven");
   const {
     isSelectionOpen,
     setIsSelectionOpen,
@@ -250,113 +253,33 @@ export default function CoastalHavenPage() {
         aria-label="Our selection"
       >
         <div className="selection-cards-grid">
-          <Link
-            href="/coastal-haven?from=dock"
-            className="selection-card"
-            data-category="coastal-haven"
-            onClick={(e) => handleSelectionCardClick(e, "/coastal-haven")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Coastal Haven</span>
-              <span className="selection-card__desc">
-                Coastal, Marina &amp; Seafront properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/bythesea-card-cover.avif"
-                alt="Coastal Haven"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/serene-greens?from=dock"
-            className="selection-card"
-            data-category="serene-greens"
-            onClick={(e) => handleSelectionCardClick(e, "/serene-greens")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Serene Greens</span>
-              <span className="selection-card__desc">
-                Gulf Resorts, parks &amp; Forest Oasis
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/evergreen-card-cover.avif"
-                alt="Serene Greens"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/urban-luxe?from=dock"
-            className="selection-card"
-            data-category="urban-luxe"
-            onClick={(e) => handleSelectionCardClick(e, "/urban-luxe")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Urban Luxe</span>
-              <span className="selection-card__desc">
-                City center &amp; Old city vibes and lifestyle
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/urban-living-card-cover.avif"
-                alt="Urban Luxe"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/limited-edition?from=dock"
-            className="selection-card"
-            data-category="limited-edition"
-            onClick={(e) => handleSelectionCardClick(e, "/limited-edition")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Limited Edition</span>
-              <span className="selection-card__desc">
-                One of a kind &amp; Unique concept Properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/rare-gems-card-cover.avif"
-                alt="Limited Edition"
-                loading="lazy"
-              />
-            </div>
-          </Link>
+          {content.selectionCards.map((card) => (
+            <Link
+              key={card.id}
+              href={`${card.path}?from=dock`}
+              className="selection-card"
+              data-category={card.id}
+              onClick={(e) => handleSelectionCardClick(e, card.path)}
+            >
+              <div className="selection-card__panel">
+                <img
+                  className="selection-card__symbol"
+                  src={card.symbol || "/assets/small_logo.png"}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span className="selection-card__title">{card.title}</span>
+                <span className="selection-card__desc">{card.desc}</span>
+              </div>
+              <div className="selection-card__cover">
+                <img
+                  src={card.cover}
+                  alt={card.title}
+                  loading="lazy"
+                />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
       {/* === Selection Overlay END === */}
@@ -415,10 +338,16 @@ export default function CoastalHavenPage() {
                 aria-hidden="true"
               >
                 <div className="about-marquee-track">
-                  <span className="about-marquee-item">Coastal Haven</span>
-                  <span className="about-marquee-item">Waterfront Residences</span>
-                  <span className="about-marquee-item">Coastal Haven</span>
-                  <span className="about-marquee-item">Private Marina Living</span>
+                  {(category?.hero?.marquee || [
+                    "Coastal Haven",
+                    "Waterfront Residences",
+                    "Coastal Haven",
+                    "Private Marina Living",
+                  ]).map((item, idx) => (
+                    <span key={idx} className="about-marquee-item">
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
               {/* === Hero Marquee END === */}
@@ -426,8 +355,8 @@ export default function CoastalHavenPage() {
               {/* === Hero Center Visual START === */}
               <div ref={visualRef} className="about-visual-wrapper">
                 <img
-                  src="/assets/bythesea-card-cover.avif"
-                  alt="Coastal Haven Luxury Waterfront Residences"
+                  src={category?.hero?.visual || "/assets/bythesea-card-cover.avif"}
+                  alt={category?.hero?.visualAlt || "Coastal Haven Luxury Waterfront Residences"}
                   fetchPriority="high"
                   decoding="sync"
                 />
@@ -437,9 +366,9 @@ export default function CoastalHavenPage() {
               {/* === Hero Content START === */}
               <div ref={contentRef} className="about-content">
                 <h1 className="about-tagline">
-                  Prime Seafront Apartments &amp; Private Villas with Direct Access to Sun-Drenched Beaches and World-Class Marinas
+                  {category?.hero?.tagline || "Prime Seafront Apartments & Private Villas with Direct Access to Sun-Drenched Beaches and World-Class Marinas"}
                 </h1>
-                <div className="about-price-badge">STARTING FROM 280,000€</div>
+                <div className="about-price-badge">{category?.hero?.priceBadge || "STARTING FROM 280,000€"}</div>
               </div>
               {/* === Hero Content END === */}
             </div>
@@ -448,18 +377,25 @@ export default function CoastalHavenPage() {
 
           {/* === Category Gallery Section START === */}
           <CategoryGallery
-            label="Coastal Haven"
-            slides={COASTAL_HAVEN_GALLERY_SLIDES}
+            label={category?.gallery?.label || "Coastal Haven"}
+            slides={category?.gallery?.slides?.length ? category.gallery.slides : COASTAL_HAVEN_GALLERY_SLIDES}
             title={
-              <>
-                Invest Where
-                <br />
-                Coastal Serenity, Luxury
-                <br />
-                &amp; High Capital Yields Meet
-              </>
+              category?.gallery?.title ? (
+                <span>{category.gallery.title}</span>
+              ) : (
+                <>
+                  Invest Where
+                  <br />
+                  Coastal Serenity, Luxury
+                  <br />
+                  &amp; High Capital Yields Meet
+                </>
+              )
             }
-            description="Steps from turquoise shorelines, private yacht berths, and Michelin-starred seaside dining, combining the ultimate Mediterranean lifestyle with finite frontline capital appreciation."
+            description={
+              category?.gallery?.description ||
+              "Steps from turquoise shorelines, private yacht berths, and Michelin-starred seaside dining, combining the ultimate Mediterranean lifestyle with finite frontline capital appreciation."
+            }
           />
           {/* === Category Gallery Section END === */}
 
@@ -467,31 +403,48 @@ export default function CoastalHavenPage() {
           <section className="page-blog" aria-hidden="true">
             <div className="marq-wrapper">
               <div className="marq-track">
-                <span className="marq-text">Coastal Haven</span>
-                <span className="marq-text">Waterfront Prestige</span>
-                <span className="marq-text">Coastal Haven</span>
-                <span className="marq-text">Oceanfront Living</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Coastal Haven",
+                  "Waterfront Prestige",
+                  "Coastal Haven",
+                  "Oceanfront Living",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
               <div className="marq-track" aria-hidden="true">
-                <span className="marq-text">Coastal Haven</span>
-                <span className="marq-text">Waterfront Prestige</span>
-                <span className="marq-text">Coastal Haven</span>
-                <span className="marq-text">Oceanfront Living</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Coastal Haven",
+                  "Waterfront Prestige",
+                  "Coastal Haven",
+                  "Oceanfront Living",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div className="page-blog-bottom">
               <figure className="blog-img">
-                <img src="/assets/selection/bythesea/coastal-ocean-waves.avif" alt="Coastal Haven Waterfront Living" loading="lazy" decoding="async" />
+                <img
+                  src={category?.whyInvestQuote?.image || "/assets/selection/bythesea/coastal-ocean-waves.avif"}
+                  alt={category?.whyInvestQuote?.imageAlt || category?.name || "Coastal Haven Waterfront Living"}
+                  loading="lazy"
+                  decoding="async"
+                />
               </figure>
 
               <h2>
-                “Finite coastlines and boundless international prestige make waterfront real estate the world's most resilient wealth preservation asset.”
+                “{category?.whyInvestQuote?.text || "Finite coastlines and boundless international prestige make waterfront real estate the world's most resilient wealth preservation asset."}”
               </h2>
 
               <div className="blog-bottom-line">
-                <p className="blog-bottom-line-1">Savills Global Luxury Real Estate Research</p>
-                <p className="blog-bottom-line-2">/ World Waterfront Index / 2025 Edition</p>
+                <p className="blog-bottom-line-1">{category?.whyInvestQuote?.name || "Savills Global Luxury Real Estate Research"}</p>
+                <p className="blog-bottom-line-2">{category?.whyInvestQuote?.source || "/ World Waterfront Index / 2025 Edition"}</p>
               </div>
             </div>
           </section>
@@ -507,8 +460,26 @@ export default function CoastalHavenPage() {
 
           {/* === Why Invest Section START === */}
           <WhyInvestSection
-            items={WHY_INVEST_ITEMS}
-            quote={WHY_INVEST_QUOTE}
+            items={
+              category?.whyInvestItems?.length
+                ? category.whyInvestItems.map((item) => ({
+                    imageSrc: item.imageSrc,
+                    imageAlt: item.imageAlt || item.title,
+                    title: item.title,
+                    text: item.text,
+                    reverse: item.reverse,
+                  }))
+                : WHY_INVEST_ITEMS
+            }
+            quote={
+              category?.whyInvestQuote?.text
+                ? {
+                    text: category.whyInvestQuote.text,
+                    name: category.whyInvestQuote.name,
+                    source: category.whyInvestQuote.source,
+                  }
+                : WHY_INVEST_QUOTE
+            }
           />
           {/* === Why Invest Section END === */}
 
@@ -525,11 +496,12 @@ export default function CoastalHavenPage() {
             <div className="cta-inner">
               <span className="cta-street-line"></span>
               <h2>
-                <div className="cta-text">Claim Your Sanctuary</div>
-                <div className="cta-text">In Coastal Haven</div>
+                <div className="cta-text">{category?.cta?.titleLine1 || "Claim Your Sanctuary"}</div>
+                <div className="cta-text">{category?.cta?.titleLine2 || "In Coastal Haven"}</div>
               </h2>
               <h4 className="cta-link">
-                <a href="/contact">Inquire About Coastal Haven
+                <a href={category?.cta?.buttonLink || "/contact"}>
+                  {category?.cta?.buttonText || "Inquire About Coastal Haven"}
                   <img src="/assets/arrow.svg" alt="" />
                 </a>
               </h4>

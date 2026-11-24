@@ -12,6 +12,7 @@ import WhyInvestSection, {
   WhyInvestQuote,
 } from "@/components/WhyInvestSection";
 import NavigationMenu from "@/components/NavigationMenu";
+import { useCategoryContent, useSiteContent } from "@/lib/use-site-content";
 import {
   initHeroParallax,
   initBackgroundParallax,
@@ -99,6 +100,8 @@ const WHY_INVEST_QUOTE: WhyInvestQuote = {
 
 export default function LimitedEditionPage() {
   const router = useRouter();
+  const { content } = useSiteContent();
+  const { category } = useCategoryContent("limited-edition");
   const {
     isSelectionOpen,
     setIsSelectionOpen,
@@ -251,113 +254,33 @@ export default function LimitedEditionPage() {
         aria-label="Our selection"
       >
         <div className="selection-cards-grid">
-          <Link
-            href="/coastal-haven?from=dock"
-            className="selection-card"
-            data-category="coastal-haven"
-            onClick={(e) => handleSelectionCardClick(e, "/coastal-haven")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Coastal Haven</span>
-              <span className="selection-card__desc">
-                Coastal, Marina &amp; Seafront properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/bythesea-card-cover.avif"
-                alt="Coastal Haven"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/serene-greens?from=dock"
-            className="selection-card"
-            data-category="serene-greens"
-            onClick={(e) => handleSelectionCardClick(e, "/serene-greens")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Serene Greens</span>
-              <span className="selection-card__desc">
-                Gulf Resorts, parks &amp; Forest Oasis
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/evergreen-card-cover.avif"
-                alt="Serene Greens"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/urban-luxe?from=dock"
-            className="selection-card"
-            data-category="urban-luxe"
-            onClick={(e) => handleSelectionCardClick(e, "/urban-luxe")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Urban Luxe</span>
-              <span className="selection-card__desc">
-                City center &amp; Old city vibes and lifestyle
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/urban-living-card-cover.avif"
-                alt="Urban Luxe"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/limited-edition?from=dock"
-            className="selection-card"
-            data-category="limited-edition"
-            onClick={(e) => handleSelectionCardClick(e, "/limited-edition")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Limited Edition</span>
-              <span className="selection-card__desc">
-                One of a kind &amp; Unique concept Properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/rare-gems-card-cover.avif"
-                alt="Limited Edition"
-                loading="lazy"
-              />
-            </div>
-          </Link>
+          {content.selectionCards.map((card) => (
+            <Link
+              key={card.id}
+              href={`${card.path}?from=dock`}
+              className="selection-card"
+              data-category={card.id}
+              onClick={(e) => handleSelectionCardClick(e, card.path)}
+            >
+              <div className="selection-card__panel">
+                <img
+                  className="selection-card__symbol"
+                  src={card.symbol || "/assets/small_logo.png"}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span className="selection-card__title">{card.title}</span>
+                <span className="selection-card__desc">{card.desc}</span>
+              </div>
+              <div className="selection-card__cover">
+                <img
+                  src={card.cover}
+                  alt={card.title}
+                  loading="lazy"
+                />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
       {/* === Selection Overlay END === */}
@@ -416,10 +339,16 @@ export default function LimitedEditionPage() {
                 aria-hidden="true"
               >
                 <div className="about-marquee-track">
-                  <span className="about-marquee-item">Limited Edition</span>
-                  <span className="about-marquee-item">Rare Gems</span>
-                  <span className="about-marquee-item">Limited Edition</span>
-                  <span className="about-marquee-item">Iconic Landmarks</span>
+                  {(category?.hero?.marquee || [
+                    "Limited Edition",
+                    "Rare Gems",
+                    "Limited Edition",
+                    "Iconic Landmarks",
+                  ]).map((item, idx) => (
+                    <span key={idx} className="about-marquee-item">
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
               {/* === Hero Marquee END === */}
@@ -427,8 +356,8 @@ export default function LimitedEditionPage() {
               {/* === Hero Center Visual START === */}
               <div ref={visualRef} className="about-visual-wrapper">
                 <img
-                  src="/assets/selection/raregems/limited-edition-hero-cover-4k.jpg"
-                  alt="Limited Edition Iconic Landmark Architecture"
+                  src={category?.hero?.visual || "/assets/selection/raregems/limited-edition-hero-cover-4k.jpg"}
+                  alt={category?.hero?.visualAlt || "Limited Edition Iconic Landmark Architecture"}
                   fetchPriority="high"
                   decoding="sync"
                 />
@@ -438,9 +367,9 @@ export default function LimitedEditionPage() {
               {/* === Hero Content START === */}
               <div ref={contentRef} className="about-content">
                 <h1 className="about-tagline">
-                  Branded Residences, Landmark Buildings &amp; One-of-a-Kind Architectural Masterpieces
+                  {category?.hero?.tagline || "Branded Residences, Landmark Buildings & One-of-a-Kind Architectural Masterpieces"}
                 </h1>
-                <div className="about-price-badge">STARTING FROM 350,000€</div>
+                <div className="about-price-badge">{category?.hero?.priceBadge || "STARTING FROM 350,000€"}</div>
               </div>
               {/* === Hero Content END === */}
             </div>
@@ -449,18 +378,25 @@ export default function LimitedEditionPage() {
 
           {/* === Category Gallery Section START === */}
           <CategoryGallery
-            label="Limited Edition"
-            slides={LIMITED_EDITION_GALLERY_SLIDES}
+            label={category?.gallery?.label || "Limited Edition"}
+            slides={category?.gallery?.slides?.length ? category.gallery.slides : LIMITED_EDITION_GALLERY_SLIDES}
             title={
-              <>
-                Invest Where
-                <br />
-                Prestige, Architecture
-                <br />
-                &amp; Exclusivity Meet
-              </>
+              category?.gallery?.title ? (
+                <span>{category.gallery.title}</span>
+              ) : (
+                <>
+                  Invest Where
+                  <br />
+                  Prestige, Architecture
+                  <br />
+                  &amp; Exclusivity Meet
+                </>
+              )
             }
-            description="Every now and then, we discover a project that transcends real estate. Extraordinary architectural design, an unrepeatable landmark location, and unmatched international value — defining a true Rare Gem."
+            description={
+              category?.gallery?.description ||
+              "Every now and then, we discover a project that transcends real estate. Extraordinary architectural design, an unrepeatable landmark location, and unmatched international value — defining a true Rare Gem."
+            }
           />
           {/* === Category Gallery Section END === */}
 
@@ -468,31 +404,46 @@ export default function LimitedEditionPage() {
           <section className="page-blog" aria-hidden="true">
             <div className="marq-wrapper">
               <div className="marq-track">
-                <span className="marq-text">Limited Edition</span>
-                <span className="marq-text">Landmark Living</span>
-                <span className="marq-text">Limited Edition</span>
-                <span className="marq-text">Rare Gems</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Limited Edition",
+                  "Landmark Living",
+                  "Limited Edition",
+                  "Rare Gems",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
               <div className="marq-track" aria-hidden="true">
-                <span className="marq-text">Limited Edition</span>
-                <span className="marq-text">Landmark Living</span>
-                <span className="marq-text">Limited Edition</span>
-                <span className="marq-text">Rare Gems</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Limited Edition",
+                  "Landmark Living",
+                  "Limited Edition",
+                  "Rare Gems",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div className="page-blog-bottom">
               <figure className="blog-img">
-                <img src="/assets/selection/raregems/square-rare-gems.avif" alt="Limited Edition Landmark" />
+                <img
+                  src={category?.whyInvestQuote?.image || "/assets/selection/raregems/square-rare-gems.avif"}
+                  alt={category?.whyInvestQuote?.imageAlt || category?.name || "Limited Edition Landmark"}
+                />
               </figure>
 
               <h2>
-                “Landmark buildings don’t just shape skylines – they shape long-term real estate value.”
+                “{category?.whyInvestQuote?.text || "Landmark buildings don’t just shape skylines – they shape long-term real estate value."}”
               </h2>
 
               <div className="blog-bottom-line">
-                <p className="blog-bottom-line-1">Knight Frank</p>
-                <p className="blog-bottom-line-2">/ Global Branded Residences Report / 2025</p>
+                <p className="blog-bottom-line-1">{category?.whyInvestQuote?.name || "Knight Frank"}</p>
+                <p className="blog-bottom-line-2">{category?.whyInvestQuote?.source || "/ Global Branded Residences Report / 2025"}</p>
               </div>
             </div>
           </section>
@@ -508,8 +459,26 @@ export default function LimitedEditionPage() {
 
           {/* === Why Invest Section START === */}
           <WhyInvestSection
-            items={WHY_INVEST_ITEMS}
-            quote={WHY_INVEST_QUOTE}
+            items={
+              category?.whyInvestItems?.length
+                ? category.whyInvestItems.map((item) => ({
+                    imageSrc: item.imageSrc,
+                    imageAlt: item.imageAlt || item.title,
+                    title: item.title,
+                    text: item.text,
+                    reverse: item.reverse,
+                  }))
+                : WHY_INVEST_ITEMS
+            }
+            quote={
+              category?.whyInvestQuote?.text
+                ? {
+                    text: category.whyInvestQuote.text,
+                    name: category.whyInvestQuote.name,
+                    source: category.whyInvestQuote.source,
+                  }
+                : WHY_INVEST_QUOTE
+            }
           />
           {/* === Why Invest Section END === */}
 
@@ -526,11 +495,12 @@ export default function LimitedEditionPage() {
             <div className="cta-inner">
               <span className="cta-street-line"></span>
               <h2>
-                <div className="cta-text">Acquire A Rare Gem</div>
-                <div className="cta-text">Limited Edition</div>
+                <div className="cta-text">{category?.cta?.titleLine1 || "Acquire A Rare Gem"}</div>
+                <div className="cta-text">{category?.cta?.titleLine2 || "Limited Edition"}</div>
               </h2>
               <h4 className="cta-link">
-                <a href="/contact">Speak With Us
+                <a href={category?.cta?.buttonLink || "/contact"}>
+                  {category?.cta?.buttonText || "Speak With Us"}
                   <img src="/assets/arrow.svg" alt="" />
                 </a>
               </h4>

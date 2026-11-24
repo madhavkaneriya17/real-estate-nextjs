@@ -1226,7 +1226,10 @@ body.bottom-cursor-active * {
     --category-intro-gap: 1.25rem;
   }
 
+  .about-page-wrapper.is-docked,
   .about-page-wrapper.is-dock-active.is-docked {
+    display: none !important;
+    visibility: hidden !important;
     transform: translateY(105svh) scale(0.95) !important;
     opacity: 0 !important;
     pointer-events: none !important;

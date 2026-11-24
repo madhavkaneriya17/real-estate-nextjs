@@ -1,0 +1,454 @@
+{
+  "coastal-haven": {
+    "slug": "coastal-haven",
+    "name": "Coastal Haven",
+    "theme": {
+      "bg": "#1F2B5E",
+      "text": "#FFFFFF"
+    },
+    "hero": {
+      "marquee": [
+        "Coastal Haven",
+        "Waterfront Residences",
+        "Coastal Haven",
+        "Private Marina Living"
+      ],
+      "visual": "/assets/bythesea-card-cover.avif",
+      "visualAlt": "Coastal Haven Luxury Waterfront Residences",
+      "tagline": "Prime Seafront Apartments & Private Villas with Direct Access to Sun-Drenched Beaches and World-Class Marinas",
+      "priceBadge": "STARTING FROM 280,000€"
+    },
+    "gallery": {
+      "label": "Coastal Haven",
+      "title": "Invest Where Tourism, Lifestyle & Growth Meet",
+      "description": "Live steps from shopping, fine dining, business hubs, and cultural attractions, combining everyday convenience with the comfort of modern city living.",
+      "slides": [
+        {
+          "src": "/assets/BTS-1.avif",
+          "alt": "Luxury beachfront villa interior"
+        },
+        {
+          "src": "/assets/BTS-2.avif",
+          "alt": "Family enjoying coastal balcony"
+        },
+        {
+          "src": "/assets/BTS-3.avif",
+          "alt": "Relaxing on seafront beach lounger"
+        },
+        {
+          "src": "/assets/BTS-4.avif",
+          "alt": "Scenic seaside architecture"
+        },
+        {
+          "src": "/assets/BTS-5.avif",
+          "alt": "Sunlit ocean view terrace"
+        },
+        {
+          "src": "/assets/BTS-6.avif",
+          "alt": "Private infinity pool overlooking bay"
+        },
+        {
+          "src": "/assets/BTS-7.avif",
+          "alt": "Coastal marina promenade"
+        },
+        {
+          "src": "/assets/BTS-8.avif",
+          "alt": "Modern waterfront living room"
+        },
+        {
+          "src": "/assets/BTS-9.avif",
+          "alt": "Panoramic blue waters and coastline"
+        },
+        {
+          "src": "/assets/BTS-10.avif",
+          "alt": "Sunset by coastal resort"
+        },
+        {
+          "src": "/assets/BTS-11.avif",
+          "alt": "Luxury bedroom facing the sea"
+        }
+      ]
+    },
+    "whyInvestQuote": {
+      "text": "Frontline waterfront real estate remains the gold standard of tangible wealth. Geographic scarcity guarantees value retention, while global lifestyle appeal delivers peerless liquidity in any market environment.",
+      "name": "Financial Times Wealth & Property",
+      "source": "/ International Waterfront Investments / 2025 Edition",
+      "image": "/assets/BTS-1.avif"
+    },
+    "whyInvestItems": [
+      {
+        "imageSrc": "/assets/selection/bythesea/coastal-luxury-pool-view.avif",
+        "imageAlt": "Frontline Scarcity waterfront villa pool overlooking the bay",
+        "title": "Frontline Scarcity",
+        "text": "Frontline coastal land is naturally strictly finite. With global demand at an all-time peak, prime beachfront assets command unprecedented resilience and uninterrupted long-term capital preservation.",
+        "reverse": false
+      },
+      {
+        "imageSrc": "/assets/women-montenegro.avif",
+        "imageAlt": "Proven Price Premiums for luxury coastal residences",
+        "title": "Unmatched Premiums",
+        "text": "Global luxury indices show waterfront homes consistently command price premiums of 40% to 76% over comparable inland properties, dramatically outperforming standard market cycles.",
+        "reverse": true
+      },
+      {
+        "imageSrc": "/assets/selection/bythesea/luxury-hotel-resort.avif",
+        "imageAlt": "Lucrative year-round rental yields in coastal destination",
+        "title": "Lucrative Yields",
+        "text": "Prime coastal destinations attract year-round international tourism and high-net-worth seasonal tenants, delivering double-digit net rental yields and premium occupancy rates.",
+        "reverse": false
+      },
+      {
+        "imageSrc": "/assets/selection/bythesea/mediterranean-yachts-cove.avif",
+        "imageAlt": "Exclusive marina and yachting lifestyle",
+        "title": "Marina Prestige",
+        "text": "Direct access to superyacht berths, private beach clubs, and waterfront promenades creates an irreplaceable lifestyle that continuously attracts the world's most affluent investors.",
+        "reverse": true
+      },
+      {
+        "imageSrc": "/assets/selection/bythesea/luxury-coastal-villa-view.avif",
+        "imageAlt": "Enduring liquidity and frontline sea view villa",
+        "title": "Enduring Liquidity",
+        "text": "Prime seaside properties consistently trade with the highest liquidity in luxury real estate, ensuring a seamless, high-confidence exit strategy for discerning investors.",
+        "reverse": false
+      }
+    ],
+    "secondMarquee": [
+      "Coastal Haven",
+      "Waterfront Residences",
+      "Coastal Haven",
+      "Private Marina Living"
+    ],
+    "cta": {
+      "titleLine1": "Secure Your Waterfront",
+      "titleLine2": "Sanctuary Today",
+      "buttonText": "Speak With Us",
+      "buttonLink": "/contact"
+    }
+  },
+  "serene-greens": {
+    "slug": "serene-greens",
+    "name": "Serene Greens",
+    "theme": {
+      "bg": "#12251D",
+      "text": "#FFFFFF"
+    },
+    "hero": {
+      "marquee": [
+        "Serene Greens",
+        "Golf & Nature Retreats",
+        "Serene Greens",
+        "Masterplanned Wellness"
+      ],
+      "visual": "/assets/selection/evergreen/evergreen-big-image.avif",
+      "visualAlt": "Serene Greens Golf Resort and Forest Oasis",
+      "tagline": "Wellness real estate, Lifestyle properties, Golf resorts and Masterplanned communities",
+      "priceBadge": "STARTING FROM 150,000€"
+    },
+    "gallery": {
+      "label": "Serene Greens",
+      "title": "Immerse in Nature, Preserve Value",
+      "description": "Surrounded by championship fairways, ancient pine groves, and mountain panoramas for the ultimate tranquil lifestyle.",
+      "slides": [
+        {
+          "src": "/assets/selection/evergreen/slider/ever-1_converted.avif",
+          "alt": "Resort villas and green landscapes"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-2_converted.avif",
+          "alt": "Modern architecture surrounded by forest"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-3_converted.avif",
+          "alt": "Golf resort fairways and clubhouse"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-4_converted.avif",
+          "alt": "Luxury terrace overlooking verdant hills"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-5_converted.avif",
+          "alt": "Serene infinity pool immersed in nature"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-6_converted.avif",
+          "alt": "Park promenade and garden pathways"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-7_converted.avif",
+          "alt": "Sunlit living room with forest vistas"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-8_converted.avif",
+          "alt": "Private retreat in secluded greenery"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-9_converted.avif",
+          "alt": "Championship golf course fairway"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-10_converted.avif",
+          "alt": "Contemporary hillside residence"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-11_converted.avif",
+          "alt": "Sunset glow across mountain ranges"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-12_converted.avif",
+          "alt": "Elegant outdoor lounge under tree canopy"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-13_converted.avif",
+          "alt": "Panoramic green valley views"
+        },
+        {
+          "src": "/assets/selection/evergreen/slider/ever-14_converted.avif",
+          "alt": "Architectural villa among ancient pines"
+        }
+      ]
+    },
+    "whyInvestQuote": {
+      "text": "From branded wellness clubs to private dining spaces, community is the new currency in luxury real estate.",
+      "name": "Knight Frank",
+      "source": "/ Global Waterfront Report / 2019",
+      "image": "/assets/selection/evergreen/evergreen-big-image.avif"
+    },
+    "whyInvestItems": [
+      {
+        "imageSrc": "/assets/serene-greens(3).jpg",
+        "imageAlt": "Luxury wellness resort living and pristine landscape",
+        "title": "15% CAGR",
+        "text": "Wellness and golf real estate commands price premiums of 10–25% with higher long-term occupancy rates, making it one of the fastest-growing property sectors worldwide.",
+        "reverse": false
+      },
+      {
+        "imageSrc": "/assets/serene-greens(4).jpg",
+        "imageAlt": "Master-planned evergreen community and lush greenery",
+        "title": "Masterplan Evergreen",
+        "text": "Homes in master-planned green communities achieve price premiums of 5–20% compared to comparable urban developments, attracting high-net-worth investors.",
+        "reverse": true
+      },
+      {
+        "imageSrc": "/assets/serene-greens(5).jpg",
+        "imageAlt": "Championship golf course with panoramic views",
+        "title": "Golf & Nature Premium",
+        "text": "Properties positioned along championship golf courses and protected nature reserves command enduring scarcity and up to 19% higher capital appreciation.",
+        "reverse": false
+      },
+      {
+        "imageSrc": "/assets/selection/evergreen/evergreen-stats-4_converted.avif",
+        "imageAlt": "Family lifestyle in expansive green environments",
+        "title": "Lifestyle Driven",
+        "text": "Over 67% of golf and nature resort buyers are seeking wellness and open space, proving that holistic lifestyle is the strongest long-term demand driver.",
+        "reverse": true
+      },
+      {
+        "imageSrc": "/assets/selection/evergreen/square-evergreen.avif",
+        "imageAlt": "Wellbeing and resilient sanctuary living",
+        "title": "Resilient Demand",
+        "text": "Sanctuary and wellness-focused developments consistently demonstrate superior capital preservation and market stability across global financial cycles.",
+        "reverse": false
+      }
+    ],
+    "secondMarquee": [
+      "Serene Greens",
+      "Golf & Nature",
+      "Serene Greens",
+      "Forest Oasis"
+    ],
+    "cta": {
+      "titleLine1": "Find Your Sanctuary in",
+      "titleLine2": "Serene Greens",
+      "buttonText": "Speak With Us",
+      "buttonLink": "/contact"
+    }
+  },
+  "urban-luxe": {
+    "slug": "urban-luxe",
+    "name": "Urban Luxe",
+    "theme": {
+      "bg": "#2A2521",
+      "text": "#FFFFFF"
+    },
+    "hero": {
+      "marquee": [
+        "Urban Luxe",
+        "Metropolitan Residences",
+        "Urban Luxe",
+        "City Living"
+      ],
+      "visual": "/assets/urban-living-card-cover.avif",
+      "visualAlt": "Urban Luxe Metropolitan Luxury Living",
+      "tagline": "Apartments & Hotel residences near the city center, downtown and touristic areas",
+      "priceBadge": "STARTING FROM 350,000€"
+    },
+    "gallery": {
+      "label": "Urban Luxe",
+      "title": "Invest Where City Living, Culture & Growth Meet",
+      "description": "Live steps from shopping, fine dining, business hubs, and cultural attractions, combining everyday convenience with the comfort of modern city living.",
+      "slides": [
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-1_converted.avif",
+          "alt": "Modern urban high-rise residence"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-2_converted.avif",
+          "alt": "City center luxury apartment interior"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-3_converted.avif",
+          "alt": "Vibrant downtown promenade and cafes"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-4_converted.avif",
+          "alt": "Elegant rooftop terrace with skyline views"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-5_converted.avif",
+          "alt": "Contemporary living room in the city"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-6_converted.avif",
+          "alt": "Architectural metropolitan development"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-7_converted.avif",
+          "alt": "Historic stone architecture and cobblestone streets"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-8_converted.avif",
+          "alt": "Sophisticated boutique residence"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-9_converted.avif",
+          "alt": "City lights and evening urban ambiance"
+        },
+        {
+          "src": "/assets/selection/urbanliving/slider/urban-10_converted.avif",
+          "alt": "Prime downtown lifestyle location"
+        }
+      ]
+    },
+    "whyInvestQuote": {
+      "text": "Vibrant centers are places where people can live, work, shop, dine, play, rest, and learn.",
+      "name": "Urban Land Institute",
+      "source": "/ Making Downtowns What They Used to Be / 2015",
+      "image": "/assets/urban-living-card-cover.avif"
+    },
+    "whyInvestItems": [
+      {
+        "imageSrc": "/assets/selection/urbanliving/square-urban-living.avif",
+        "imageAlt": "Urban lifestyle and metropolitan heartbeat",
+        "title": "Prime Density",
+        "text": "Metropolitan center residences benefit from constant high rental yield, executive demand, and proximity to international institutions.",
+        "reverse": false
+      }
+    ],
+    "secondMarquee": [
+      "Urban Luxe",
+      "City Sophistication",
+      "Urban Luxe",
+      "Downtown Living"
+    ],
+    "cta": {
+      "titleLine1": "Experience The Rhythm",
+      "titleLine2": "Of Urban Luxe",
+      "buttonText": "Speak With Us",
+      "buttonLink": "/contact"
+    }
+  },
+  "limited-edition": {
+    "slug": "limited-edition",
+    "name": "Limited Edition",
+    "theme": {
+      "bg": "#1C181D",
+      "text": "#FFFFFF"
+    },
+    "hero": {
+      "marquee": [
+        "Limited Edition",
+        "Rare Gems",
+        "Limited Edition",
+        "Iconic Landmarks"
+      ],
+      "visual": "/assets/selection/raregems/limited-edition-hero-cover-4k.jpg",
+      "visualAlt": "Limited Edition Iconic Landmark Architecture",
+      "tagline": "Branded Residences, Landmark Buildings & One-of-a-Kind Architectural Masterpieces",
+      "priceBadge": "STARTING FROM 200,000€"
+    },
+    "gallery": {
+      "label": "Limited Edition",
+      "title": "Architectural Masterpieces For The Discerning Few",
+      "description": "Trophy real estate crafted by world-renowned architects, featuring signature branded finishes and unmatched exclusivity.",
+      "slides": [
+        {
+          "src": "/assets/selection/raregems/slider/rare-1_converted.avif",
+          "alt": "A unique-concept residence with distinctive architecture"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-2_converted.avif",
+          "alt": "An exclusive one-of-a-kind property interior"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-3_converted.avif",
+          "alt": "A design-led home set in a rare location"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-4_converted.avif",
+          "alt": "A singular architectural statement residence"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-5_converted.avif",
+          "alt": "Iconic branded residences with panoramic views"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-6_converted.avif",
+          "alt": "Sculptural luxury development interior"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-7_converted.avif",
+          "alt": "Landmark architectural silhouette at dusk"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-8_converted.avif",
+          "alt": "Refined materials and bespoke craftsmanship"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-9_converted.avif",
+          "alt": "Exclusive cantilever terrace and private lounge"
+        },
+        {
+          "src": "/assets/selection/raregems/slider/rare-10_converted.avif",
+          "alt": "Trophy penthouse residence overlooking the horizon"
+        }
+      ]
+    },
+    "whyInvestQuote": {
+      "text": "Scarcity of visionary architecture turns real estate into collectible art, preserving wealth through multiple generations.",
+      "name": "Architectural Digest Collectibles",
+      "source": "/ Landmark Edition / 2025",
+      "image": "/assets/selection/raregems/square-rare-gems.avif"
+    },
+    "whyInvestItems": [
+      {
+        "imageSrc": "/assets/rare-gems-card-cover.avif",
+        "imageAlt": "Iconic architectural trophy estate",
+        "title": "Collectible Asset",
+        "text": "Unique concept properties command exponential valuation premiums as timeless trophies in a global wealth portfolio.",
+        "reverse": false
+      }
+    ],
+    "secondMarquee": [
+      "Limited Edition",
+      "Landmark Living",
+      "Limited Edition",
+      "Rare Gems"
+    ],
+    "cta": {
+      "titleLine1": "Acquire A Rare Gem",
+      "titleLine2": "Limited Edition",
+      "buttonText": "Speak With Us",
+      "buttonLink": "/contact"
+    }
+  }
+}

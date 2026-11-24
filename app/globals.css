@@ -588,10 +588,22 @@ button {
   }
 
   .hero-stage.is-docked,
+  .about-page-wrapper.is-docked,
   .about-page-wrapper.is-dock-active.is-docked {
-    transform: translateY(105svh) scale(0.95) !important;
+    display: none !important;
+    visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    transform: translateY(105svh) scale(0.95) !important;
+  }
+
+  body:has(.selection-container.visible),
+  html:has(.selection-container.visible),
+  .about-viewport-root:has(.selection-container.visible) {
+    height: 100svh !important;
+    max-height: 100svh !important;
+    min-height: 100svh !important;
+    overflow: hidden !important;
   }
   
   .selection-cards-grid {
@@ -736,10 +748,22 @@ button {
   }
 
   .hero-stage.is-docked,
+  .about-page-wrapper.is-docked,
   .about-page-wrapper.is-dock-active.is-docked {
-    transform: translateY(105svh) scale(0.95) !important;
+    display: none !important;
+    visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    transform: translateY(105svh) scale(0.95) !important;
+  }
+
+  body:has(.selection-container.visible),
+  html:has(.selection-container.visible),
+  .about-viewport-root:has(.selection-container.visible) {
+    height: 100svh !important;
+    max-height: 100svh !important;
+    min-height: 100svh !important;
+    overflow: hidden !important;
   }
 
   .selection-card__panel {

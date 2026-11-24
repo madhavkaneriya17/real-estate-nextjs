@@ -12,6 +12,7 @@ import WhyInvestSection, {
   WhyInvestQuote,
 } from "@/components/WhyInvestSection";
 import NavigationMenu from "@/components/NavigationMenu";
+import { useCategoryContent, useSiteContent } from "@/lib/use-site-content";
 import {
   initHeroParallax,
   initBackgroundParallax,
@@ -97,6 +98,8 @@ const WHY_INVEST_QUOTE: WhyInvestQuote = {
 
 export default function SereneGreensPage() {
   const router = useRouter();
+  const { content } = useSiteContent();
+  const { category } = useCategoryContent("serene-greens");
   const {
     isSelectionOpen,
     setIsSelectionOpen,
@@ -247,113 +250,33 @@ export default function SereneGreensPage() {
         aria-label="Our selection"
       >
         <div className="selection-cards-grid">
-          <Link
-            href="/coastal-haven?from=dock"
-            className="selection-card"
-            data-category="coastal-haven"
-            onClick={(e) => handleSelectionCardClick(e, "/coastal-haven")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Coastal Haven</span>
-              <span className="selection-card__desc">
-                Coastal, Marina &amp; Seafront properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/bythesea-card-cover.avif"
-                alt="Coastal Haven"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/serene-greens?from=dock"
-            className="selection-card"
-            data-category="serene-greens"
-            onClick={(e) => handleSelectionCardClick(e, "/serene-greens")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Serene Greens</span>
-              <span className="selection-card__desc">
-                Gulf Resorts, parks &amp; Forest Oasis
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/evergreen-card-cover.avif"
-                alt="Serene Greens"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/urban-luxe?from=dock"
-            className="selection-card"
-            data-category="urban-luxe"
-            onClick={(e) => handleSelectionCardClick(e, "/urban-luxe")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Urban Luxe</span>
-              <span className="selection-card__desc">
-                City center &amp; Old city vibes and lifestyle
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/urban-living-card-cover.avif"
-                alt="Urban Luxe"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/limited-edition?from=dock"
-            className="selection-card"
-            data-category="limited-edition"
-            onClick={(e) => handleSelectionCardClick(e, "/limited-edition")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Limited Edition</span>
-              <span className="selection-card__desc">
-                One of a kind &amp; Unique concept Properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/rare-gems-card-cover.avif"
-                alt="Limited Edition"
-                loading="lazy"
-              />
-            </div>
-          </Link>
+          {content.selectionCards.map((card) => (
+            <Link
+              key={card.id}
+              href={`${card.path}?from=dock`}
+              className="selection-card"
+              data-category={card.id}
+              onClick={(e) => handleSelectionCardClick(e, card.path)}
+            >
+              <div className="selection-card__panel">
+                <img
+                  className="selection-card__symbol"
+                  src={card.symbol || "/assets/small_logo.png"}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span className="selection-card__title">{card.title}</span>
+                <span className="selection-card__desc">{card.desc}</span>
+              </div>
+              <div className="selection-card__cover">
+                <img
+                  src={card.cover}
+                  alt={card.title}
+                  loading="lazy"
+                />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
       {/* === Selection Overlay END === */}
@@ -412,12 +335,18 @@ export default function SereneGreensPage() {
                 aria-hidden="true"
               >
                 <div className="about-marquee-track">
-                  <span className="about-marquee-item">Serene Greens</span>
-                  <span className="about-marquee-item">Serene Greens</span>
-                  <span className="about-marquee-item">Serene Greens</span>
-                  <span className="about-marquee-item">Serene Greens</span>
-                  <span className="about-marquee-item">Serene Greens</span>
-                  <span className="about-marquee-item">Serene Greens</span>
+                  {(category?.hero?.marquee || [
+                    "Serene Greens",
+                    "Serene Greens",
+                    "Serene Greens",
+                    "Serene Greens",
+                    "Serene Greens",
+                    "Serene Greens",
+                  ]).map((item, idx) => (
+                    <span key={idx} className="about-marquee-item">
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
               {/* === Hero Marquee END === */}
@@ -425,8 +354,8 @@ export default function SereneGreensPage() {
               {/* === Hero Center Visual START === */}
               <div ref={visualRef} className="about-visual-wrapper">
                 <img
-                  src="/assets/selection/evergreen/evergreen-big-image.avif"
-                  alt="Serene Greens Golf Resort and Forest Oasis"
+                  src={category?.hero?.visual || "/assets/selection/evergreen/evergreen-big-image.avif"}
+                  alt={category?.hero?.visualAlt || "Serene Greens Golf Resort and Forest Oasis"}
                   fetchPriority="high"
                   decoding="sync"
                 />
@@ -436,9 +365,9 @@ export default function SereneGreensPage() {
               {/* === Hero Content START === */}
               <div ref={contentRef} className="about-content">
                 <h1 className="about-tagline">
-                  Wellness real estate, Lifestyle properties, Golf resorts and Masterplanned communities
+                  {category?.hero?.tagline || "Wellness real estate, Lifestyle properties, Golf resorts and Masterplanned communities"}
                 </h1>
-                <div className="about-price-badge">STARTING FROM 150,000€</div>
+                <div className="about-price-badge">{category?.hero?.priceBadge || "STARTING FROM 150,000€"}</div>
               </div>
               {/* === Hero Content END === */}
             </div>
@@ -447,18 +376,25 @@ export default function SereneGreensPage() {
 
           {/* === Category Gallery Section START === */}
           <CategoryGallery
-            label="Serene Greens"
+            label={category?.gallery?.label || "Serene Greens"}
+            slides={category?.gallery?.slides?.length ? category.gallery.slides : SERENE_GREENS_GALLERY_SLIDES}
             title={
-              <>
-                Nature, Leisure
-                <br />
-                &amp; Community
-                <br />
-                Converge
-              </>
+              category?.gallery?.title ? (
+                <span>{category.gallery.title}</span>
+              ) : (
+                <>
+                  Nature, Leisure
+                  <br />
+                  &amp; Community
+                  <br />
+                  Converge
+                </>
+              )
             }
-            description="Live within masterplanned communities where wellness, green spaces, premium amenities, and everyday convenience create a healthier way of living."
-            slides={SERENE_GREENS_GALLERY_SLIDES}
+            description={
+              category?.gallery?.description ||
+              "Live within masterplanned communities where wellness, green spaces, premium amenities, and everyday convenience create a healthier way of living."
+            }
           />
           {/* === Category Gallery Section END === */}
 
@@ -466,31 +402,46 @@ export default function SereneGreensPage() {
           <section className="page-blog" aria-hidden="true">
             <div className="marq-wrapper">
               <div className="marq-track">
-                <span className="marq-text">Serene Greens</span>
-                <span className="marq-text">Serene Greens</span>
-                <span className="marq-text">Serene Greens</span>
-                <span className="marq-text">Serene Greens</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Serene Greens",
+                  "Golf & Nature",
+                  "Serene Greens",
+                  "Forest Oasis",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
               <div className="marq-track" aria-hidden="true">
-                <span className="marq-text">Serene Greens</span>
-                <span className="marq-text">Serene Greens</span>
-                <span className="marq-text">Serene Greens</span>
-                <span className="marq-text">Serene Greens</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Serene Greens",
+                  "Golf & Nature",
+                  "Serene Greens",
+                  "Forest Oasis",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div className="page-blog-bottom">
               <figure className="blog-img">
-                <img src="/assets/selection/evergreen/square-evergreen.avif" alt="Serene Greens Oasis" />
+                <img
+                  src={category?.whyInvestQuote?.image || "/assets/selection/evergreen/square-evergreen.avif"}
+                  alt={category?.whyInvestQuote?.imageAlt || category?.name || "Serene Greens Oasis"}
+                />
               </figure>
 
               <h2>
-                “From branded wellness clubs to private dining spaces, community is the new currency in luxury real estate.”
+                “{category?.whyInvestQuote?.text || "From branded wellness clubs to private dining spaces, community is the new currency in luxury real estate."}”
               </h2>
 
               <div className="blog-bottom-line">
-                <p className="blog-bottom-line-1">Knight Frank</p>
-                <p className="blog-bottom-line-2">/ Global Waterfront Report / 2019</p>
+                <p className="blog-bottom-line-1">{category?.whyInvestQuote?.name || "Knight Frank"}</p>
+                <p className="blog-bottom-line-2">{category?.whyInvestQuote?.source || "/ Global Waterfront Report / 2019"}</p>
               </div>
             </div>
           </section>
@@ -506,8 +457,26 @@ export default function SereneGreensPage() {
 
           {/* === Why Invest Section START === */}
           <WhyInvestSection
-            items={WHY_INVEST_ITEMS}
-            quote={WHY_INVEST_QUOTE}
+            items={
+              category?.whyInvestItems?.length
+                ? category.whyInvestItems.map((item) => ({
+                    imageSrc: item.imageSrc,
+                    imageAlt: item.imageAlt || item.title,
+                    title: item.title,
+                    text: item.text,
+                    reverse: item.reverse,
+                  }))
+                : WHY_INVEST_ITEMS
+            }
+            quote={
+              category?.whyInvestQuote?.text
+                ? {
+                    text: category.whyInvestQuote.text,
+                    name: category.whyInvestQuote.name,
+                    source: category.whyInvestQuote.source,
+                  }
+                : WHY_INVEST_QUOTE
+            }
           />
           {/* === Why Invest Section END === */}
 
@@ -524,11 +493,12 @@ export default function SereneGreensPage() {
             <div className="cta-inner">
               <span className="cta-street-line"></span>
               <h2>
-                <div className="cta-text">Find Your </div>
-                <div className="cta-text">Serene Greens Escape</div>
+                <div className="cta-text">{category?.cta?.titleLine1 || "Find Your"}</div>
+                <div className="cta-text">{category?.cta?.titleLine2 || "Serene Greens Escape"}</div>
               </h2>
               <h4 className="cta-link">
-                <Link href="/contact">Speak With Us
+                <Link href={category?.cta?.buttonLink || "/contact"}>
+                  {category?.cta?.buttonText || "Speak With Us"}
                   <img src="/assets/arrow.svg" alt="" />
                 </Link>
               </h4>

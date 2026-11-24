@@ -6,8 +6,10 @@ import { useInteractions } from "../lib/interactions";
 import gsap from "gsap";
 import NavigationMenu from "@/components/NavigationMenu";
 import { animatePriceBadgeBorder } from "@/lib/category-transitions";
+import { useSiteContent } from "@/lib/use-site-content";
 
 export default function Home() {
+  const { content } = useSiteContent();
   const {
     isSelectionOpen,
     setIsSelectionOpen,
@@ -89,117 +91,34 @@ export default function Home() {
         aria-label="Our selection"
       >
         <div className="selection-cards-grid">
-          <Link
-            href="/coastal-haven?from=dock"
-            className="selection-card"
-            data-category="coastal-haven"
-            onClick={(e) => handleCardClick(e, "/coastal-haven")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Coastal Haven</span>
-              <span className="selection-card__desc">
-                Coastal, Marina &amp; Seafront properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/bythesea-card-cover.avif"
-                alt="Coastal Haven"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/serene-greens?from=dock"
-            className="selection-card"
-            data-category="serene-greens"
-            onClick={(e) => handleCardClick(e, "/serene-greens")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Serene Greens</span>
-              <span className="selection-card__desc">
-                Gulf Resorts, parks &amp; Forest Oasis
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/evergreen-card-cover.avif"
-                alt="Serene Greens"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/urban-luxe?from=dock"
-            className="selection-card"
-            data-category="urban-luxe"
-            onClick={(e) => handleCardClick(e, "/urban-luxe")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Urban Luxe</span>
-              <span className="selection-card__desc">
-                City center &amp; Old city vibes and lifestyle
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/urban-living-card-cover.avif"
-                alt="Urban Luxe"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/limited-edition?from=dock"
-            className="selection-card"
-            data-category="limited-edition"
-            onClick={(e) => handleCardClick(e, "/limited-edition")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Limited Edition</span>
-              <span className="selection-card__desc">
-                One of a kind &amp; Unique concept Properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/rare-gems-card-cover.avif"
-                alt="Limited Edition"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
+          {content.selectionCards.map((card) => (
+            <Link
+              key={card.id}
+              href={`${card.path}?from=dock`}
+              className="selection-card"
+              data-category={card.id}
+              onClick={(e) => handleCardClick(e, card.path)}
+            >
+              <div className="selection-card__panel">
+                <img
+                  className="selection-card__symbol"
+                  src={card.symbol || "/assets/small_logo.png"}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span className="selection-card__title">{card.title}</span>
+                <span className="selection-card__desc">{card.desc}</span>
+              </div>
+              <div className="selection-card__cover">
+                <img
+                  src={card.cover}
+                  alt={card.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
       {/* === Selection Overlay Section END === */}
@@ -222,8 +141,8 @@ export default function Home() {
             <div className="site-logo">
               <Link href="/" aria-label="PROPVISTA Homepage">
                 <img
-                  src="/assets/main-logo-blue.svg"
-                  alt="PROPVISTA"
+                  src={content.general.logoUrl || "/assets/main-logo-blue.svg"}
+                  alt={content.general.siteName || "PROPVISTA"}
                 />
               </Link>
             </div>
@@ -239,12 +158,11 @@ export default function Home() {
             {/* === Marquee Background Track START === */}
             <div className="marquee-container" aria-hidden="true">
               <div className="marquee-track">
-                <span className="marquee-item">Elevating Life</span>
-                <span className="marquee-item">Elevating Life</span>
-                <span className="marquee-item">Elevating Life</span>
-                <span className="marquee-item">Elevating Life</span>
-                <span className="marquee-item">Elevating Life</span>
-                <span className="marquee-item">Elevating Life</span>
+                {content.hero.marqueeItems.map((item, idx) => (
+                  <span key={idx} className="marquee-item">
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
             {/* === Marquee Background Track END === */}
@@ -252,8 +170,8 @@ export default function Home() {
             {/* === Hero Center Visual START === */}
             <div ref={heroVisualRef} className="hero-visual-wrapper">
               <img
-                src="/assets/hero-load-visual.avif"
-                alt="Balcony overlooking coastal Montenegro"
+                src={content.hero.heroImage || "/assets/hero-load-visual.avif"}
+                alt={content.hero.heroImageAlt || "Balcony overlooking coastal Montenegro"}
                 fetchPriority="high"
                 decoding="async"
               />
@@ -262,11 +180,8 @@ export default function Home() {
 
             {/* === Hero Content START === */}
             <div ref={heroContentRef} className="hero-content-unclickable" aria-hidden="true">
-              <h1 className="hero-tagline">
-                Invest in Exceptional Real Estate Properties in Cyprus,
-                Montenegro, and Georgia.
-              </h1>
-              <div className="hero-price-badge">STARTING FROM 100,000€</div>
+              <h1 className="hero-tagline">{content.hero.tagline}</h1>
+              <div className="hero-price-badge">{content.hero.priceBadge}</div>
             </div>
             {/* === Hero Content END === */}
           </div>
@@ -277,7 +192,7 @@ export default function Home() {
 
       {/* === Site Footer Bar START === */}
       <footer className="site-footer">
-        <span className="footer-copyright">Realevate® 2026</span>
+        <span className="footer-copyright">{content.general.copyright || "Realevate® 2026"}</span>
 
         <div
           className="footer-actions"

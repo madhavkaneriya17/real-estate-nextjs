@@ -3,10 +3,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import { useSiteContent } from "@/lib/use-site-content";
 
 import "./contact.css";
 
 export default function ContactPage() {
+  const { content } = useSiteContent();
+  const contactInfo = content.general.contact;
+
   // Tab State: "investors" | "developers"
   const [activeTab, setActiveTab] = useState<"investors" | "developers">("investors");
 
@@ -195,8 +199,8 @@ export default function ContactPage() {
         <header className="contact-site-nav__logo">
           <Link href="/" aria-label="PROPVISTA - home">
             <img
-              src="/assets/main-logo-blue.svg"
-              alt="PROPVISTA"
+              src={content.general.logoUrl || "/assets/main-logo-blue.svg"}
+              alt={content.general.siteName || "PROPVISTA"}
             />
           </Link>
         </header>
@@ -247,11 +251,11 @@ export default function ContactPage() {
                   className={`contact-hero__channel-value contact-hero__channel-copy ${
                     isCopied ? "is-copied" : ""
                   }`}
-                  onClick={() => handleCopyEmail("info@realevate.agency")}
-                  aria-label="Copy email address info@realevate.agency"
+                  onClick={() => handleCopyEmail(contactInfo.email || "info@realevate.agency")}
+                  aria-label={`Copy email address ${contactInfo.email || "info@realevate.agency"}`}
                 >
                   <span className="contact-hero__channel-copy-label">
-                    Info@realevate.agency
+                    {contactInfo.email || "Info@realevate.agency"}
                   </span>
                   <span
                     className="contact-hero__channel-copy-feedback"
@@ -281,7 +285,7 @@ export default function ContactPage() {
                 <p className="contact-hero__channel-label">Whatsapp</p>
                 <a
                   className="contact-hero__channel-value"
-                  href="https://wa.me/972546020690"
+                  href={`https://wa.me/${(contactInfo.whatsapp || "972546020690").replace(/[^0-9]/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -294,9 +298,9 @@ export default function ContactPage() {
                 <p className="contact-hero__channel-label">Phone</p>
                 <a
                   className="contact-hero__channel-value"
-                  href="tel:+972546020690"
+                  href={`tel:${(contactInfo.phone || "+972546020690").replace(/\s+/g, "")}`}
                 >
-                  (+972) 54 60 20 690
+                  {contactInfo.phone || "(+972) 54 60 20 690"}
                 </a>
               </div>
             </div>
@@ -739,7 +743,7 @@ export default function ContactPage() {
                             <option value="Kuwait">Kuwait</option>
                             <option value="Monaco">Monaco</option>
                             <option value="Montenegro">Montenegro</option>
-                            <option value="Netherlands">Netherlands</option>
+                            <option value="Netherlands">Netherlands</option>                            
                             <option value="Norway">Norway</option>
                             <option value="Oman">Oman</option>
                             <option value="Poland">Poland</option>

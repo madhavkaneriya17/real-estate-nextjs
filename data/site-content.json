@@ -1,0 +1,62 @@
+{
+  "general": {
+    "siteName": "PROPVISTA",
+    "copyright": "Realevate® 2026",
+    "logoUrl": "/assets/main-logo-blue.svg",
+    "whiteLogoUrl": "/assets/main-logo.svg",
+    "contact": {
+      "email": "info@realevate.agency",
+      "phone": "(+972) 54 60 20 690",
+      "whatsapp": "+972546020690",
+      "address": "Montenegro, Cyprus & Georgia"
+    }
+  },
+  "hero": {
+    "marqueeItems": [
+      "Elevating Life",
+      "Elevating Life",
+      "Elevating Life",
+      "Elevating Life",
+      "Elevating Life",
+      "Elevating Life"
+    ],
+    "tagline": "Invest in Exceptional Real Estate Properties in Cyprus, Montenegro, and Georgia.",
+    "priceBadge": "STARTING FROM 100,000€",
+    "heroImage": "/assets/hero-load-visual.avif",
+    "heroImageAlt": "Balcony overlooking coastal Montenegro"
+  },
+  "selectionCards": [
+    {
+      "id": "coastal-haven",
+      "path": "/coastal-haven",
+      "title": "Coastal Haven",
+      "desc": "Coastal, Marina & Seafront properties",
+      "symbol": "/assets/small_logo.png",
+      "cover": "/assets/bythesea-card-cover.avif"
+    },
+    {
+      "id": "serene-greens",
+      "path": "/serene-greens",
+      "title": "Serene Greens",
+      "desc": "Gulf Resorts, parks & Forest Oasis",
+      "symbol": "/assets/small_logo.png",
+      "cover": "/assets/evergreen-card-cover.avif"
+    },
+    {
+      "id": "urban-luxe",
+      "path": "/urban-luxe",
+      "title": "Urban Luxe",
+      "desc": "City center & Old city vibes and lifestyle",
+      "symbol": "/assets/small_logo.png",
+      "cover": "/assets/urban-living-card-cover.avif"
+    },
+    {
+      "id": "limited-edition",
+      "path": "/limited-edition",
+      "title": "Limited Edition",
+      "desc": "One of a kind & Unique concept Properties",
+      "symbol": "/assets/small_logo.png",
+      "cover": "/assets/rare-gems-card-cover.avif"
+    }
+  ]
+}

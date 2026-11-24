@@ -9,6 +9,7 @@ import CategoryGallery, {
 } from "@/components/CategoryGallery";
 import WhyInvestSection from "@/components/WhyInvestSection";
 import NavigationMenu from "@/components/NavigationMenu";
+import { useCategoryContent, useSiteContent } from "@/lib/use-site-content";
 import {
   initHeroParallax,
   initBackgroundParallax,
@@ -19,6 +20,8 @@ import { useInteractions } from "@/lib/interactions";
 
 export default function UrbanLuxePage() {
   const router = useRouter();
+  const { content } = useSiteContent();
+  const { category } = useCategoryContent("urban-luxe");
   const {
     isSelectionOpen,
     setIsSelectionOpen,
@@ -170,113 +173,33 @@ export default function UrbanLuxePage() {
         aria-label="Our selection"
       >
         <div className="selection-cards-grid">
-          <Link
-            href="/coastal-haven?from=dock"
-            className="selection-card"
-            data-category="coastal-haven"
-            onClick={(e) => handleSelectionCardClick(e, "/coastal-haven")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Coastal Haven</span>
-              <span className="selection-card__desc">
-                Coastal, Marina &amp; Seafront properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/bythesea-card-cover.avif"
-                alt="Coastal Haven"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/serene-greens?from=dock"
-            className="selection-card"
-            data-category="serene-greens"
-            onClick={(e) => handleSelectionCardClick(e, "/serene-greens")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Serene Greens</span>
-              <span className="selection-card__desc">
-                Gulf Resorts, parks &amp; Forest Oasis
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/evergreen-card-cover.avif"
-                alt="Serene Greens"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/urban-luxe?from=dock"
-            className="selection-card"
-            data-category="urban-luxe"
-            onClick={(e) => handleSelectionCardClick(e, "/urban-luxe")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Urban Luxe</span>
-              <span className="selection-card__desc">
-                City center &amp; Old city vibes and lifestyle
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/urban-living-card-cover.avif"
-                alt="Urban Luxe"
-                loading="lazy"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/limited-edition?from=dock"
-            className="selection-card"
-            data-category="limited-edition"
-            onClick={(e) => handleSelectionCardClick(e, "/limited-edition")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Limited Edition</span>
-              <span className="selection-card__desc">
-                One of a kind &amp; Unique concept Properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/rare-gems-card-cover.avif"
-                alt="Limited Edition"
-                loading="lazy"
-              />
-            </div>
-          </Link>
+          {content.selectionCards.map((card) => (
+            <Link
+              key={card.id}
+              href={`${card.path}?from=dock`}
+              className="selection-card"
+              data-category={card.id}
+              onClick={(e) => handleSelectionCardClick(e, card.path)}
+            >
+              <div className="selection-card__panel">
+                <img
+                  className="selection-card__symbol"
+                  src={card.symbol || "/assets/small_logo.png"}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span className="selection-card__title">{card.title}</span>
+                <span className="selection-card__desc">{card.desc}</span>
+              </div>
+              <div className="selection-card__cover">
+                <img
+                  src={card.cover}
+                  alt={card.title}
+                  loading="lazy"
+                />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
       {/* === Selection Overlay END === */}
@@ -335,12 +258,18 @@ export default function UrbanLuxePage() {
                 aria-hidden="true"
               >
                 <div className="about-marquee-track">
-                  <span className="about-marquee-item">Urban Luxe</span>
-                  <span className="about-marquee-item">Urban Luxe</span>
-                  <span className="about-marquee-item">Urban Luxe</span>
-                  <span className="about-marquee-item">Urban Luxe</span>
-                  <span className="about-marquee-item">Urban Luxe</span>
-                  <span className="about-marquee-item">Urban Luxe</span>
+                  {(category?.hero?.marquee || [
+                    "Urban Luxe",
+                    "Urban Luxe",
+                    "Urban Luxe",
+                    "Urban Luxe",
+                    "Urban Luxe",
+                    "Urban Luxe",
+                  ]).map((item, idx) => (
+                    <span key={idx} className="about-marquee-item">
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
               {/* === Hero Marquee END === */}
@@ -348,8 +277,8 @@ export default function UrbanLuxePage() {
               {/* === Hero Center Visual START === */}
               <div ref={visualRef} className="about-visual-wrapper">
                 <img
-                  src="/assets/urban-living-card-cover.avif"
-                  alt="Urban Luxe"
+                  src={category?.hero?.visual || "/assets/urban-living-card-cover.avif"}
+                  alt={category?.hero?.visualAlt || "Urban Luxe"}
                   fetchPriority="high"
                   decoding="sync"
                 />
@@ -359,9 +288,9 @@ export default function UrbanLuxePage() {
               {/* === Hero Content START === */}
               <div ref={contentRef} className="about-content">
                 <h1 className="about-tagline">
-                  Apartments &amp; Hotel residences near the city center, downtown and touristic areas
+                  {category?.hero?.tagline || "Apartments & Hotel residences near the city center, downtown and touristic areas"}
                 </h1>
-                <div className="about-price-badge">STARTING FROM 350,000€</div>
+                <div className="about-price-badge">{category?.hero?.priceBadge || "STARTING FROM 350,000€"}</div>
               </div>
               {/* === Hero Content END === */}
             </div>
@@ -370,18 +299,25 @@ export default function UrbanLuxePage() {
 
           {/* === Category Gallery Section START === */}
           <CategoryGallery
-            label="Urban Luxe"
-            slides={URBAN_LUXE_GALLERY_SLIDES}
+            label={category?.gallery?.label || "Urban Luxe"}
+            slides={category?.gallery?.slides?.length ? category.gallery.slides : URBAN_LUXE_GALLERY_SLIDES}
             title={
-              <>
-                Invest Where
-                <br />
-                City Living, Culture
-                <br />
-                &amp; Growth Meet
-              </>
+              category?.gallery?.title ? (
+                <span>{category.gallery.title}</span>
+              ) : (
+                <>
+                  Invest Where
+                  <br />
+                  City Living, Culture
+                  <br />
+                  &amp; Growth Meet
+                </>
+              )
             }
-            description="Live steps from shopping, fine dining, business hubs, and cultural attractions, combining everyday convenience with the comfort of modern city living."
+            description={
+              category?.gallery?.description ||
+              "Live steps from shopping, fine dining, business hubs, and cultural attractions, combining everyday convenience with the comfort of modern city living."
+            }
           />
           {/* === Category Gallery Section END === */}
 
@@ -389,31 +325,46 @@ export default function UrbanLuxePage() {
           <section className="page-blog" aria-hidden="true">
             <div className="marq-wrapper">
               <div className="marq-track">
-                <span className="marq-text">Urban Luxe</span>
-                <span className="marq-text">Urban Luxe</span>
-                <span className="marq-text">Urban Luxe</span>
-                <span className="marq-text">Urban Luxe</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Urban Luxe",
+                  "City Sophistication",
+                  "Urban Luxe",
+                  "Downtown Living",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
               <div className="marq-track" aria-hidden="true">
-                <span className="marq-text">Urban Luxe</span>
-                <span className="marq-text">Urban Luxe</span>
-                <span className="marq-text">Urban Luxe</span>
-                <span className="marq-text">Urban Luxe</span>
+                {(category?.secondMarquee || category?.hero?.marquee || [
+                  "Urban Luxe",
+                  "City Sophistication",
+                  "Urban Luxe",
+                  "Downtown Living",
+                ]).map((item, idx) => (
+                  <span key={idx} className="marq-text">
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
 
             <div className="page-blog-bottom">
               <figure className="blog-img">
-                <img src="/assets/selection/urbanliving/square-urban-living.avif" alt="Urban Luxe" />
+                <img
+                  src={category?.whyInvestQuote?.image || "/assets/selection/urbanliving/square-urban-living.avif"}
+                  alt={category?.whyInvestQuote?.imageAlt || category?.name || "Urban Luxe"}
+                />
               </figure>
 
               <h2>
-                “Vibrant centers are places where people can live, work, shop, dine, play, rest, and learn.”
+                “{category?.whyInvestQuote?.text || "Vibrant centers are places where people can live, work, shop, dine, play, rest, and learn."}”
               </h2>
 
               <div className="blog-bottom-line">
-                <p className="blog-bottom-line-1">Urban Land Institute</p>
-                <p className="blog-bottom-line-2">/ Making Downtowns What They Used to Be / 2015 </p>
+                <p className="blog-bottom-line-1">{category?.whyInvestQuote?.name || "Urban Land Institute"}</p>
+                <p className="blog-bottom-line-2">{category?.whyInvestQuote?.source || "/ Making Downtowns What They Used to Be / 2015"}</p>
               </div>
             </div>
           </section>
@@ -428,7 +379,28 @@ export default function UrbanLuxePage() {
           {/* === Background Parallax Section (1) END === */}
 
           {/* === Why Invest Section START === */}
-          <WhyInvestSection />
+          <WhyInvestSection
+            items={
+              category?.whyInvestItems?.length
+                ? category.whyInvestItems.map((item) => ({
+                    imageSrc: item.imageSrc,
+                    imageAlt: item.imageAlt || item.title,
+                    title: item.title,
+                    text: item.text,
+                    reverse: item.reverse,
+                  }))
+                : undefined
+            }
+            quote={
+              category?.whyInvestQuote?.text
+                ? {
+                    text: category.whyInvestQuote.text,
+                    name: category.whyInvestQuote.name,
+                    source: category.whyInvestQuote.source,
+                  }
+                : undefined
+            }
+          />
           {/* === Why Invest Section END === */}
 
           {/* === Background Parallax Section (2) START === */}
@@ -444,12 +416,13 @@ export default function UrbanLuxePage() {
             <div className="cta-inner">
               <span className="cta-street-line"></span>
               <h2>
-                <div className="cta-text">Start Your Urban </div>
-                <div className="cta-text">Living Life</div>
+                <div className="cta-text">{category?.cta?.titleLine1 || "Start Your Urban"}</div>
+                <div className="cta-text">{category?.cta?.titleLine2 || "Living Life"}</div>
               </h2>
               <h4 className="cta-link">
-                <a href="#">Speak With Us
-                  <img src="https://realevate.agency/assets/arrow.svg" alt="" />
+                <a href={category?.cta?.buttonLink || "/contact"}>
+                  {category?.cta?.buttonText || "Speak With Us"}
+                  <img src="/assets/arrow.svg" alt="" />
                 </a>
               </h4>
             </div>
