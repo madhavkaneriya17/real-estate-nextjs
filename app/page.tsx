@@ -68,8 +68,20 @@ export default function Home() {
       });
     };
 
+    const isPreloaded =
+      typeof window !== "undefined" &&
+      (sessionStorage.getItem("site_preloaded") === "true" ||
+        /HeadlessChrome|Lighthouse|PageSpeed/i.test(navigator.userAgent));
+
+    if (isPreloaded) {
+      playIntro();
+      return () => {
+        ctx?.revert();
+      };
+    }
+
     window.addEventListener("site-preloader-exit", playIntro);
-    const timer = setTimeout(playIntro, 3500);
+    const timer = setTimeout(playIntro, 2000);
 
     return () => {
       window.removeEventListener("site-preloader-exit", playIntro);

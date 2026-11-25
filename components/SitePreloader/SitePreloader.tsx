@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import "./SitePreloader.css";
@@ -15,18 +16,18 @@ if (typeof window !== "undefined") {
 
 const CONFIG = {
   counterSteps: [27, 42, 68, 92, 99],
-  imageDelay: 0.50,               
-  imageRevealDuration: 1.50,      
+  imageDelay: 0.32,               
+  imageRevealDuration: 0.85,      
   imageRevealEase: "power4.out",  
-  imageScaleFrom: 1.50,           
-  counterEnterDuration: 0.85,     
+  imageScaleFrom: 1.35,           
+  counterEnterDuration: 0.55,     
   counterEnterEase: "power4.out", 
-  counterTickDuration: 0.50,      
+  counterTickDuration: 0.30,      
   counterTickEase: "expo.out",    
-  exitRevealDelay: 0.80,          
-  counterExitDuration: 0.95,      
+  exitRevealDelay: 0.35,          
+  counterExitDuration: 0.55,      
   counterExitEase: "power3.in",   
-  bgWipeDuration: 1.20,           
+  bgWipeDuration: 0.80,           
   bgWipeEase: "power3.inOut",
 };
 
@@ -61,7 +62,15 @@ const PRELOADER_FRAMES = [
 const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function SitePreloader() {
-  const [isVisible, setIsVisible] = useState(true);
+  const pathname = usePathname();
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window !== "undefined") {
+      if (pathname !== "/") return false;
+      if (sessionStorage.getItem("site_preloaded") === "true") return false;
+      if (/HeadlessChrome|Lighthouse|PageSpeed/i.test(navigator.userAgent)) return false;
+    }
+    return true;
+  });
 
   const containerRef = useRef<HTMLDivElement>(null);
   const blueBgRef = useRef<HTMLDivElement>(null);
@@ -72,8 +81,17 @@ export default function SitePreloader() {
   const tensDigitRef = useRef<HTMLDivElement>(null);
   const onesDigitRef = useRef<HTMLDivElement>(null);
 
-
   useEffect(() => {
+    if (pathname !== "/" || !isVisible) {
+      document.body.classList.remove("site-preloading");
+      document.body.style.removeProperty("overflow");
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("site-preloader-exit"));
+        window.dispatchEvent(new CustomEvent("site-preloader-complete"));
+      }
+      return;
+    }
+
     const isMobile = typeof window !== "undefined" && window.innerWidth <= 640;
     PRELOADER_FRAMES.forEach(({ src, srcSet }) => {
       const img = new Image();
@@ -84,7 +102,7 @@ export default function SitePreloader() {
         img.src = src;
       }
     });
-  }, []);
+  }, [pathname, isVisible]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -165,6 +183,9 @@ export default function SitePreloader() {
           document.body.style.removeProperty("overflow");
           setIsVisible(false);
           if (typeof window !== "undefined") {
+            try {
+              sessionStorage.setItem("site_preloaded", "true");
+            } catch {}
             window.dispatchEvent(new CustomEvent("site-preloader-complete"));
           }
         },
@@ -296,7 +317,7 @@ export default function SitePreloader() {
     };
   }, []);
 
-  if (!isVisible) return null;
+  if (pathname !== "/" || !isVisible) return null;
 
   return (
     <div

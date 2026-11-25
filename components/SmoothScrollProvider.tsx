@@ -16,8 +16,12 @@ export default function SmoothScrollProvider() {
       touchMultiplier: 2.2,  
     });
 
+    let rAFId: number | null = null;
     const resizeObserver = new ResizeObserver(() => {
-      scroller?.update();
+      if (rAFId) cancelAnimationFrame(rAFId);
+      rAFId = requestAnimationFrame(() => {
+        scroller?.update();
+      });
     });
 
     if (document.body) {
@@ -25,6 +29,7 @@ export default function SmoothScrollProvider() {
     }
 
     return () => {
+      if (rAFId) cancelAnimationFrame(rAFId);
       resizeObserver.disconnect();
     };
   }, []);
