@@ -31,11 +31,31 @@ const CONFIG = {
 };
 
 const PRELOADER_FRAMES = [
-  { src: "/assets/bythesea-card-cover.avif", alt: "Coastal beachfront property" },
-  { src: "/assets/evergreen-card-cover.avif", alt: "Golf course resort oasis" },
-  { src: "/assets/urban-living-card-cover.avif", alt: "City center terrace" },
-  { src: "/assets/rare-gems-card-cover.avif", alt: "Architectural luxury skyscraper tower" },
-  { src: "/assets/hero-load-visual.avif", alt: "Woman relaxing on scenic coastal balcony" },
+  {
+    src: "/assets/bythesea-card-cover.avif",
+    srcSet: "/assets/bythesea-card-cover-500w.avif 500w, /assets/bythesea-card-cover.avif 1024w",
+    alt: "Coastal beachfront property",
+  },
+  {
+    src: "/assets/evergreen-card-cover.avif",
+    srcSet: "/assets/evergreen-card-cover-500w.avif 500w, /assets/evergreen-card-cover.avif 1024w",
+    alt: "Golf course resort oasis",
+  },
+  {
+    src: "/assets/urban-living-card-cover.avif",
+    srcSet: "/assets/urban-living-card-cover-500w.avif 500w, /assets/urban-living-card-cover.avif 1024w",
+    alt: "City center terrace",
+  },
+  {
+    src: "/assets/rare-gems-card-cover.avif",
+    srcSet: "/assets/rare-gems-card-cover.avif 1024w",
+    alt: "Architectural luxury skyscraper tower",
+  },
+  {
+    src: "/assets/hero-load-visual.avif",
+    srcSet: "/assets/hero-load-visual-400w.avif 400w, /assets/hero-load-visual.avif 800w",
+    alt: "Woman relaxing on scenic coastal balcony",
+  },
 ];
 
 const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -54,9 +74,15 @@ export default function SitePreloader() {
 
 
   useEffect(() => {
-    PRELOADER_FRAMES.forEach(({ src }) => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 640;
+    PRELOADER_FRAMES.forEach(({ src, srcSet }) => {
       const img = new Image();
-      img.src = src;
+      if (isMobile && srcSet) {
+        const mobileSrc = srcSet.split(",")[0].trim().split(" ")[0];
+        img.src = mobileSrc;
+      } else {
+        img.src = src;
+      }
     });
   }, []);
 
@@ -302,6 +328,8 @@ export default function SitePreloader() {
             >
               <img
                 src={frame.src}
+                srcSet={frame.srcSet}
+                sizes="(max-width: 640px) 240px, 360px"
                 alt={frame.alt}
                 decoding="async"
                 loading="eager"

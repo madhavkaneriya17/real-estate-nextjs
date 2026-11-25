@@ -222,7 +222,7 @@ export default function AdminCategoryDetailPage({
       });
 
       const rawText = await res.text();
-      let data: any = null;
+      let data: { error?: string } | null = null;
       try {
         data = JSON.parse(rawText);
       } catch {
@@ -591,7 +591,7 @@ export default function AdminCategoryDetailPage({
           <div className="admin-card">
             <div className="admin-card__header">
               <div>
-                <h3 className="admin-card__title">Middle Running Banner ("marq")</h3>
+                <h3 className="admin-card__title">Middle Running Banner (&quot;marq&quot;)</h3>
                 <p className="admin-card__desc">
                   Horizontal animated marquee shown directly underneath the slider gallery.
                 </p>

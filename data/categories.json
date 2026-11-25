@@ -436,6 +436,34 @@
         "title": "Collectible Asset",
         "text": "Unique concept properties command exponential valuation premiums as timeless trophies in a global wealth portfolio.",
         "reverse": false
+      },
+      {
+        "imageSrc": "/assets/selection/raregems/limited-edition-brand-4k.jpg",
+        "imageAlt": "Branded residences commanding global price premiums",
+        "title": "Brand Premium",
+        "text": "Branded residences command average price premiums of 25% to 35% over comparable non-branded luxury properties, setting a benchmark for global prestige and sustained capital growth.",
+        "reverse": true
+      },
+      {
+        "imageSrc": "/assets/selection/raregems/rare-gem-stats-2_converted.avif",
+        "imageAlt": "Elevated lifestyle with bespoke services and haute craftsmanship",
+        "title": "Elevated Lifestyle",
+        "text": "Every nuance, from private concierge and bespoke residential management to five-star hospitality services, is crafted to deliver an unprecedented luxury living standard.",
+        "reverse": false
+      },
+      {
+        "imageSrc": "/assets/selection/raregems/limited-edition-skyline-4k.jpg",
+        "imageAlt": "Iconic architectural landmark shaping city skyline",
+        "title": "Iconic Architecture",
+        "text": "World-renowned master architects create sculptural landmark towers that become international destinations, ensuring generational wealth and global prestige.",
+        "reverse": true
+      },
+      {
+        "imageSrc": "/assets/selection/raregems/limited-edition-lifestyle-4k.jpg",
+        "imageAlt": "Unmatched trophy asset exclusivity",
+        "title": "Trophy Scarcity",
+        "text": "Strictly limited in supply, one-of-a-kind concept residences represent the pinnacle of collectable real estate, attracting the world's most discerning ultra-high-net-worth buyers.",
+        "reverse": false
       }
     ],
     "secondMarquee": [

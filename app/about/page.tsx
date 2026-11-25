@@ -12,6 +12,7 @@ import {
   initNextCategoryScrollRedirect,
   initBackgroundParallax,
 } from "@/app/urban-luxe/urban-luxe-scripts";
+import { useSiteContent } from "@/lib/use-site-content";
 import "./about.css";
 
 if (typeof window !== "undefined") {
@@ -19,6 +20,7 @@ if (typeof window !== "undefined") {
 }
 
 export default function AboutPage() {
+  const { content } = useSiteContent();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const videoStageRef = useRef<HTMLDivElement>(null);
@@ -290,117 +292,34 @@ export default function AboutPage() {
         aria-label="Our selection"
       >
         <div className="selection-cards-grid">
-          <Link
-            href="/coastal-haven?from=dock"
-            className="selection-card"
-            data-category="coastal-haven"
-            onClick={(e) => handleSelectionCardClick(e, "/coastal-haven")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Coastal Haven</span>
-              <span className="selection-card__desc">
-                Coastal, Marina &amp; Seafront properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/bythesea-card-cover.avif"
-                alt="Coastal Haven"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/serene-greens?from=dock"
-            className="selection-card"
-            data-category="serene-greens"
-            onClick={(e) => handleSelectionCardClick(e, "/serene-greens")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Serene Greens</span>
-              <span className="selection-card__desc">
-                Gulf Resorts, parks &amp; Forest Oasis
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/evergreen-card-cover.avif"
-                alt="Serene Greens"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/urban-luxe?from=dock"
-            className="selection-card"
-            data-category="urban-luxe"
-            onClick={(e) => handleSelectionCardClick(e, "/urban-luxe")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Urban Luxe</span>
-              <span className="selection-card__desc">
-                City center &amp; Old city vibes and lifestyle
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/urban-living-card-cover.avif"
-                alt="Urban Luxe"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
-
-          <Link
-            href="/limited-edition?from=dock"
-            className="selection-card"
-            data-category="limited-edition"
-            onClick={(e) => handleSelectionCardClick(e, "/limited-edition")}
-          >
-            <div className="selection-card__panel">
-              <img
-                className="selection-card__symbol"
-                src="/assets/small_logo.png"
-                alt=""
-                aria-hidden="true"
-              />
-              <span className="selection-card__title">Limited Edition</span>
-              <span className="selection-card__desc">
-                One of a kind &amp; Unique concept Properties
-              </span>
-            </div>
-            <div className="selection-card__cover">
-              <img
-                src="/assets/selection/raregems/rare-gem-cover_converted.avif"
-                alt="Limited Edition"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </Link>
+          {content.selectionCards.map((card) => (
+            <Link
+              key={card.id}
+              href={`${card.path}?from=dock`}
+              className="selection-card"
+              data-category={card.id}
+              onClick={(e) => handleSelectionCardClick(e, card.path)}
+            >
+              <div className="selection-card__panel">
+                <img
+                  className="selection-card__symbol"
+                  src={card.symbol || "/assets/small_logo.png"}
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span className="selection-card__title">{card.title}</span>
+                <span className="selection-card__desc">{card.desc}</span>
+              </div>
+              <div className="selection-card__cover">
+                <img
+                  src={card.cover}
+                  alt={card.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
       {/* === Selection Overlay Section END === */}

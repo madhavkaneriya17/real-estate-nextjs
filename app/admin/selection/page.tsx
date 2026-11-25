@@ -32,30 +32,6 @@ export default function AdminSelectionPage() {
     setContent({ ...content, selectionCards: newCards });
   };
 
-  const handleCardImageUpload = async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (res.ok && data.url) {
-        handleCardChange(index, "cover", data.url);
-        showToast("Card cover image updated!");
-      } else {
-        showToast(data.error || "Upload failed", "error");
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Upload error";
-      showToast(msg, "error");
-    }
-  };
 
   const handleSave = async () => {
     if (!content) return;
@@ -69,7 +45,7 @@ export default function AdminSelectionPage() {
       });
 
       const rawText = await res.text();
-      let data: any = null;
+      let data: { error?: string } | null = null;
       try {
         data = JSON.parse(rawText);
       } catch {

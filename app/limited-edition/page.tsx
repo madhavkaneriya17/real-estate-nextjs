@@ -26,6 +26,19 @@ import { useInteractions } from "@/lib/interactions";
 // =========================================================================
 const WHY_INVEST_ITEMS: WhyInvestItem[] = [
   {
+    imageSrc: "/assets/rare-gems-card-cover.avif",
+    imageAlt: "Iconic architectural trophy estate",
+    title: (
+      <>
+        Collectible
+        <br />
+        Asset
+      </>
+    ),
+    text: "Unique concept properties command exponential valuation premiums as timeless trophies in a global wealth portfolio.",
+    reverse: false,
+  },
+  {
     imageSrc: "/assets/selection/raregems/limited-edition-brand-4k.jpg",
     imageAlt: "Branded residences commanding global price premiums",
     title: (
@@ -36,7 +49,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
       </>
     ),
     text: "Branded residences command average price premiums of 25% to 35% over comparable non-branded luxury properties, setting a benchmark for global prestige and sustained capital growth.",
-    reverse: false,
+    reverse: true,
   },
   {
     imageSrc: "/assets/selection/raregems/rare-gem-stats-2_converted.avif",
@@ -49,7 +62,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
       </>
     ),
     text: "Every nuance, from private concierge and bespoke residential management to five-star hospitality services, is crafted to deliver an unprecedented luxury living standard.",
-    reverse: true,
+    reverse: false,
   },
   {
     imageSrc: "/assets/selection/raregems/limited-edition-skyline-4k.jpg",
@@ -62,7 +75,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
       </>
     ),
     text: "World-renowned master architects create sculptural landmark towers that become international destinations, ensuring generational wealth and global prestige.",
-    reverse: false,
+    reverse: true,
   },
   {
     imageSrc: "/assets/selection/raregems/limited-edition-lifestyle-4k.jpg",
@@ -75,19 +88,6 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
       </>
     ),
     text: "Strictly limited in supply, one-of-a-kind concept residences represent the pinnacle of collectable real estate, attracting the world's most discerning ultra-high-net-worth buyers.",
-    reverse: true,
-  },
-  {
-    imageSrc: "/assets/selection/raregems/limited-edition-parallax-2-4k.jpg",
-    imageAlt: "Enduring value and international resilience",
-    title: (
-      <>
-        Capital
-        <br />
-        Preservation
-      </>
-    ),
-    text: "Landmark architectural gems retain peak value across all economic cycles, offering unmatched liquidity and generational wealth transfer capabilities.",
     reverse: false,
   },
 ];

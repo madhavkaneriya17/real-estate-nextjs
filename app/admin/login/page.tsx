@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
       });
 
       const rawText = await res.text();
-      let data: any = null;
+      let data: { error?: string } | null = null;
       try {
         data = JSON.parse(rawText);
       } catch {

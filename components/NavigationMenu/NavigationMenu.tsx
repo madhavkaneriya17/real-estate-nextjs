@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import { useSiteContent } from "@/lib/use-site-content";
 import "./NavigationMenu.css";
 
 export interface NavigationMenuProps {
@@ -26,6 +27,11 @@ export default function NavigationMenu({
   textColor = "#FFFFFF",
   backdropBg,
 }: NavigationMenuProps) {
+  const { content } = useSiteContent();
+  const whatsappRaw = content.general?.contact?.whatsapp || "+972546020690";
+  const whatsappNumber = whatsappRaw.replace(/[^\d]/g, "");
+  const contactEmail = content.general?.contact?.email || "info@realevate.agency";
+
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isMenuOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
 
@@ -224,7 +230,7 @@ export default function NavigationMenu({
           <div className="nav-menu-bottom">
             <div className="nav-menu-channels">
               <a
-                href="https://wa.me/972546020690"
+                href={`https://wa.me/${whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="nav-menu-channel-link"
@@ -247,7 +253,7 @@ export default function NavigationMenu({
               </a>
 
               <a
-                href="mailto:info@realevate.agency"
+                href={`mailto:${contactEmail}`}
                 className="nav-menu-channel-link"
               >
                 <span className="nav-menu-channel-icon-wrap" aria-hidden="true">

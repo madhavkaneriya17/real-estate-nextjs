@@ -73,30 +73,6 @@ export default function AdminHeroPage() {
     });
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (res.ok && data.url) {
-        handleHeroChange("heroImage", data.url);
-        showToast("Image uploaded and set as Hero visual!");
-      } else {
-        showToast(data.error || "Upload failed", "error");
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Upload error";
-      showToast(msg, "error");
-    }
-  };
 
   const handleSave = async () => {
     if (!content) return;
@@ -110,7 +86,7 @@ export default function AdminHeroPage() {
       });
 
       const rawText = await res.text();
-      let data: any = null;
+      let data: { error?: string } | null = null;
       try {
         data = JSON.parse(rawText);
       } catch {
@@ -283,7 +259,7 @@ export default function AdminHeroPage() {
           <div>
             <h3 className="admin-card__title">Underneath Hero: Our Selection Cards</h3>
             <p className="admin-card__desc">
-              When visitors click "Our Selection", these 4 destination cards are displayed.
+              When visitors click &quot;Our Selection&quot;, these 4 destination cards are displayed.
             </p>
           </div>
           <Link href="/admin/selection" className="admin-btn admin-btn-primary" style={{ fontSize: "13px" }}>

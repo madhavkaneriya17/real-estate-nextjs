@@ -8,6 +8,19 @@ import NavigationMenu from "@/components/NavigationMenu";
 import { animatePriceBadgeBorder } from "@/lib/category-transitions";
 import { useSiteContent } from "@/lib/use-site-content";
 
+const getCoverSrcSet = (cover: string) => {
+  if (cover === "/assets/bythesea-card-cover.avif") {
+    return "/assets/bythesea-card-cover-500w.avif 500w, /assets/bythesea-card-cover.avif 1024w";
+  }
+  if (cover === "/assets/evergreen-card-cover.avif") {
+    return "/assets/evergreen-card-cover-500w.avif 500w, /assets/evergreen-card-cover.avif 1024w";
+  }
+  if (cover === "/assets/urban-living-card-cover.avif") {
+    return "/assets/urban-living-card-cover-500w.avif 500w, /assets/urban-living-card-cover.avif 1024w";
+  }
+  return undefined;
+};
+
 export default function Home() {
   const { content } = useSiteContent();
   const {
@@ -112,6 +125,8 @@ export default function Home() {
               <div className="selection-card__cover">
                 <img
                   src={card.cover}
+                  srcSet={getCoverSrcSet(card.cover)}
+                  sizes="(max-width: 640px) 320px, 25vw"
                   alt={card.title}
                   loading="lazy"
                   decoding="async"
@@ -171,6 +186,12 @@ export default function Home() {
             <div ref={heroVisualRef} className="hero-visual-wrapper">
               <img
                 src={content.hero.heroImage || "/assets/hero-load-visual.avif"}
+                srcSet={
+                  !content.hero.heroImage || content.hero.heroImage === "/assets/hero-load-visual.avif"
+                    ? "/assets/hero-load-visual-400w.avif 400w, /assets/hero-load-visual.avif 800w"
+                    : undefined
+                }
+                sizes="(max-width: 640px) 240px, 360px"
                 alt={content.hero.heroImageAlt || "Balcony overlooking coastal Montenegro"}
                 fetchPriority="high"
                 decoding="async"

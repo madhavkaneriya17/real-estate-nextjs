@@ -12,13 +12,11 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [isAuthed, setIsAuthed] = useState<boolean | null>(null);
-
   const isLoginPage = pathname === "/admin/login";
+  const [isAuthed, setIsAuthed] = useState<boolean | null>(() => (isLoginPage ? true : null));
 
   useEffect(() => {
     if (isLoginPage) {
-      setIsAuthed(true);
       return;
     }
 

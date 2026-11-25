@@ -72,6 +72,25 @@ export async function getJSONFromStorage<T>(
   localFilePath: string,
   defaultData: T
 ): Promise<T> {
+  const isServerless = Boolean(
+    process.env.NETLIFY ||
+    process.env.AWS_LAMBDA_FUNCTION_NAME ||
+    process.env.LAMBDA_TASK_ROOT ||
+    process.env.VERCEL
+  );
+
+  // In local development, always read from workspace local file first
+  if (!isServerless) {
+    try {
+      const raw = await fs.readFile(localFilePath, "utf-8");
+      const parsed = JSON.parse(raw) as T;
+      memoryJSON.set(key, parsed);
+      return parsed;
+    } catch {
+      return defaultData;
+    }
+  }
+
   // 1. Check in-memory instance cache first (instant)
   if (memoryJSON.has(key)) {
     return memoryJSON.get(key) as T;
@@ -135,14 +154,11 @@ export async function saveJSONToStorage<T>(
   // 1. Immediately store in memory (instant)
   memoryJSON.set(key, data);
 
-  let savedToBlob = false;
-
   // 2. Try saving to Netlify Blobs (with timeout protection)
   if (isBlobsConfigured()) {
     try {
       const store = getBlobStore(STORE_CONTENT);
       await withTimeout(store.setJSON(key, data), 2000);
-      savedToBlob = true;
     } catch (blobErr) {
       console.warn(`[StorageAdapter] Blobs save skipped for "${key}":`, blobErr instanceof Error ? blobErr.message : blobErr);
     }
@@ -190,8 +206,6 @@ export async function saveUploadedFile(
   const buffer: Buffer = Buffer.isBuffer(data) ? data : Buffer.from(data);
   memoryUploads.set(fileName, { data: buffer, contentType });
 
-  let savedToBlob = false;
-
   // 1. Netlify Blobs
   if (isBlobsConfigured()) {
     try {
@@ -203,7 +217,6 @@ export async function saveUploadedFile(
         }),
         3000
       );
-      savedToBlob = true;
     } catch (err) {
       console.warn(`[StorageAdapter] Blobs upload save skipped:`, err instanceof Error ? err.message : err);
     }
