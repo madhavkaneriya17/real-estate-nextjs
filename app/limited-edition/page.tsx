@@ -460,7 +460,7 @@ export default function LimitedEditionPage() {
           {/* === Why Invest Section START === */}
           <WhyInvestSection
             items={
-              category?.whyInvestItems?.length
+              category?.whyInvestItems && category.whyInvestItems.length >= WHY_INVEST_ITEMS.length
                 ? category.whyInvestItems.map((item) => ({
                     imageSrc: item.imageSrc,
                     imageAlt: item.imageAlt || item.title,

@@ -113,11 +113,40 @@ export async function saveSiteContent(data: SiteContent): Promise<void> {
 }
 
 export async function getCategories(): Promise<CategoriesMap> {
-  return getJSONFromStorage<CategoriesMap>(
+  const defaults = defaultCategories as unknown as CategoriesMap;
+  const stored = await getJSONFromStorage<CategoriesMap>(
     "categories",
     CATEGORIES_PATH,
-    defaultCategories as unknown as CategoriesMap
+    defaults
   );
+
+  let needsResave = false;
+  const merged: CategoriesMap = { ...defaults, ...stored };
+
+  for (const slug of Object.keys(defaults)) {
+    if (!merged[slug]) {
+      merged[slug] = defaults[slug];
+      needsResave = true;
+    } else {
+      const defaultWhy = defaults[slug]?.whyInvestItems || [];
+      const storedWhy = merged[slug]?.whyInvestItems || [];
+      // If code was updated with more items than stale storage (e.g. 5 cards vs stale 1 card in Netlify Blobs)
+      if (defaultWhy.length > storedWhy.length) {
+        merged[slug] = {
+          ...merged[slug],
+          whyInvestItems: defaultWhy,
+        };
+        needsResave = true;
+      }
+    }
+  }
+
+  // Heal Netlify Blobs/tmp storage with full items in background
+  if (needsResave) {
+    saveAllCategories(merged).catch(() => {});
+  }
+
+  return merged;
 }
 
 export async function getCategoryBySlug(slug: string): Promise<CategoryData | null> {
