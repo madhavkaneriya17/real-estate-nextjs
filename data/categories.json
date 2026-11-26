@@ -215,21 +215,21 @@
     },
     "whyInvestItems": [
       {
-        "imageSrc": "/assets/serene-greens(3).jpg",
+        "imageSrc": "/assets/serene-greens(3).avif",
         "imageAlt": "Luxury wellness resort living and pristine landscape",
         "title": "15% CAGR",
         "text": "Wellness and golf real estate commands price premiums of 10–25% with higher long-term occupancy rates, making it one of the fastest-growing property sectors worldwide.",
         "reverse": false
       },
       {
-        "imageSrc": "/assets/serene-greens(4).jpg",
+        "imageSrc": "/assets/serene-greens(4).avif",
         "imageAlt": "Master-planned evergreen community and lush greenery",
         "title": "Masterplan Evergreen",
         "text": "Homes in master-planned green communities achieve price premiums of 5–20% compared to comparable urban developments, attracting high-net-worth investors.",
         "reverse": true
       },
       {
-        "imageSrc": "/assets/serene-greens(5).jpg",
+        "imageSrc": "/assets/serene-greens(5).avif",
         "imageAlt": "Championship golf course with panoramic views",
         "title": "Golf & Nature Premium",
         "text": "Properties positioned along championship golf courses and protected nature reserves command enduring scarcity and up to 19% higher capital appreciation.",

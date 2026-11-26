@@ -833,6 +833,20 @@ button {
   pointer-events: none !important;
 }
 
+.move-next-category-content {
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+}
+
+.move-next-category-badge,
+.move-next-category-title,
+.move-next-category-subtitle {
+  opacity: 1;
+  visibility: visible;
+}
+
 .next-category-scroll-indicator.is-active {
   opacity: 1 !important;
   visibility: visible !important;

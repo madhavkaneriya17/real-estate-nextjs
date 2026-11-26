@@ -24,7 +24,7 @@ import { useInteractions } from "@/lib/interactions";
 // < ===  WHY INVEST SECTION: ASSETS & CONTENT (Page-Specific) === >
 const WHY_INVEST_ITEMS: WhyInvestItem[] = [
   {
-    imageSrc: "/assets/serene-greens(3).jpg",
+    imageSrc: "/assets/serene-greens(3).avif",
     imageAlt: "Luxury wellness resort living and pristine landscape",
     title: (
       <>
@@ -37,7 +37,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
     reverse: false,
   },
   {
-    imageSrc: "/assets/serene-greens(4).jpg",
+    imageSrc: "/assets/serene-greens(4).avif",
     imageAlt: "Master-planned evergreen community and lush greenery",
     title: (
       <>
@@ -50,7 +50,7 @@ const WHY_INVEST_ITEMS: WhyInvestItem[] = [
     reverse: true,
   },
   {
-    imageSrc: "/assets/serene-greens(5).jpg",
+    imageSrc: "/assets/serene-greens(5).avif",
     imageAlt: "Championship golf course with panoramic views",
     title: (
       <>
@@ -450,7 +450,7 @@ export default function SereneGreensPage() {
           {/* === Background Parallax Section (1) START === */}
           <section className="background-image-parallax category-parallax">
             <div className="background-image-parallax-inner category-parallax__viewport">
-              <img src="/assets/serene-greens(2).jpg" alt="Resort and forest destination" />
+              <img src="/assets/serene-greens(2).avif" alt="Resort and forest destination" />
             </div>
           </section>
           {/* === Background Parallax Section (1) END === */}
@@ -483,7 +483,7 @@ export default function SereneGreensPage() {
           {/* === Background Parallax Section (2) START === */}
           <section className="background-image-parallax category-parallax">
             <div className="background-image-parallax-inner category-parallax__viewport">
-              <img src="/assets/serene-greens(1).jpg" alt="Resort and forest lifestyle" />
+              <img src="/assets/serene-greens(1).avif" alt="Resort and forest lifestyle" />
             </div>
           </section>
           {/* === Background Parallax Section (2) END === */}

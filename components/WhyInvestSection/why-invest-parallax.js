@@ -20,7 +20,7 @@ export function initWhyInvestParallax(container) {
 
   const travelY = 8;
   const scaleVal = 1.12;
-  const scrubLag = 0.25;
+  const scrubLag = 0.1;
 
   const loadListeners = [];
   let refreshTimer = null;

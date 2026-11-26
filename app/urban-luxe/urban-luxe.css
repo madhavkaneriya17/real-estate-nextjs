@@ -1222,7 +1222,7 @@ body.bottom-cursor-active * {
 
 .move-next-category-content {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   width: 100%;
   height: 100%;
   display: flex;
@@ -1233,6 +1233,8 @@ body.bottom-cursor-active * {
   padding: 2rem 1.5rem;
   pointer-events: none;
   transform: none !important;
+  opacity: 1;
+  visibility: visible;
 }
 
 .move-next-category-badge {
@@ -1264,7 +1266,7 @@ body.bottom-cursor-active * {
 
 .move-next-category-title {
   font-family: var(--sans-font, sans-serif);
-  font-size: clamp(32px, 5.2vw, 56px);
+  font-size: clamp(44px, 6vw, 88px);
   line-height: .94;
   font-weight: 500;
   color: #ffffff;
@@ -1275,7 +1277,7 @@ body.bottom-cursor-active * {
 
 .move-next-category-subtitle {
   font-family: var(--sans-font, sans-serif);
-  font-size: clamp(14px, 1.2vw, 17px);
+  font-size: clamp(16px, 1.4vw, 22px);
   font-weight: 400;
   color: rgba(255, 255, 255, 0.92);
   line-height: 1.4;
@@ -1303,14 +1305,16 @@ body.bottom-cursor-active * {
   }
 
   .move-next-category-title {
-    font-size: 32px;
+    font-size: clamp(32px, 8.5vw, 48px);
     line-height: 1.05;
     margin-bottom: 0.75rem;
+    padding-inline: 1rem;
   }
 
   .move-next-category-subtitle {
-    font-size: 14px;
-    padding: 0 1rem;
+    font-size: clamp(14px, 3.8vw, 18px);
+    padding-inline: 1.25rem;
+    max-width: min(90vw, 380px);
   }
 }
 /* === Next Category Section END === */
